@@ -42,7 +42,13 @@
         </q-btn-group>
         <q-space />
         <q-btn-group outline class="q-mr-md">
-          <q-btn color="white" text-color="black" class="cta" label="Sign Up" />
+          <q-btn
+            color="white"
+            to="/account"
+            text-color="black"
+            class="cta"
+            label="Sign Up"
+          />
         </q-btn-group>
         <q-space />
       </q-toolbar>
@@ -71,6 +77,7 @@
           color="white"
           class="bg-white hero-button"
           size="15px"
+          to="/account"
           text-color="black"
           flat
           label="Get Started"
@@ -171,6 +178,7 @@
             <q-btn
               text-color="white"
               class="cta"
+              to="/account"
               label="Login"
               style="
                 font-size: 17px;
@@ -192,6 +200,7 @@
             <q-btn
               text-color="white"
               class="cta"
+              to="/account"
               label="Sign up"
               style="
                 font-size: 17px;
