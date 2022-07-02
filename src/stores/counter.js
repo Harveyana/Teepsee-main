@@ -3,6 +3,9 @@ import { defineStore } from 'pinia';
 export const useCounterStore = defineStore('counter', {
   state: () => ({
     counter: 0,
+    panel: 'orders',
+    profile: 'profile',
+    orders:'orders',
     leftDrawerOpen: false,
   }),
   getters: {
@@ -14,6 +17,14 @@ export const useCounterStore = defineStore('counter', {
     },
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
+    toggleAccPanel1() {
+      this.panel = this.profile
+      toggleLeftDrawer();
+    },
+    toggleAccPanel2() {
+      this.panel = this.orders
+      toggleLeftDrawer();
     },
   },
 });

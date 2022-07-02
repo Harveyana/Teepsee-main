@@ -40,17 +40,24 @@
         padding
         class="self-start"
         style="margin-bottom: 8px; margin-top: 20px"
+        @click="Store.toggleAccPanel1()"
       >
         <q-item-section avatar>
           <q-icon name="img:/profile.svg" style="margin-left: 16px" />
         </q-item-section>
         <q-space />
         <q-item-section>
-          <div class="text-h6 acc-link">Profile</div>
+          <!-- <div class="text-h6 acc-link">Profile</div> -->
+          <div name="Profile" class="text-h6 acc-link">Profile</div>
         </q-item-section>
       </q-item>
 
-      <q-item clickable class="self-start" style="margin-bottom: 8px">
+      <q-item
+        clickable
+        class="self-start"
+        style="margin-bottom: 8px"
+        @click="Store.toggleAccPanel2()"
+      >
         <q-item-section avatar>
           <q-icon name="img:/Bag.svg" style="margin-left: 16px" />
         </q-item-section>
