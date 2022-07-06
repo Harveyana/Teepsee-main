@@ -269,25 +269,35 @@ const Store = useCounterStore();
 
 .card2-Image
   body.screen--xl &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     max-width: 110px
     margin-top: 20px
     margin-left: 30px
   body.screen--lg &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     max-width: 110px
     margin-top: 20px
     margin-left: 30px
   body.screen--md &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     max-width: 110px
     margin-top: 20px
     margin-left: 30px
   body.screen--sm &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     max-width: 110px
     margin-left: 30px
   body.screen--xs &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     max-width: 110px
     margin-left: 5px

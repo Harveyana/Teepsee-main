@@ -73,6 +73,14 @@
         />
 
         <q-space />
+        <q-btn
+          dense
+          flat
+          round
+          size="13px"
+          icon="img:/vector.png"
+          style="position: relative; top: 0px; right: 15px"
+        />
 
         <q-btn
           dense

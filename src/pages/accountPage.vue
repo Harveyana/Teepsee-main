@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center overflow-hidden" style="background: #e5e5e5">
-    <div class="pageContainer items-start justify-items-start">
+    <div class="pageContainer items-start justify-items-start overflow-hidden">
       <div class="text-h1 text3 self-start">My Account</div>
       <div class="container items-center row no-wrap">
         <q-card class="my-card1 gt-sm">
@@ -64,7 +64,12 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable class="self-start" style="margin-bottom: 4%">
+            <q-item
+              clickable
+              class="self-start"
+              style="margin-bottom: 4%"
+              @click="Store.toggleAccPanel3()"
+            >
               <q-item-section avatar>
                 <q-icon name="img:/Setting.svg" />
               </q-item-section>
@@ -74,7 +79,12 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable class="self-start" style="margin-bottom: 4%">
+            <q-item
+              clickable
+              class="self-start"
+              style="margin-bottom: 4%"
+              @click="Store.toggleAccPanel4()"
+            >
               <q-item-section avatar>
                 <q-icon name="img:/Location.svg" />
               </q-item-section>
@@ -98,8 +108,7 @@
             {{ lorem }}
           </q-card-section> -->
         </q-card>
-        <q-card class="my-card2 scroll hide-scrollbar">
-          <!-- <q-tab-panels v-model="Store.panel" animated> -->
+        <q-card class="my-card2 scroll hide-scrollbar overflow-hidden">
           <!-- Profile -->
           <profileVue />
           <!-- Profile -->
@@ -107,7 +116,14 @@
           <!-- OrderHistory -->
           <orderHistoryVue />
           <!-- OrderHistory -->
-          <!-- </q-tab-panels> -->
+
+          <!-- settings -->
+          <settingsVue />
+          <!-- settings -->
+
+          <!-- Addresses -->
+          <AddressVue />
+          <!-- Addresses -->
         </q-card>
       </div>
     </div>
@@ -117,6 +133,8 @@
 <script setup>
 import orderHistoryVue from "src/components/orderHistory.vue";
 import profileVue from "src/components/profile.vue";
+import settingsVue from "src/components/settings.vue";
+import AddressVue from "src/components/Address.vue";
 import { useCounterStore } from "stores/counter";
 const Store = useCounterStore();
 // import { ref } from "vue";
@@ -129,12 +147,18 @@ const Store = useCounterStore();
 
 .avatar
   body.screen--xl &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     min-width: 140px
   body.screen--lg &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     min-width: 110px
   body.screen--md &
+    border-radius: 50%
+    border: 1px solid black
     height: 100%
     min-width: 110px
 
@@ -180,8 +204,8 @@ const Store = useCounterStore();
     margin-left: 1%
   body.screen--md &
     width: fit-content
-    max-width: 35%
-    height: 90vh
+    min-width: 35%
+    height: 95vh
     // height: 579px
     border-radius: 15px
     margin-right: 2%
@@ -198,7 +222,7 @@ const Store = useCounterStore();
     border-radius: 15px
   body.screen--md &
     width: 65%
-    height: 90vh
+    height: 95vh
     border-radius: 15px
   body.screen--sm &
     width: 100%

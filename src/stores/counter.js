@@ -6,7 +6,15 @@ export const useCounterStore = defineStore('counter', {
     panel: 'orders',
     profile: 'profile',
     orders:'orders',
+    settings:'settings',
+    Address:'Address',
     leftDrawerOpen: false,
+    hide1: false,
+    hide2: false,
+    hide3: false,
+    ShowChangePass: false,
+    ShowNotification: false,
+    Showsetup: true
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -20,11 +28,19 @@ export const useCounterStore = defineStore('counter', {
     },
     toggleAccPanel1() {
       this.panel = this.profile
-      toggleLeftDrawer();
+      this.leftDrawerOpen = false;
     },
     toggleAccPanel2() {
       this.panel = this.orders
-      toggleLeftDrawer();
+      this.leftDrawerOpen = false;
+    },
+    toggleAccPanel3() {
+      this.panel = this.settings;
+      this.leftDrawerOpen = false;
+    },
+    toggleAccPanel4() {
+      this.panel = this.Address;
+      this.leftDrawerOpen = false;
     },
   },
 });

@@ -77,7 +77,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable class="self-start" style="margin-bottom: 8px">
+      <q-item
+        clickable
+        class="self-start"
+        style="margin-bottom: 8px"
+        @click="Store.toggleAccPanel3()"
+      >
         <q-item-section avatar>
           <q-icon name="img:/Setting.svg" style="margin-left: 16px" />
         </q-item-section>
@@ -87,7 +92,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable class="self-start" style="margin-bottom: 8px">
+      <q-item
+        clickable
+        class="self-start"
+        style="margin-bottom: 8px"
+        @click="Store.toggleAccPanel4()"
+      >
         <q-item-section avatar>
           <q-icon name="img:/Location.svg" style="margin-left: 16px" />
         </q-item-section>
@@ -100,14 +110,14 @@
       <!-- Categories Button -->
       <!-- login button -->
       <q-item clickable>
-        <q-item-section avatar>
+        <q-item-section>
           <q-btn
             text-color="white"
             class="cta"
             label="Login"
             style="
               font-size: 17px;
-              min-width: 155px;
+              width: 60%;
               margin-left: 18px;
               margin-top: 25px;
               border-radius: 15px;
@@ -121,14 +131,14 @@
 
       <!-- Sign up button -->
       <q-item clickable>
-        <q-item-section avatar>
+        <q-item-section>
           <q-btn
             text-color="white"
             class="cta"
             label="Sign up"
             style="
               font-size: 17px;
-              min-width: 155px;
+              width: 60%;
               margin-left: 18px;
               border-radius: 15px;
               background-color: #e6b41d;
@@ -219,10 +229,14 @@ const Store = useCounterStore();
 <style scoped lang="sass">
 .avatar
   body.screen--xs &
+    border-radius: 50%
+    border: 1px solid black
     min-height: 100%
     min-width: 100px
     margin-left: 10px
   body.screen--sm &
+    border-radius: 50%
+    border: 1px solid black
     min-height: 100%
     min-width: 100px
     margin-left: 10px

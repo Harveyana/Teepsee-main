@@ -4,15 +4,21 @@
     animated
     transition-prev="jump-up"
     transition-next="jump-up"
+    class="overflow-hidden"
   >
-    <q-tab-panel :name="Store.orders">
-      <div class="orderContainer" style="">
+    <q-tab-panel :name="Store.orders" class="overflow-hidden">
+      <div class="orderContainer overflow-hidden" style="">
         <q-icon name="img:/back.svg" size="28px" class="flex lt-md q-ml-md q-mt-md" />
         <div class="text-h1 orderLabel" style="">Order History</div>
-        <div class="list scroll">
+        <div class="list scroll overflow-hidden">
           <!-- list -->
           <!-- list -->
-          <q-card clickable flat class="order row justify-start no-wrap" style="">
+          <q-card
+            clickable
+            flat
+            class="order overflow-hidden row justify-start no-wrap"
+            style=""
+          >
             <q-card-section class="productImage">
               <q-img
                 src="../assets/nothing.png"
@@ -396,7 +402,7 @@ const Store = useCounterStore();
     width: 160px
   body.screen--xs &
     height: 100%
-    width: 90px
+    width: 110px
 .order
   body.screen--xl &
     padding-right: 40px
@@ -468,5 +474,5 @@ const Store = useCounterStore();
     padding-top: 45px
   body.screen--xs &
     // padding-bottom: 25%
-    width: 100%
+    width: 90vw
 </style>
