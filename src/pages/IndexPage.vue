@@ -4,38 +4,38 @@
       <div class="text-h1 text1">How to get Teepsee</div>
       <div class="text-h1 text2 self-start">Shop Now</div>
       <div class="feature-list row no-wrap" style="margin-left: auto; margin-right: auto">
-        <q-card class="my-card"> </q-card>
-        <q-card class="my-card2"> </q-card>
-        <q-card class="my-card3 self-center"> </q-card>
+        <q-card flat class="my-card"> </q-card>
+        <q-card flat class="my-card2"> </q-card>
+        <q-card flat class="my-card3 self-center"> </q-card>
       </div>
       <div class="text-h1 text3 self-start">Shop Now</div>
       <q-toolbar
         class="bg-transparent shop-features items-center justify-center rounded-borders"
       >
-        <q-card class="wine"> </q-card>
-        <q-card class="champagne"> </q-card>
+        <q-card flat class="wine"> </q-card>
+        <q-card flat class="champagne"> </q-card>
       </q-toolbar>
       <!-- <div class="shop-features row no-wrap">
 
       </div> -->
-      <q-card class="ShopVodka"> </q-card>
+      <q-card flat class="ShopVodka"> </q-card>
 
       <q-toolbar
         class="bg-transparent shop-features2 items-center justify-center rounded-borders"
       >
-        <q-card class="ShopWhiskey"> </q-card>
-        <q-card class="ShopBrandy"> </q-card>
+        <q-card flat class="ShopWhiskey"> </q-card>
+        <q-card flat class="ShopBrandy"> </q-card>
       </q-toolbar>
 
       <!-- <div class="shop-features2 row">
 
       </div> -->
-      <q-card class="PartyCombo"> </q-card>
+      <q-card flat class="PartyCombo"> </q-card>
       <q-toolbar
         class="bg-transparent shop-features2 items-center justify-center rounded-borders"
       >
-        <q-card class="ShopTequila"> </q-card>
-        <q-card class="ShopCognac"> </q-card>
+        <q-card flat class="ShopTequila"> </q-card>
+        <q-card flat class="ShopCognac"> </q-card>
       </q-toolbar>
 
       <!-- <div class="shop-features2 row">
