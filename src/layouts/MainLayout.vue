@@ -9,87 +9,206 @@
         background-repeat: no-repeat;
       "
     >
-      <q-toolbar wrap class="bg-transparent gt-sm text-white q-pt-lg wrap justify-evenly">
-        <!-- <q-space /> -->
-        <q-item>
-          <q-img
-            class="logo"
-            src="~assets/Logo.svg"
-            spinner-color="black"
-            style="min-width: 180px"
-          />
-        </q-item>
+      <div class="con">
+        <q-toolbar
+          wrap
+          class="bg-transparent gt-sm text-white q-pt-lg wrap justify-evenly"
+        >
+          <!-- <q-space /> -->
+          <q-item>
+            <q-img
+              class="logo"
+              src="~assets/Logo.svg"
+              spinner-color="black"
+              style="min-width: 180px"
+            />
+          </q-item>
 
-        <!-- <q-item></q-item> -->
-        <!-- <q-space /> -->
+          <!-- <q-item></q-item> -->
+          <!-- <q-space /> -->
 
-        <q-item>
-          <div class="input q-ml-md">
-            <img src="/Vector.png" alt="" />
-            <input class="search q-pl-xl" type="text" placeholder="search" />
-          </div>
-        </q-item>
-        <!-- <q-space /> -->
+          <q-item>
+            <div class="input q-ml-md">
+              <img src="/Vector.png" alt="" />
+              <input
+                class="search q-pl-xl"
+                type="text"
+                placeholder="search"
+                @keydown="showsearch = true"
+              />
+              <!-- <q-popup-proxy transition-show="flip-up" transition-hide="flip-down"> -->
 
-        <!--
+              <!-- </q-popup-proxy> -->
+            </div>
+          </q-item>
+          <!-- <q-space /> -->
+
+          <!--
         notice shrink property since we are placing it
         as child of QToolbar
-      -->
-        <q-item outline class="navbar">
-          <q-btn color="white" flat label="Track Order" class="nav" />
-        </q-item>
+       -->
+          <q-item outline class="navbar">
+            <q-btn color="white" flat label="Track Order" class="nav" />
+          </q-item>
 
-        <q-item outline class="navbar"
-          ><q-btn color="white" flat label="FAQs" class="nav"
-        /></q-item>
+          <q-item outline class="navbar"
+            ><q-btn color="white" flat label="FAQs" class="nav"
+          /></q-item>
 
-        <q-item outline class="navbar"
-          ><q-btn color="white" flat label="Log In" class="nav"
-        /></q-item>
+          <q-item outline class="navbar"
+            ><q-btn color="white" flat label="Log In" class="nav"
+          /></q-item>
 
-        <q-item outline class="navbar"
-          ><q-btn color="white" flat label="Cart" icon="img:/buy.png" class="nav"
-        /></q-item>
-        <!-- <q-space /> -->
+          <q-item outline class="navbar"
+            ><q-btn color="white" flat label="Cart" icon="img:/buy.png" class="nav"
+          /></q-item>
+          <!-- <q-space /> -->
 
-        <q-item outline class="q-mr-md"
-          ><q-btn
-            color="white"
-            to="/account"
-            text-color="black"
-            class="cta"
-            label="Sign Up"
-        /></q-item>
-        <!-- <q-space /> -->
-      </q-toolbar>
+          <q-item outline class="q-mr-md"
+            ><q-btn
+              color="white"
+              to="/account"
+              text-color="black"
+              class="cta"
+              label="Sign Up"
+          /></q-item>
+          <!-- <q-space /> -->
+        </q-toolbar>
+
+        <!-- search results -->
+        <q-banner
+          class="gt-sm rows searchResults"
+          v-if="showsearch"
+          style=""
+          @mouseleave="showsearch = false"
+        >
+          <q-list>
+            <q-item clickable class="row">
+              <q-card class="row imagebox" style="">
+                <q-card style="">
+                  <q-img
+                    src="../assets/product1.png"
+                    spinner-color="white"
+                    class="product-image"
+                    style=""
+                  />
+                </q-card>
+                <q-card class="column">
+                  <q-card-section>
+                    <div class="text-h2 product-name" style="">Hennessey</div>
+                  </q-card-section>
+                  <q-card-section>
+                    <div class="text-h3 product-price" style="">₦5,000</div>
+                  </q-card-section>
+                  <q-card-section>
+                    <div class="text-h5 product-cat" style="">Cognac</div>
+                  </q-card-section>
+                </q-card>
+              </q-card>
+            </q-item>
+          </q-list>
+        </q-banner>
+
+        <!-- search results -->
+      </div>
 
       <!-- Mobile toolbar Mobile toolbar -->
-      <q-toolbar class="lt-md">
-        <q-img
-          class="mobile-logo"
-          src="~assets/Logo.svg"
-          spinner-color="black"
-          style="width: 100px"
-        />
+      <div class="con lt-md">
+        <q-toolbar class="lt-md">
+          <q-img
+            class="mobile-logo"
+            src="~assets/Logo.svg"
+            spinner-color="black"
+            style="width: 100px"
+          />
 
-        <q-space />
-        <q-btn
-          dense
-          flat
-          round
-          size="13px"
-          icon="img:/vector.png"
-          style="position: relative; top: 0px; right: 15px"
-        />
+          <q-space />
+          <q-btn
+            dense
+            flat
+            round
+            size="13px"
+            icon="img:/vector.png"
+            style="position: relative; top: 0px; right: 15px"
+            @click="showsearch = true"
+          />
 
-        <q-btn
-          dense
-          flat
-          round
-          icon="img:/mobileMenu.png"
-          @click="Store.toggleLeftDrawer()"
-        />
-      </q-toolbar>
+          <q-btn
+            dense
+            flat
+            round
+            icon="img:/mobileMenu.png"
+            @click="Store.toggleLeftDrawer()"
+          />
+        </q-toolbar>
+
+        <!-- mobile search results -->
+        <q-banner
+          class="text-white searchResults lt-md"
+          v-if="showsearch"
+          style="z-index: 10"
+          @mouseleave="(showsearch = false), (showResults = false)"
+        >
+          <q-icon
+            name="img:/close.svg"
+            class="flex"
+            style="position: absolute; top: 25px; right: 25px; z-index: 10"
+            @click="(showsearch = false), (showResults = false)"
+          />
+          <q-item>
+            <q-input
+              outlined
+              bottom-slots
+              color="grey"
+              rounded
+              label=" Search Products"
+              style="width: 280px; border-radius: 30px; margin-top: 30px"
+              @keydown="showResults = true"
+            >
+              <template v-slot:prepend>
+                <q-icon
+                  name="img:/wineCup.svg"
+                  size="35px"
+                  class="searchIcon"
+                  style="height: 10px; transform: rotate(40deg)"
+                />
+              </template>
+              <template v-slot:hint> Search Products </template>
+            </q-input>
+          </q-item>
+
+          <!-- results -->
+          <q-list v-if="showResults">
+            <q-item clickable class="row">
+              <q-card class="row imagebox" style="">
+                <q-card style="">
+                  <q-img
+                    src="../assets/product1.png"
+                    spinner-color="white"
+                    class="product-image"
+                    style=""
+                  />
+                </q-card>
+                <q-card class="column">
+                  <q-card-section>
+                    <div class="text-h2 product-name" style="">
+                      {{ product.name.slice(0, 9) + ".." }}
+                    </div>
+                  </q-card-section>
+                  <q-card-section>
+                    <div class="text-h3 product-price" style="">{{ product.price }}</div>
+                  </q-card-section>
+                  <q-card-section>
+                    <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
+                  </q-card-section>
+                </q-card>
+              </q-card>
+            </q-item>
+          </q-list>
+          <!-- results -->
+        </q-banner>
+        <!-- mobile search results -->
+      </div>
 
       <!-- hero items -->
       <div class="hero-items fit column justify-center items-start content-start">
@@ -138,15 +257,121 @@ export default {
   setup() {
     let link = ref("inbox");
     const Store = useCounterStore();
+    const showsearch = ref(false);
+    const showResults = ref(false);
+    const product = {
+      name: "Hennessey",
+      price: "₦5,000",
+      cat: "Cognac",
+    };
     return {
       link,
       Store,
+      showsearch,
+      showResults,
+      product,
     };
   },
 };
 </script>
 
 <style scoped lang="sass">
+.searchResults
+  body.screen--xl &
+    width: 32%
+    position: absolute
+    left: 20%
+    border-radius: 16px
+  body.screen--lg &
+    width: 38%
+    position: absolute
+    left: 20%
+    border-radius: 16px
+  body.screen--md &
+    width: 42%
+    position: absolute
+    left: 20%
+    border-radius: 16px
+  body.screen--sm &
+    width: 60%
+    position: absolute
+    left: 20%
+    border-radius: 16px
+  body.screen--xs &
+    width: 95%
+    position: absolute
+    left: 3%
+    border-radius: 16px
+
+.imagebox
+  body.screen--md &
+    height: 110px
+    border-radius: 15px
+  body.screen--sm &
+    height: 110px
+    border-radius: 15px
+  body.screen--xs &
+    height: 110px
+    border-radius: 15px
+.product-image
+  body.screen--md &
+    width: 80px
+    object-fit: cover
+  body.screen--sm &
+    width: 80px
+    object-fit: cover
+  body.screen--xs &
+    width: 80px
+    object-fit: cover
+.product-name
+  body.screen--md &
+    font-size: 18px
+    color: #27141a
+    line-height: 1px
+    font-family: 'Manrope-Bold'
+  body.screen--sm &
+    font-size: 18px
+    color: #27141a
+    line-height: 1px
+    font-family: 'Manrope-Bold'
+  body.screen--xs &
+    font-size: 18px
+    color: #27141a
+    line-height: 1px
+    font-family: 'Manrope-Bold'
+.product-price
+  body.screen--md &
+    font-size: 15px
+    color: #27141a
+    line-height: 1px
+    font-family: 'Manrope-Bold'
+  body.screen--sm &
+    font-size: 15px
+    color: #27141a
+    line-height: 1px
+    font-family: 'Manrope-Bold'
+  body.screen--xs &
+    font-size: 15px
+    color: #27141a
+    line-height: 1px
+    font-family: 'Manrope-Bold'
+.product-cat
+  body.screen--md &
+    font-size: 12px
+    color: #27141a
+    line-height: 10px
+    font-family: 'Manrope-SemiBold'
+  body.screen--sm &
+    font-size: 12px
+    color: #27141a
+    line-height: 10px
+    font-family: 'Manrope-SemiBold'
+  body.screen--xs &
+    font-size: 12px
+    color: #27141a
+    line-height: 10px
+    font-family: 'Manrope-SemiBold'
+
 .drawer
   body.screen--md &
     display: none

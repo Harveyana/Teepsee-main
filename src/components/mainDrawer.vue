@@ -12,34 +12,9 @@
       <q-icon
         name="img:/close.svg"
         class="flex"
-        style="position: absolute; top: 25px; right: 25px"
+        style="position: absolute; top: 25px; right: 25px; z-index: 5"
         @click="Store.toggleLeftDrawer()"
       />
-
-      <q-item clickable>
-        <q-input
-          outlined
-          bottom-slots
-          color="grey"
-          rounded
-          label=" Search Products"
-          style="width: 280px; border-radius: 30px; margin-top: 40px"
-        >
-          <template v-slot:prepend>
-            <q-icon
-              name="img:/wineCup.svg"
-              size="35px"
-              class="searchIcon"
-              style="height: 10px; transform: rotate(40deg)"
-            />
-          </template>
-          <!-- <template v-slot:append>
-          <q-icon name="close" @click="text = ''" class="cursor-pointer" />
-        </template> -->
-
-          <template v-slot:hint> Search Products </template>
-        </q-input>
-      </q-item>
 
       <q-item
         clickable
