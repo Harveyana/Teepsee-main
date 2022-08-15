@@ -1,0 +1,350 @@
+<template>
+  <q-page
+    class="column flex flex-center q-px-xl-xl q-px-lg-xl q-px-md-xl q-px-sm-xl q-px-xs-none"
+    style="background: #e5e5e5"
+  >
+    <h2 class="PageName self-start items-start" style="">Cart</h2>
+    <div class="container row justify-between" style="">
+      <q-card class="cart q-pb-md self-start" style="">
+        <q-card class="gt-xs card-headers q-mt-lg row justify-around">
+          <q-card class="ImageAndName"
+            ><h3 class="ImageAndNameLabel card-header" style="">
+              Product Image & Item Name
+            </h3></q-card
+          >
+          <q-card class="Price"
+            ><h3 class="PriceLabel card-header" style="">Price</h3></q-card
+          >
+          <q-card class="Quantity"
+            ><h3 class="QuantityLabel card-header" style="">Quantity</h3></q-card
+          >
+          <q-card class="Sub-total"
+            ><h3 class="Sub-totalLabel card-header" style="">Sub-total</h3></q-card
+          >
+          <q-card class="Remove"
+            ><h3 class="RemoveLabel card-header" style="">Remove</h3></q-card
+          >
+        </q-card>
+        <q-list class="scroll hide-scrollbar" style="">
+          <!--  Product -->
+          <!--  Product -->
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue>
+          <!-- Product -->
+        </q-list>
+
+        <q-separator class="" style="margin-bottom: 1%; height: 5px" />
+        <q-btn
+          to="/checkout"
+          text-color="white"
+          class="lt-sm checkoutBtn q-mt-xl"
+          label="Checkout"
+          style="position: relative; left: 10%"
+        />
+        <!-- chasers -->
+        <!-- chasers -->
+        <q-card class="gt-xs Chasers q-pl-lg">
+          <q-card class="column chaser-container q-mb-lg">
+            <h3 class="chaserHeading card-header q-mb-md" style="">
+              Hey, you’ll need some chasers for your drinks
+            </h3>
+            <q-card class="searchChaser q-mt-sm" style="width: 30%">
+              <q-input
+                class="search"
+                dense
+                borderless
+                label="search for Chasers"
+                v-model="text"
+                style=""
+              >
+                <template v-slot:prepend>
+                  <q-icon name="search" style="position: relative; left: 25%" />
+                </template>
+              </q-input>
+            </q-card>
+          </q-card>
+          <q-card class="chaserSearchResult">
+            <!-- searchResult -->
+            <!-- searchResult -->
+            <!-- searchResult -->
+            <Chasers></Chasers>
+            <!-- searcResult -->
+            <!-- searcResult -->
+            <!-- searcResult -->
+          </q-card>
+        </q-card>
+      </q-card>
+      <q-card class="gt-xs row summary justify-center q-pa-lg" style="">
+        <q-card class="column summary-container" style="width: 100%">
+          <q-card><h3 class="summaryLabel card-header" style="">Summary</h3></q-card>
+          <q-separator class="" style="" />
+          <q-card class="summaryItems q-my-lg">
+            <q-card class="row justify-between subtotal">
+              <h4 class="subtotalKey NameClassLess" style="">Subtotal</h4>
+              <h4 class="subtotalEntry NameClass" style="">₦13,047.00</h4>
+            </q-card>
+            <q-card class="row justify-between Delivery">
+              <h4 class="DeliveryKey NameClassLess" style="">Delivery Fee</h4>
+              <h4 class="DeliveryEntry NameClass" style="">₦1,047.00</h4>
+            </q-card>
+            <q-card class="row justify-between Total">
+              <h4 class="TotalKey NameClass" style="">Total</h4>
+              <h4 class="TotalEntry NameClass" style="">₦12,000.00</h4>
+            </q-card>
+          </q-card>
+          <q-separator class="" style="" />
+          <q-card
+            class="row no-wrap CouponInput justify-between self-center q-my-xl"
+            style="width: 80%; height: 41px; border-radius: 12px"
+          >
+            <q-input
+              class="discountEntry"
+              dense
+              borderless
+              label="Your discount code"
+              v-model="discountCode"
+              style=""
+            >
+            </q-input>
+            <q-btn text-color="black" class="AddToCartBtn" label="Apply" style="" />
+          </q-card>
+          <q-btn
+            to="/checkout"
+            text-color="white"
+            class="checkoutBtn self-center"
+            label="Checkout"
+            style=""
+          />
+        </q-card>
+      </q-card>
+    </div>
+    <RecentlyViewed></RecentlyViewed>
+  </q-page>
+</template>
+
+<script setup>
+import cartProductVue from "src/components/cartProduct.vue";
+import Chasers from "../components/Chasers.vue";
+import RecentlyViewed from "src/components/RecentlyViewed.vue";
+</script>
+<style scoped lang="sass">
+.card-header
+  body.screen--xl &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Catellosdemo'
+    font-size: 125%
+  body.screen--lg &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Catellosdemo'
+    font-size: 125%
+  body.screen--md &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Catellosdemo'
+    font-size: 125%
+  body.screen--sm &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Catellosdemo'
+    font-size: 125%
+
+.AddToCartBtn
+  border-top-right-radius: 8px
+  border-bottom-right-radius: 8px
+  width: 35%
+  height: 100%
+  font-family: 'Manrope-Regular'
+  text-transform: capitalize
+  background: #e6b41d
+.checkoutBtn
+  border-radius: 8px
+  width: 80%
+  height: 41px
+  font-family: 'Manrope-semiBold'
+  text-transform: capitalize
+  background: #27141a
+.NameClassLess
+  body.screen--xl &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-semiBold'
+    font-size: 100%
+  body.screen--lg &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-regular'
+    font-size: 100%
+  body.screen--md &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-regular'
+    font-size: 100%
+  body.screen--sm &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-regular'
+    font-size: 100%
+.NameClass
+  body.screen--xl &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-Bold'
+    font-size: 100%
+  body.screen--lg &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-Bold'
+    font-size: 100%
+  body.screen--md &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-Bold'
+    font-size: 100%
+  body.screen--sm &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Manrope-Bold'
+    font-size: 100%
+// .productCat
+//   body.screen--md &
+//     line-height: 5px
+//     color: #1f1e26
+//     font-family: 'Manrope-Bold'
+//     font-size: 70%
+
+.search
+  // padding-left: 10px
+  // margin-top: 15px
+  border-radius: 10px
+  width: 100%
+  height: 40px
+  font-size: 14px
+  border: 0.5px solid #1f1e26
+  body.screen--sm &
+    font-size: 12px
+.discountEntry
+  width: 65%
+  border-top-left-radius: 12px
+  border-bottom-left-radius: 12px
+  border: 1px solid #e4e4e4
+  height: 100%
+  font-size: 14px
+  padding-left: 15px
+  bor
+  body.screen--sm &
+    font-size: 12px
+
+// Product Counter
+// Product Counter
+// Product Counter
+// Product Counter
+.container
+  body.screen--xl &
+    width: 55%
+  body.screen--lg &
+    width: 98%
+  body.screen--md &
+    width: 100%
+  body.screen--sm &
+    width: 100%
+    height: fit-content
+    flex-direction: column
+  body.screen--xs &
+    width: 90%
+    height: fit-content
+    flex-direction: row
+.PageName
+  body.screen--xl &
+    line-height: 25px
+    color: #27141a
+    font-family: 'Catellosdemo'
+    font-size: 290%
+    position: relative
+    left: 23%
+    margin-right: auto
+  body.screen--lg &
+    line-height: 25px
+    color: #27141a
+    font-family: 'Catellosdemo'
+    font-size: 250%
+    position: relative
+    left: 2.5%
+    margin-right: auto
+  body.screen--md &
+    line-height: 25px
+    color: #27141a
+    font-family: 'Catellosdemo'
+    font-size: 220%
+    margin-right: auto
+  body.screen--sm &
+    line-height: 25px
+    color: #27141a
+    font-family: 'Catellosdemo'
+    font-size: 210%
+    margin-right: auto
+  body.screen--xs &
+    line-height: 25px
+    color: #27141a
+    font-family: 'Catellosdemo'
+    font-size: 210%
+    margin-right: auto
+    position: relative
+    left: 5%
+.scroll
+  width: 100%
+  max-height: 300px
+  body.screen--xs &
+    width: 100%
+    max-height: 400px
+
+
+.cart
+  body.screen--xl &
+    width: 62%
+
+    border-radius: 15px
+  body.screen--lg &
+    width: 62%
+
+    border-radius: 15px
+  body.screen--md &
+    width: 62%
+
+    border-radius: 15px
+  body.screen--sm &
+    width: 100%
+
+    border-radius: 15px
+  body.screen--xs &
+    width: 100%
+
+    border-radius: 15px
+.summary
+  body.screen--xl &
+    width: 35%
+
+    border-radius: 15px
+  body.screen--lg &
+    width: 35%
+
+    border-radius: 15px
+  body.screen--md &
+    width: 35%
+
+    border-radius: 15px
+  body.screen--sm &
+    margin-top: 5%
+    margin-bottom: 7%
+    align-self: center
+    width: 65%
+
+    border-radius: 15px
+</style>

@@ -31,7 +31,8 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable class="self-start" style="margin-bottom: 8px">
+      <!-- <a href="/cart" style="text-decoration: none"> -->
+      <q-item clickable class="self-start" style="margin-bottom: 8px" to="/cart">
         <q-item-section avatar>
           <q-icon name="img:/Bag.svg" style="margin-left: 16px" />
         </q-item-section>
@@ -50,10 +51,11 @@
               width: fit-content;
               padding: 1px 4px;
             "
-            >2</small
+            >{{ cartQuantity }}</small
           ></q-item-section
         >
       </q-item>
+      <!-- </a> -->
 
       <q-item clickable class="self-start" style="margin-bottom: 8px">
         <q-item-section avatar>
@@ -67,12 +69,43 @@
 
       <!-- Categories Button -->
       <!-- login button -->
-      <q-item clickable>
+      <q-card
+        flat
+        clickable
+        class="profile row no-wrap self-center flex flex-center justify-around bg-transparent q-px-lg q-ml-md q-mt-lg"
+        style="width: 90%; cursor: pointer"
+        v-if="Store.isLoggedIn"
+      >
+        <q-img
+          to="/account"
+          :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+          spinner-color="white"
+          class="profile-Image"
+          style="width: 25%; border-radius: 50%; border: 1x solid"
+        />
+
+        <a href="/account" style="text-decoration: none">
+          <div
+            to="/account"
+            class="text-h3 userName no-wrap"
+            style="
+              font-family: 'Catellosdemo';
+              font-weight: 400;
+              line-height: 25px;
+              font-size: 150%;
+              color: #e6b41d;
+            "
+          >
+            {{ Store.username }}
+          </div>
+        </a>
+      </q-card>
+      <q-item clickable v-else="!Store.isLoggedIn">
         <q-item-section avatar>
           <q-btn
             text-color="white"
             class="cta"
-            to="/account"
+            to="/login"
             label="Login"
             style="
               font-size: 17px;
@@ -89,12 +122,12 @@
       </q-item>
 
       <!-- Sign up button -->
-      <q-item clickable>
+      <q-item clickable v-else="!Store.isLoggedIn">
         <q-item-section avatar>
           <q-btn
             text-color="white"
             class="cta"
-            to="/account"
+            to="/signup"
             label="Sign up"
             style="
               font-size: 17px;
@@ -127,44 +160,65 @@
       <q-separator inset style="margin-top: 17px" />
 
       <q-list padding class="overflow-hidden">
-        <q-item clickable padding class="self-start" style="margin-top: 20px">
+        <q-item
+          clickable
+          padding
+          class="self-start"
+          style="margin-top: 20px"
+          to="/categories"
+        >
           <q-item-section>
-            <div class="text-h6 acc-link">General</div>
+            <router-link to="/categories/general" style="text-decoration: none">
+              <div class="text-h6 acc-link">General</div>
+            </router-link>
           </q-item-section>
         </q-item>
+
         <q-item clickable padding class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Brandy</div>
+            <router-link to="/categories/brandy" style="text-decoration: none">
+              <div class="text-h6 acc-link">Brandy</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Wine</div>
+            <router-link to="/categories/wine" style="text-decoration: none">
+              <div class="text-h6 acc-link">Wine</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Cognac</div>
+            <router-link to="/categories/cognac" style="text-decoration: none">
+              <div class="text-h6 acc-link">Cognac</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Whiskey</div>
+            <router-link to="/categories/whiskey" style="text-decoration: none">
+              <div class="text-h6 acc-link">Whiskey</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Vodka</div>
+            <router-link to="/categories/vodka" style="text-decoration: none">
+              <div class="text-h6 acc-link">Vodka</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Tequila</div>
+            <router-link to="/categories/tequila" style="text-decoration: none">
+              <div class="text-h6 acc-link">Tequila</div>
+            </router-link>
           </q-item-section>
         </q-item>
       </q-list>
@@ -174,7 +228,23 @@
 
 <script setup>
 import { useCounterStore } from "stores/counter";
+import { useQuasar } from "quasar";
+import { ref, onMounted } from "vue";
+const $q = useQuasar();
 const Store = useCounterStore();
+const cartQuantity = ref("");
+const getcartQuantity = () => {
+  const items = $q.localStorage.getItem("cartItems");
+  // const item = items.find((item) => item.name === name);
+  if (items) {
+    // item.quantity -= quantity;
+    cartQuantity.value = items.length;
+  }
+};
+
+onMounted(() => {
+  getcartQuantity();
+});
 </script>
 
 <style scoped lang="sass">

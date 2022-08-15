@@ -3,7 +3,7 @@
     <q-header flat class="header no-shadow" style="background: #e5e5e5">
       <div class="con">
         <q-toolbar wrap flat class="bg-transparent no-shadow gt-sm justify-evenly">
-          <q-item>
+          <q-item to="/">
             <q-img
               class="logo"
               src="~assets/Logo2.svg"
@@ -24,30 +24,31 @@
             </div>
           </q-item>
 
-          <!--
-        notice shrink property since we are placing it
-        as child of QToolbar
-      -->
-
           <q-item outline class="navbar">
-            <q-btn flat label="Categories" class="nav q-ml-md" />
+            <q-btn
+              flat
+              label="Categories"
+              class="nav q-ml-md"
+              to="/categories"
+              style="position: relative; left: 20%"
+            />
           </q-item>
 
           <q-item outline class="navbar">
             <q-btn flat label="Track Order" class="nav" />
           </q-item>
 
-          <q-item outline class="navbar"
+          <!-- <q-item outline class="navbar"
             ><q-btn flat label="Log In" class="nav"
-          /></q-item>
+          /></q-item> -->
 
           <q-item outline class="navbar"
             ><q-btn flat label="Cart" icon="img:/buy2.png" class="nav" />
           </q-item>
 
-          <q-item outline class="q-mr-md"
+          <!-- <q-item outline class="q-mr-md"
             ><q-btn text-color="white" to="/account" class="cta" label="Sign Up"
-          /></q-item>
+          /></q-item> -->
         </q-toolbar>
         <!-- search results -->
         <q-banner
@@ -237,7 +238,9 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
+    <q-dialog class="" v-model="Store.showReviewBox" persistent>
+      <ReviewEntry />
+    </q-dialog>
     <!-- footer footer footer footer -->
     <footerVue />
   </q-layout>
@@ -247,9 +250,11 @@
 import { ref } from "vue";
 import footerVue from "src/components/footer.vue";
 import AccountDrawer from "/src/components/accountDrawer.vue";
+import ReviewEntry from "/src/components/reviewEntry.vue";
 import { useCounterStore } from "stores/counter";
 
 const leftDrawerOpen = ref(false);
+const confirm = ref(true);
 const Store = useCounterStore();
 const showsearch = ref(false);
 const showResults = ref(false);
@@ -476,8 +481,12 @@ const product = {
     min-width: 10%
   body.screen--md &
     min-width: 10%
+    position: relative
+    right: 16%
   body.screen--lg &
     min-width: 10%
+    position: relative
+    right: 25%
   body.screen--xl &
     min-width: 10%
 .nav
@@ -553,17 +562,34 @@ const product = {
   color: white
 
 .input
-  position: relative
+  body.screen--md &
+    position: relative
+    right: 25%
+  body.screen--lg &
+    position: relative
+    right: 30%
+  body.screen--xl &
+    position: relative
+    right: 30%
 
 .input >img
-  position: absolute
-  top: 15px
-  left: 15px
+  body.screen--md &
+    position: absolute
+    top: 15px
+    left: 9%
+  body.screen--lg &
+    position: absolute
+    top: 15px
+    left: 15px
+  body.screen--xl &
+    position: absolute
+    top: 15px
+    left: 15px
 .search
   body.screen--md &
     border-radius: 15px
     min-height: 50px
-    min-width: 120%
+    min-width: 160%
     outline: none
     background: transparent
     border: 1px solid #27141A
@@ -573,7 +599,7 @@ const product = {
   body.screen--lg &
     border-radius: 15px
     min-height: 50px
-    min-width: 120%
+    min-width: 180%
     outline: none
     // margin-right: 70px
     background: transparent
@@ -584,7 +610,7 @@ const product = {
   body.screen--xl &
     border-radius: 15px
     min-height: 50px
-    min-width: 120%
+    min-width: 180%
     outline: none
     background: transparent
     border: 1px solid #27141A

@@ -1,25 +1,485 @@
 import { defineStore } from 'pinia';
+import { auth,db,Storage } from "src/boot/firebase"
+import { createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+  sendEmailVerification,
+  signOut
+ } from "firebase/auth"
+ import { ref,  uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+ import { collection, query, arrayUnion, onSnapshot, where, doc, addDoc, getDocs, updateDoc } from "firebase/firestore";
+
+import { Notify, LocalStorage, } from 'quasar'
+
+import { reactive } from 'vue';
+import axios from "axios";
+
 
 export const useCounterStore = defineStore('counter', {
   state: () => ({
+    user: reactive({}),
+    username: LocalStorage.getItem('username'),
+    userId: ref(null),
+    // useRef: doc(db, "users", this.userId),
+    isLoggedIn: LocalStorage.getItem('isLoggedIn')| null,
+    upDateProfilePrompt: ref(false),
+    defaultPic:'https://cdn.quasar.dev/img/boy-avatar.png',
     counter: 0,
-    panel: 'orders',
+    panel: 'profile',
     profile: 'profile',
     orders:'orders',
     settings:'settings',
     Address:'Address',
+    favourites:'favourites',
     leftDrawerOpen: false,
     hide1: false,
     hide2: false,
     hide3: false,
+    showReviewBox: ref(false),
     ShowChangePass: false,
     ShowNotification: false,
-    Showsetup: true
+    Showsetup: true,
+    ShowLoading: false,
+    products: ref([]),
+    filter: [],
+    cat1: null,
+    cat2: null,
+    cat3: null,
+    results: null,
+    loadSignUpBtn: false,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
   },
   actions: {
+    notifyUser(avatar, message) {
+      Notify.create({
+        message: message,
+        avatar: avatar,
+        color: 'primary',
+        textColor: 'secondary'
+
+      })
+    },
+    queryUser(userId) {
+      const userQuery = query(collection(db, "users"), where("id", "==", userId));
+      onSnapshot(userQuery, (querySnapshot)=>{
+        querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          Object.assign(this.user, doc.data());
+          // Object.assign(this.userId, doc.id);
+          this.userId = doc.id;
+        });
+
+      })
+      // getDocs(userQuery).then((querySnapshot)=>{
+      //   querySnapshot.forEach((doc) => {
+      //     // doc.data() is never undefined for query doc snapshots
+      //      console.log(doc.id, " => ", doc.data());
+      //     });
+      // })
+
+      // const querySnapshot = await getDocs(userQuery);
+      // querySnapshot.forEach((doc) => {
+      // // doc.data() is never undefined for query doc snapshots
+      //  console.log(doc.id, " => ", doc.data());
+      // });
+    },
+    registerUser(payload) {
+      this.loadSignUpBtn = true;
+      createUserWithEmailAndPassword(auth, payload.email, payload.password)
+      .then((userCredential)=>{
+        // sendEmailVerification(auth.currentUser)
+        console.log(userCredential)
+        let colRef= collection(db, 'users',);
+        addDoc(colRef, {
+          name:'',
+          lastName:'',
+          id: userCredential.user.uid,
+          email: userCredential.user.email,
+          profilePic:'',
+          phoneNumber:'',
+          cart:[],
+          orderHistory:[],
+          recentlyViewed:[],
+          addresses:[],
+          setup:{
+            getOrderConfirm: true,
+            getOrderDelivered: true,
+            getUpdates: true
+          }
+        }).then(() =>{
+          this.router.push('/account');
+          this.upDateProfilePrompt = true;
+          this.loadSignUpBtn = false;
+          this.notifyUser(this.defaultPic, 'Welcome to Teepsee');
+        })
+
+
+      })
+      .catch((err) => {
+        console.log(err);
+        this.loadSignUpBtn = false;
+        Notify.create({
+          message: err.message.slice(10),
+          icon: 'announcement',
+          position: 'top-right',
+          color: 'secondary'
+        })
+      })
+    },
+    loginUser(payload) {
+      this.loadSignUpBtn = true;
+      signInWithEmailAndPassword(auth, payload.email, payload.password)
+      .then((response)=>{
+        console.log(response.user)
+        // this.router.push({ name: 'user', params: { username: 'eduardo' } })
+        LocalStorage.set('username', response.user.displayName);
+        this.router.push('/account');
+        this.loadSignUpBtn = false;
+        notifyUser(this.defaultPic, 'Welcome back')
+
+      })
+      .catch((err) => {
+        this.loadSignUpBtn = false;
+        Notify.create({
+          message: err.message.slice(10),
+          icon: 'announcement',
+          position: 'top-right',
+          color: 'secondary'
+        })
+      })
+    },
+    googleSigin() {
+      let provider = new GoogleAuthProvider();
+
+      this.loadSignUpBtn = true;
+      signInWithPopup(auth, provider)
+       .then((userCredential) => {
+
+        let colRef= collection(db, 'users',);
+        addDoc(colRef, {
+          name: userCredential.user.displayName,
+          lastName:'',
+          id: userCredential.user.uid,
+          email: userCredential.user.email,
+          profilePic: userCredential.user.photoURL,
+          phoneNumber:'',
+          cart:[],
+          orderHistory:[],
+          recentlyViewed:[],
+          addresses:[],
+          setup:{
+            getOrderConfirm: true,
+            getOrderDelivered: true,
+            getUpdates: true
+          }
+
+
+        }).then(() =>{
+          this.router.push('/account');
+          this.upDateProfilePrompt = true;
+          this.loadSignUpBtn = false;
+          console.log(userCredential.user);
+          LocalStorage.set('username', userCredential.user.displayName);
+          this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`);
+
+        })
+
+
+        }).catch((error) => {
+          // Handle Errors here.
+          console.log(error);
+          const errorMessage = error.message;
+          Notify.create({
+          message: error.Message,
+          icon: 'announcement',
+          color: 'secondary'
+        })
+
+       });
+    },
+    googleLogin() {
+      let provider = new GoogleAuthProvider();
+      this.loadSignUpBtn = true;
+      signInWithPopup(auth, provider)
+       .then((userCredential) => {
+         this.router.push('/account');
+         console.log(userCredential.user);
+
+         this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`)
+         LocalStorage.set('username', userCredential.user.displayName);
+          this.loadSignUpBtn = false;
+        }).catch((error) => {
+          // Handle Errors here.
+          console.log(error);
+          const errorMessage = error.message;
+          Notify.create({
+          message: error.Message,
+          icon: 'announcement',
+          color: 'secondary'
+        })
+
+       });
+    },
+    handleAuthState() {
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // this.isLoggedIn = true;
+          console.log(user);
+          this.queryUser(user.uid);
+
+          LocalStorage.set('isLoggedIn', true);
+        }
+      });
+    },
+    logOut() {
+      signOut(auth).then(() => {
+        // Sign-out successful.
+        LocalStorage.remove('isLoggedIn');
+        LocalStorage.remove('username');
+        this.router.push('/login');
+        this.notifyUser(this.defaultPic, `Bye dear ${this.user.displayName}`)
+
+        console.log('User logged out');
+      }).catch((error) => {
+        // An error happened.
+        console.log('error logging out')
+
+      });
+    },
+    uploadImage(file) {
+      if (file) {
+        const metadata = {
+          contentType: 'image/jpeg'
+        };
+        this.ShowLoading = true;
+        // Upload file and metadata to the object 'images/mountains.jpg'
+        const storageRef = ref(Storage, 'images/' + file.name);
+        const uploadTask = uploadBytesResumable(storageRef, file, metadata).then(()=>{
+          getDownloadURL(storageRef).then((downloadURL) => {
+              console.log('File available at', downloadURL);
+               const docToupdate = doc(db, "users", this.userId);
+               updateProfile(auth.currentUser, {
+                photoURL: downloadURL
+              })
+                updateDoc(docToupdate, { profilePic: downloadURL  }).then(() => {
+                  this.ShowLoading = false;
+              });
+            });
+        })
+      }
+
+
+
+    },
+    Fetchproducts (category) {
+      this.ShowLoading = true;
+      if (category === 'general') {
+
+      const colRef = collection(db, "products");
+      onSnapshot(colRef, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.products.value = [...group];
+        console.log(group);
+        if (this.products.value.length > 0) {
+          this.ShowLoading = false;
+        }
+      });
+      }else{
+        const productQuery = query(
+          collection(db, "products"),
+          where("category", "==", `${category}`)
+        );
+        onSnapshot(productQuery, (data) => {
+          let group = data.docs.map((item) => {
+            return item.data();
+          });
+          this.products.value = [...group];
+          console.log(group);
+          if (this.products.value.length > 0) {
+            this.ShowLoading = false;
+          }
+        });
+
+      }
+
+    },
+    brandQuery(brand){
+      if (brand.Hennessey === 'nil' && brand.Vodka === 'nil' && brand.Azul === 'nil' ) {
+        this.Fetchproducts('general');
+      }else{
+        this.ShowLoading = true;
+        const productQuery = query(
+        collection(db, "products"),
+        where('brand', 'in', [`${brand.Hennessey}`, `${brand.Vodka}`, `${brand.Azul}`]));
+
+        onSnapshot(productQuery, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.products.value = [...group];
+        console.log(group);
+        if (this.products.value.length > 0) {
+          this.ShowLoading = false;
+        }
+      });
+      }
+
+    },
+    priceQuery(min, max){
+      this.ShowLoading = true;
+      const queryPrice = query(collection(db, "products"), where("price", ">=", `${min}`), where("price", "<=", `${max}`));
+
+      onSnapshot(queryPrice, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.products.value = [...group];
+        console.log(group);
+        if (this.products.value.length > 0) {
+          this.ShowLoading = false;
+        }
+      });
+    },
+    updateData(payload,userId) {
+      const docToUpdate = doc(db, "users", userId);
+      this.ShowLoading = true;
+       updateEmail(auth.currentUser, payload.email).then(()=>{
+        updateProfile(auth.currentUser, {
+          displayName: `${payload.name} ${payload.lastName}`,
+          phoneNumber: payload.phoneNumber
+        })
+
+         updateDoc(docToUpdate, {
+          name: payload.name,
+          lastName: payload.lastName,
+          email: payload.email,
+          phoneNumber: payload.phoneNumber,
+        }).then(()=>{
+          this.handleAuthState();
+          this.notifyUser(this.defaultPic, `Profile Updated`);
+
+          this.ShowLoading = false;
+        })
+       }).catch(()=>{
+        this.notifyUser(this.defaultPic,'Required to signin again')
+        this.ShowLoading = false;
+        this.logOut();
+
+       })
+
+    },
+    changePassWord(payload) {
+      this.ShowLoading = true;
+      const user = auth.currentUser;
+      updatePassword(user, payload.newPassword).then(() => {
+        this.notifyUser(this.defaultPic,'Password Updated Successfully')
+        this.ShowLoading = false;
+      }).catch(()=>{
+        this.notifyUser(this.defaultPic,'Required to signin again');
+        this.logOut();
+        this.ShowLoading = false;
+      })
+    },
+
+    updateSetup(setup) {
+      const docToUpdate = doc(db, "users", this.userId);
+    //  if (this.user.getOrderConfirm === true) {
+     updateDoc(docToUpdate, {
+        setup
+      }).then(() => {
+       this.notifyUser(this.user.profilePic, "Settings Updated");
+      });
+    },
+    updateAddress(address) {
+      const docToUpdate = doc(db, "users", this.userId);
+      updateDoc(docToUpdate, {
+        addresses: arrayUnion(address)
+      }).then(()=>{
+        this.notifyUser(this.user.profilePic, " New Address Added");
+      })
+    },
+    uploadProduct(payload) {
+
+      if (payload) {
+
+        console.log(payload.length);
+        for (i=0; i<payload.length; i++) {
+          alert(payload[i])
+        }
+        // payload.forEach((file)=>{
+
+          // console.log(file.length);
+          // const metadata = {
+          //   contentType: 'image/jpeg'
+          // };
+
+          // const storageRef = ref(Storage, 'images/' + file.name);
+          // const uploadTask = uploadBytesResumable(storageRef, file, metadata).then(()=>{
+          //   const imageUrls = {};
+          //   getDownloadURL(storageRef).then((downloadURL)=>{
+          //     console.log('File available at', downloadURL);
+          //     Object.assign(imageUrls, downloadURL);
+
+          //     let colRef= collection(db, 'products',);
+          //     addDoc(colRef, {
+          //       addresses: arrayUnion(downloadURL)
+          //     })
+
+          //   })
+
+          // })
+
+        // })
+        // console.log(imageUrls);
+      }
+    },
+    addImage(file) {
+      if (file) {
+        this.ShowLoading = true;
+        const metadata = {
+          contentType: "image/jpeg",
+        };
+        let docToUpdate = doc(db, "products", "KbHDF2HwbeY80EvU1gUt");
+        const storageRef = ref(Storage, "images/" + file.name);
+        uploadBytesResumable(storageRef, file, metadata).then(() => {
+          getDownloadURL(storageRef).then((downloadURL) => {
+            // const docToUpdate = doc(db, "users", this.userId);
+            updateDoc(docToUpdate, {
+              images: arrayUnion(downloadURL),
+            }).then(() => {
+              this.ShowLoading = false;
+              this.notifyUser(this.user.profilePic, "image Uploaded");
+            });
+          });
+        });
+      } else {
+        this.notifyUser(this.user.profilePic, "No image to upload");
+      }
+    },
+
+    deleteProduct (id) {
+      this.ShowLoading = true;
+      deleteDoc(doc(db, "products", id)).then(() => {
+       this.notifyUser(this.user.profilePic, "Product deleted Successfully");
+       this.ShowLoading = false;
+      });
+     },
+    FetchUser() {
+      if (this.user === null) {
+        this.namePrompt = true;
+      }
+    },
     increment() {
       this.counter++;
     },
@@ -42,5 +502,10 @@ export const useCounterStore = defineStore('counter', {
       this.panel = this.Address;
       this.leftDrawerOpen = false;
     },
+    toggleAccPanel5() {
+      this.panel = this.favourites;
+      this.leftDrawerOpen = false;
+    },
+
   },
 });

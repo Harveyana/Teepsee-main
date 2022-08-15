@@ -17,6 +17,7 @@
           <!-- <q-space /> -->
           <q-item>
             <q-img
+              to="/"
               class="logo"
               src="~assets/Logo.svg"
               spinner-color="black"
@@ -28,11 +29,12 @@
           <!-- <q-space /> -->
 
           <q-item>
-            <div class="input q-ml-md">
+            <div class="input q-ml-sm">
               <img src="/Vector.png" alt="" />
               <input
                 class="search q-pl-xl"
                 type="text"
+                v-model="searchResults"
                 placeholder="search"
                 @keydown="showsearch = true"
               />
@@ -48,30 +50,114 @@
         as child of QToolbar
        -->
           <q-item outline class="navbar">
-            <q-btn color="white" flat label="Track Order" class="nav" />
+            <q-btn
+              to="/categories"
+              color="white"
+              flat
+              label="Categories"
+              class="nav q-ml-md"
+              style="position: relative; left: 20%"
+            />
           </q-item>
 
-          <q-item outline class="navbar"
+          <!-- <q-item outline class="navbar"
             ><q-btn color="white" flat label="FAQs" class="nav"
-          /></q-item>
+          /></q-item> -->
 
-          <q-item outline class="navbar"
+          <!-- <q-item outline class="navbar"
             ><q-btn color="white" flat label="Log In" class="nav"
-          /></q-item>
+          /></q-item> -->
 
-          <q-item outline class="navbar"
+          <q-item outline class="navbar" to="/cart"
             ><q-btn color="white" flat label="Cart" icon="img:/buy.png" class="nav"
           /></q-item>
           <!-- <q-space /> -->
 
-          <q-item outline class="q-mr-md"
-            ><q-btn
-              color="white"
-              to="/account"
-              text-color="black"
-              class="cta"
-              label="Sign Up"
-          /></q-item>
+          <q-card
+            flat
+            outline
+            class="row no-wrap q-mr-md bg-transparent"
+            style="width: 20%"
+          >
+            <q-card
+              clickable
+              class="profile row no-wrap flex flex-center justify-between bg-transparent"
+              style="width: 60%; cursor: pointer"
+              v-if="Store.isLoggedIn"
+            >
+              <q-img
+                to="/account"
+                :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+                spinner-color="white"
+                class="profile-Image"
+                style="width: 25%; border-radius: 50%; border: 1x solid"
+              />
+
+              <router-link to="/account" style="text-decoration: none">
+                <div
+                  to="/account"
+                  class="text-h3 userName no-wrap"
+                  style="
+                    font-family: 'Catellosdemo';
+                    font-weight: 400;
+                    line-height: 25px;
+                    font-size: 130%;
+                    color: #e6b41d;
+                  "
+                  v-if="Store.username !== null"
+                >
+                  {{ Store.username }}
+                </div>
+              </router-link>
+            </q-card>
+            <q-card
+              class="AuthBtns row no-wrap bg-transparent"
+              style="width: 100%; border-radius: 12px; background: transparent"
+              v-else="!Store.isLoggedIn"
+            >
+              <q-btn
+                to="/login"
+                text-color="black"
+                class="Authbtn"
+                label="Log in"
+                style="
+                  padding: 12px 15px 12px 30px;
+                  border-top-right-radius: 0px;
+                  border-bottom-right-radius: 0px;
+                  background-color: #e6b41d;
+                  border-radius: 12px;
+                "
+              />
+              <q-btn
+                color="white"
+                to="/signup"
+                text-color="black"
+                class="Authbtn"
+                label="Sign Up"
+                style="
+                  padding: 12px 30px 12px 15px;
+                  border-top-left-radius: 0px;
+                  border-bottom-left-radius: 0px;
+                  border-radius: 12px;
+                "
+              />
+            </q-card>
+            <q-card
+              outline
+              class="bg-transparent navbar"
+              to=""
+              style="width: 30%"
+              v-if="Store.isLoggedIn"
+              ><q-btn
+                color="white"
+                flat
+                label=""
+                icon="img:/logoutMain.svg"
+                style="width: 100%; position: relative; left: 15%"
+                @click="Store.logOut()"
+            /></q-card>
+          </q-card>
+
           <!-- <q-space /> -->
         </q-toolbar>
 
@@ -83,11 +169,16 @@
           @mouseleave="showsearch = false"
         >
           <q-list>
-            <q-item clickable class="row">
-              <q-card class="row imagebox" style="">
+            <q-item clickable class="column">
+              <q-card
+                class="row imagebox"
+                style=""
+                v-for="product in productList"
+                :key="product.id"
+              >
                 <q-card style="">
                   <q-img
-                    src="../assets/product1.png"
+                    :src="product.images[0]"
                     spinner-color="white"
                     class="product-image"
                     style=""
@@ -95,13 +186,13 @@
                 </q-card>
                 <q-card class="column">
                   <q-card-section>
-                    <div class="text-h2 product-name" style="">Hennessey</div>
+                    <div class="text-h2 product-name" style="">{{ product.name }}</div>
                   </q-card-section>
                   <q-card-section>
-                    <div class="text-h3 product-price" style="">₦5,000</div>
+                    <div class="text-h3 product-price" style="">₦{{ product.price }}</div>
                   </q-card-section>
                   <q-card-section>
-                    <div class="text-h5 product-cat" style="">Cognac</div>
+                    <div class="text-h5 product-cat" style="">{{ product.category }}</div>
                   </q-card-section>
                 </q-card>
               </q-card>
@@ -211,7 +302,7 @@
       </div>
 
       <!-- hero items -->
-      <div class="hero-items fit column justify-center items-start content-start">
+      <div class="hero-items fit column justify-center items-start content-start no-wrap">
         <h1 class="hero-text">Get Teepsee</h1>
         <h4 class="hero-subtext">
           Wine, Liquor, Ice, Mixers and some other cool stuff? We got it
@@ -259,6 +350,7 @@ export default {
     const Store = useCounterStore();
     const showsearch = ref(false);
     const showResults = ref(false);
+    const searchResults = ref("");
     const product = {
       name: "Hennessey",
       price: "₦5,000",
@@ -271,6 +363,21 @@ export default {
       showResults,
       product,
     };
+  },
+  computed: {
+    // a computed getter
+    productList() {
+      // `this` points to the component instance
+      if (this.showsearch == true) {
+        return this.Store.products.value.filter((product) =>
+          product.name.toLowerCase().includes(this.searchResults.toLowerCase())
+        );
+      }
+    },
+  },
+  mounted() {
+    this.Store.Fetchproducts("general");
+    console.log(`the component is now mounted.`);
   },
 };
 </script>
@@ -543,10 +650,15 @@ export default {
     min-width: 10%
   body.screen--md &
     min-width: 10%
+    position: relative
+    right: 16%
   body.screen--lg &
     min-width: 10%
+    position: relative
+    right: 25%
   body.screen--xl &
     min-width: 10%
+
 .nav
   body.screen--sm &
     font-size: 60%
@@ -574,6 +686,11 @@ export default {
 //     width: 100px
 //   body.screen--md &
 //     width: 180px
+
+.Authbtn
+  body.screen--md &
+    font-size: 110%
+    font-family: "Manrope-Bold"
 .cta
   body.screen--sm &
     font-size: 12px
@@ -581,11 +698,7 @@ export default {
     padding: 7px 20px 7px 20px
     min-width: 100px
     font-family: "Manrope-SemiBold"
-  body.screen--md &
-    font-size: 110%
-    border-radius: 12px
-    padding: 12px 46px 12px 46px
-    font-family: "Manrope-SemiBold"
+
   body.screen--lg &
     font-size: 110%
     border-radius: 12px
@@ -609,18 +722,38 @@ export default {
   color: white
 
 .input
-  position: relative
+  // position: relative
+  // right: 30%
+  // min-width: 45%
+  body.screen--md &
+    position: relative
+    right: 25%
+  body.screen--lg &
+    position: relative
+    right: 30%
+  body.screen--xl &
+    position: relative
+    right: 30%
 
 .input >img
-  position: absolute
-  top: 15px
-  left: 15px
+  body.screen--md &
+    position: absolute
+    top: 15px
+    left: 9%
+  body.screen--lg &
+    position: absolute
+    top: 15px
+    left: 15px
+  body.screen--xl &
+    position: absolute
+    top: 15px
+    left: 15px
 
 .search
   body.screen--md &
     border-radius: 15px
     min-height: 50px
-    min-width: 120%
+    min-width: 160%
     outline: none
     background: transparent
     border: 1px solid whitesmoke
@@ -630,7 +763,7 @@ export default {
   body.screen--lg &
     border-radius: 15px
     min-height: 50px
-    min-width: 120%
+    min-width: 180%
     outline: none
     background: transparent
     border: 1px solid whitesmoke
@@ -640,7 +773,7 @@ export default {
   body.screen--xl &
     border-radius: 15px
     min-height: 50px
-    min-width: 120%
+    min-width: 180%
     outline: none
     background: transparent
     border: 1px solid whitesmoke

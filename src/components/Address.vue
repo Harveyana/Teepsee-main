@@ -16,7 +16,7 @@
               Enter Address<span style="color: red">*</span>
             </div>
             <q-input
-              v-model="Oldpass"
+              v-model="address.street"
               required
               borderless
               class="inputAddress"
@@ -24,11 +24,9 @@
             />
           </q-card-section>
           <q-card-section class="input2">
-            <div class="text-h6 inputLabel" style="color: #27141a">
-              Landmark<span style="color: red">*</span>
-            </div>
+            <div class="text-h6 inputLabel" style="color: #27141a">Landmark</div>
             <q-input
-              v-model="Oldpass"
+              v-model="address.landmark"
               required
               borderless
               class="inputAddress"
@@ -37,7 +35,12 @@
           </q-card-section>
           <!-- inputs -->
           <q-card-section>
-            <q-btn text-color="white" class="AddButton" label="Save" />
+            <q-btn
+              text-color="white"
+              class="AddButton"
+              label="Save"
+              @click="addAddress()"
+            />
           </q-card-section>
         </q-card>
       </div>
@@ -47,8 +50,21 @@
 
 <script setup>
 import { useCounterStore } from "stores/counter";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 const Store = useCounterStore();
+
+const address = reactive({
+  street: "",
+  landmark: "",
+});
+
+const addAddress = () => {
+  if (address.street.length === 0) {
+    Store.notifyUser(Store.user.profilePic, "Please Enter Address");
+  } else {
+    Store.updateAddress(address);
+  }
+};
 </script>
 
 <style scoped lang="sass">

@@ -10,7 +10,7 @@
       <div class="orderContainer overflow-hidden" style="">
         <q-icon name="img:/back.svg" size="28px" class="flex lt-md q-ml-md q-mt-md" />
         <div class="text-h1 orderLabel" style="">Order History</div>
-        <div class="list scroll overflow-hidden">
+        <q-card class="list scroll overflow-hidden">
           <!-- list -->
           <!-- list -->
           <q-card
@@ -243,7 +243,7 @@
           </q-card>
           <!-- list -->
           <!-- list -->
-        </div>
+        </q-card>
       </div>
     </q-tab-panel>
   </q-tab-panels>
@@ -470,9 +470,16 @@ const Store = useCounterStore();
     margin-bottom: 30px
 
 .orderContainer
+  body.screen--xl &
+    width: 100%
+  body.screen--lg &
+    width: 100%
   body.screen--md &
     padding-top: 45px
+    width: 100%
+  body.screen--sm &
+    width: 100%
   body.screen--xs &
     // padding-bottom: 25%
-    width: 90vw
+    width: 100vw
 </style>

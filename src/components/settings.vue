@@ -5,22 +5,30 @@
     transition-prev="jump-up"
     transition-next="jump-up"
   >
-    <q-tab-panel :name="Store.settings">
-      <div class="settingsContainer justify-center items-center content-center">
-        <div class="settingsContainer justify-center items-center content-center">
-          <q-icon
-            name="img:/back.svg"
-            size="28px"
-            class="flex lt-md q-ml-md q-mt-md"
-            v-show="Store.Showsetup"
-          />
-          <div class="text-h1 settingsLabel" style="" v-show="Store.Showsetup">
-            Settings
-          </div>
-          <div class="cards row no-wrap flex-center overflow-hidden" style="">
+    <q-tab-panel :name="Store.settings" style="width: 100%; border: 1px solid">
+      <div
+        class="settingsContainer justify-center items-center content-center"
+        style="width: 100%; border: 1px solid"
+      >
+        <div
+          class="overflow-hidden row settingsContainer justify-start items-center content-center"
+          style="width: 100%; border: 1px solid"
+        >
+          <q-card flat class="">
+            <q-icon
+              name="img:/back.svg"
+              size="28px"
+              class="flex lt-md q-ml-md q-mt-md"
+              v-show="Store.Showsetup"
+            />
+            <div class="text-h1 settingsLabel" style="" v-show="Store.Showsetup">
+              Settings
+            </div>
+          </q-card>
+          <div class="cards row no-wrap flex-center overflow-hidden" style="width: 100%">
             <q-card
               class="settingCard1 col q-py-md"
-              style="background: rgba(164, 165, 168, 0.3); width: inherit"
+              style="background: rgba(164, 165, 168, 0.3); width: 100%"
               v-show="Store.Showsetup"
             >
               <q-item-section>
@@ -351,7 +359,7 @@ const Store = useCounterStore();
 .cards
   body.screen--xs &
     flex-direction: column
-    width: 80vw
+    width: 100%
   body.screen--md &
     // width: fit-content
     padding: 0 2% 0 2%
@@ -363,9 +371,9 @@ const Store = useCounterStore();
   body.screen--xl &
     // width: fit-content
     // padding: 0 2% 0 2%
-    width: inherit
+    width: 100%
   body.screen--sm &
     // width: fit-content
     padding: 0 2% 0 2%
-    width: 75vw
+    width: 100%
 </style>

@@ -18,7 +18,7 @@
       <q-item class="self-center" style="margin-left: -13px; margin-top: 10%">
         <q-item-section avatar>
           <q-img
-            src="../assets/userImage.svg"
+            :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
             spinner-color="white"
             class="avatar"
             style=""
@@ -28,7 +28,7 @@
         <q-item-section>
           <div class="userDetails self-end">
             <div class="text-h1 userName self-start" style="min-width: 250px">
-              Obiajulu Anayo
+              {{ Store.user.name + " " + Store.user.lastName }}
             </div>
             <div class="text-h6 userRole self-start" style="color: #e6b41d">Teepseer</div>
           </div>
@@ -67,7 +67,12 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable class="self-start" style="margin-bottom: 8px">
+      <q-item
+        clickable
+        class="self-start"
+        style="margin-bottom: 8px"
+        @click="Store.toggleAccPanel5()"
+      >
         <q-item-section avatar>
           <q-icon name="img:/Heart.svg" style="margin-left: 16px" />
         </q-item-section>
@@ -167,6 +172,7 @@
       <q-separator inset style="margin-top: 17px" />
 
       <q-list padding class="overflow-hidden">
+
         <q-item clickable padding class="self-start" style="margin-top: 20px">
           <q-item-section>
             <div class="text-h6 acc-link">General</div>

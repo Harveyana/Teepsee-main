@@ -2,10 +2,14 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
   "cSpell.words": [
+    "Adresses",
+    "Btns",
     "Catellosdemo",
     "Counterstore",
     "drawbtn",
-    "Showsetup"
+    "Favourites",
+    "Showsetup",
+    "Sigin"
   ],
   "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }

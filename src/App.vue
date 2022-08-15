@@ -2,11 +2,14 @@
   <router-view />
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { useCounterStore } from "stores/counter";
+import { onMounted } from "vue";
 
-export default defineComponent({
-  name: "App",
+const Store = useCounterStore();
+
+onMounted(() => {
+  Store.handleAuthState();
 });
 </script>
 <style>

@@ -9,6 +9,7 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 
+const { Notify } = require('quasar');
 const { configure } = require('quasar/wrappers');
 
 
@@ -25,6 +26,9 @@ module.exports = configure(function (/* ctx */) {
     boot: [
 
       'axios',
+      'firebase',
+      'addressbar-color'
+
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -89,8 +93,25 @@ module.exports = configure(function (/* ctx */) {
       config: {
         screen: {
           bodyClasses: true // <<< add this
-        }
+        },
+        brand: {
+          primary: '#27141a',
+          secondary: '#e6b41d',
+          accent: '#9C27B0',
+
+          dark: '#1d1d1d',
+          'dark-page': '#121212',
+
+          positive: '#21BA45',
+          negative: '#C10015',
+          info: '#31CCEC',
+          warning: '#F2C037'
+        },
+        dark: false, // or Boolean true/false
+        notify:{type: 'custom-type'}
+
       },
+      cssAddon: true,
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -103,7 +124,9 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify','AddressbarColor','LocalStorage',
+      'SessionStorage'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

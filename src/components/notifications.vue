@@ -12,7 +12,12 @@
       />
       <div class="text-h1 NotificationLabel" style="color: #27141a">Notifcations</div>
     </div>
-    <q-card flat class="inputs flex-center" style="width: inherit">
+    <q-card
+      flat
+      class="inputs flex-center"
+      v-if="Store.user.setup"
+      style="width: inherit"
+    >
       <q-card flat class="toggle1 row no-wrap" style="">
         <q-card-section class="column flex-center align-center">
           <div class="text-h3 self-start heading" style="">Order Confirmation</div>
@@ -21,7 +26,12 @@
           </div>
         </q-card-section>
         <q-card-section>
-          <q-toggle v-model="value" size="60px" color="yellow" />
+          <q-toggle
+            v-model="setup.getOrderConfirm"
+            size="60px"
+            color="yellow"
+            @click=""
+          />
         </q-card-section>
       </q-card>
 
@@ -35,7 +45,12 @@
           </div>
         </q-card-section>
         <q-card-section style="margin-left: 5%">
-          <q-toggle v-model="value" size="60px" color="yellow" />
+          <q-toggle
+            v-model="setup.getOrderDelivered"
+            size="60px"
+            color="yellow"
+            @click=""
+          />
         </q-card-section>
       </q-card>
 
@@ -49,7 +64,7 @@
           </div>
         </q-card-section>
         <q-card-section>
-          <q-toggle v-model="value" size="60px" color="yellow" />
+          <q-toggle v-model="setup.getUpdates" size="60px" color="yellow" @click="" />
         </q-card-section>
       </q-card>
     </q-card>
@@ -57,15 +72,48 @@
 </template>
 
 <script setup>
-import { useCounterStore } from "stores/counter";
-import { ref } from "vue";
-const Store = useCounterStore();
+import { db } from "src/boot/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
-const value = ref(true);
-// const hide2 = ref(false);
-// const hide3 = ref(false);
-// const ShowChangePass = ref(false);
-// const Showsetup = ref(true);
+import { useCounterStore } from "stores/counter";
+import { ref, reactive, watch } from "vue";
+const Store = useCounterStore();
+const setup = reactive({
+  getOrderConfirm: Store.user.setup.getOrderConfirm,
+  getOrderDelivered: Store.user.setup.getOrderDelivered,
+  getUpdates: Store.user.setup.getUpdates,
+});
+
+// watch(notifyset, (newValue, oldValue) => {});
+
+watch(
+  () => setup,
+  (newValue, oldValue) => {
+    console.log(newValue, oldValue);
+    Store.updateSetup(setup);
+  },
+  { deep: true }
+);
+// const orderConfirm = ref(true);
+// const orderDelivered = ref(false);
+// const getUpdates = ref(false);
+
+const updateSetup = () => {
+  const docToUpdate = doc(db, "users", "SR86nPnZB79JvsqkpHyo");
+  if (Store.user.getOrderConfirm === true) {
+    updateDoc(docToUpdate, {
+      getOrderConfirm: false,
+    }).then(() => {
+      Store.notifyUser(Store.user.profilePic, "Settings Updated");
+    });
+  } else {
+    updateDoc(docToUpdate, {
+      getOrderConfirm: true,
+    }).then(() => {
+      Store.notifyUser(Store.user.profilePic, "Settings Updated");
+    });
+  }
+};
 </script>
 <style scoped lang="sass">
 .heading

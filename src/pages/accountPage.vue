@@ -1,33 +1,54 @@
 <template>
   <q-page class="flex flex-center overflow-hidden" style="background: #e5e5e5">
-    <div class="pageContainer items-start justify-items-start overflow-hidden">
+    <q-card
+      flat
+      class="pageContainer column justify-center overflow-hidden bg-transparent"
+    >
       <div class="text-h1 text3 self-start">My Account</div>
-      <div class="container items-center row no-wrap">
-        <q-card class="my-card1 gt-sm">
-          <q-list class="items-center justify-center q-py-xl q-px-xl" bordered>
-            <q-item class="self-center items-center justify-evenly">
-              <q-item-section avatar>
-                <q-img
+      <div class="container justify-between row no-wrap" style="">
+        <q-card class="my-card1 gt-sm" style="">
+          <q-list
+            class="column items-center justify-center q-py-xl q-px-xl"
+            bordered
+            style="border: 1px solid; width: 100%"
+          >
+            <q-card
+              flat
+              class="row no-wrap items-center justify-between"
+              style="width: 100%"
+            >
+              <q-card class="flex flex-center" avatar style="width: 50%">
+                <!-- <q-img
                   class="avatar"
                   src="../assets/userImage.svg"
                   spinner-color="white"
+                  style="width: 80%"
+                /> -->
+                <q-img
+                  class="avatar"
+                  :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+                  spinner-color="white"
+                  style="width: 80%"
                 />
-              </q-item-section>
-              <q-space />
-              <q-item-section>
-                <div class="userDetails self-end">
-                  <div class="text-h1 userName self-start" style="">Obiajulu Anayo</div>
-                  <div class="text-h6 userRole self-start" style="color: #e6b41d">
-                    Teepseer
-                  </div>
+              </q-card>
+              <q-card style="width: 50%">
+                <div class="text-h3 userName self-start" style="">
+                  {{
+                    Store.user.name
+                      ? Store.user.name + " " + Store.user.lastName
+                      : "Teepseer"
+                  }}
                 </div>
-              </q-item-section>
-            </q-item>
+                <div class="text-h6 userRole self-start" style="color: #e6b41d">
+                  Teepseer
+                </div>
+              </q-card>
+            </q-card>
             <q-item
               clickable
               padding
               class="self-start"
-              style="margin-bottom: 2%; margin-top: 8%"
+              style="margin-bottom: 2%; margin-top: 8%; width: 100%"
               @click="Store.toggleAccPanel1()"
             >
               <q-item-section avatar>
@@ -42,7 +63,7 @@
             <q-item
               clickable
               class="self-start"
-              style="margin-bottom: 4%"
+              style="margin-bottom: 4%; width: 100%"
               @click="Store.toggleAccPanel2()"
             >
               <q-item-section avatar>
@@ -54,7 +75,12 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable class="self-start" style="margin-bottom: 4%">
+            <q-item
+              clickable
+              class="self-start"
+              style="margin-bottom: 4%; width: 100%"
+              @click="Store.toggleAccPanel5()"
+            >
               <q-item-section avatar>
                 <q-icon name="img:/Heart.svg" />
               </q-item-section>
@@ -67,7 +93,7 @@
             <q-item
               clickable
               class="self-start"
-              style="margin-bottom: 4%"
+              style="margin-bottom: 4%; width: 100%"
               @click="Store.toggleAccPanel3()"
             >
               <q-item-section avatar>
@@ -82,7 +108,7 @@
             <q-item
               clickable
               class="self-start"
-              style="margin-bottom: 4%"
+              style="margin-bottom: 4%; width: 100%"
               @click="Store.toggleAccPanel4()"
             >
               <q-item-section avatar>
@@ -94,7 +120,12 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable class="self-start" style="margin-bottom: 4%">
+            <q-item
+              clickable
+              class="self-start"
+              style="margin-bottom: 4%; width: 100%"
+              @click="Store.logOut()"
+            >
               <q-item-section avatar>
                 <q-icon name="img:/Logout.svg" />
               </q-item-section>
@@ -108,7 +139,7 @@
             {{ lorem }}
           </q-card-section> -->
         </q-card>
-        <q-card class="my-card2 scroll hide-scrollbar overflow-hidden">
+        <q-card class="my-card2 scroll hide-scrollbar" style="border: 1px solid">
           <!-- Profile -->
           <profileVue />
           <!-- Profile -->
@@ -116,6 +147,10 @@
           <!-- OrderHistory -->
           <orderHistoryVue />
           <!-- OrderHistory -->
+
+          <!-- favourites -->
+          <Favourites1 />
+          <!-- favourites -->
 
           <!-- settings -->
           <settingsVue />
@@ -126,7 +161,40 @@
           <!-- Addresses -->
         </q-card>
       </div>
-    </div>
+      <!-- dialogue for name  -->
+    </q-card>
+    <q-dialog v-model="Store.upDateProfilePrompt" persistent>
+      <q-card class="bg-primary" style="">
+        <img
+          alt="teepsee logo"
+          src="~assets/engrave-yel.svg"
+          class="engrave"
+          style="width: 20%; opacity: 0.4"
+        />
+
+        <q-card-section>
+          <div
+            class="text-h6 text-secondary userName"
+            style="line-height: 25px; font-family: 'Catellosdemo'"
+          >
+            Welcome please quickly update your Profile Details
+          </div>
+        </q-card-section>
+
+        <!-- <q-card-section class="q-pt-none">
+          <q-input dense v-model="UserName" autofocus @keyup.enter="prompt = false" />
+        </q-card-section> -->
+
+        <q-card-actions align="right" class="text-secondary">
+          <!-- <q-btn flat label="Cancel" v-close-popup /> -->
+          <q-btn flat label="Okay" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-inner-loading :showing="Store.ShowLoading">
+      <q-spinner-ball size="50px" color="primary" />
+    </q-inner-loading>
+    <!-- dialogue for name  -->
   </q-page>
 </template>
 
@@ -136,14 +204,29 @@ import profileVue from "src/components/profile.vue";
 import settingsVue from "src/components/settings.vue";
 import AddressVue from "src/components/Address.vue";
 import { useCounterStore } from "stores/counter";
+import Favourites1 from "../components/favourites.vue";
+import { ref, onMounted } from "vue";
 const Store = useCounterStore();
-// import { ref } from "vue";
 
+const address = ref("");
 // const panel = "profile";
 // const Url = ref('../assets/userImage.svg');
+// onMounted(() => {
+//   // Store.FetchUser();
+//   if (!Store.user) {
+//     Store.namePrompt = true;
+//   }
+// });
 </script>
 
 <style lang="sass">
+.engrave
+  width: 5%
+  position: absolute
+  top: 0px
+  left: 0px
+  body.screen--xs &
+    width: 25%
 
 .avatar
   body.screen--xl &
@@ -164,65 +247,57 @@ const Store = useCounterStore();
 
 .pageContainer
   body.screen--xl &
-    margin-left: 3%
-    margin-right: 3%
+    width: 50%
     margin-bottom: 3%
   body.screen--lg &
-    margin-left: 3%
-    margin-right: 3%
+    width: 85%
     margin-bottom: 3%
   body.screen--md &
-    margin-left: 3%
-    margin-right: 3%
+    width: 88%
     margin-bottom: 3%
   body.screen--sm &
     margin-left: 3%
     margin-right: 3%
     margin-bottom: 3%
   body.screen--xs &
-    margin-left: 3%
-    margin-right: 3%
     margin-bottom: 11%
 
+.container
+  body.screen--xl &
+    width: 100%
+  body.screen--lg &
+    width: 100%
+  body.screen--md &
+    width: 100%
+  body.screen--sm &
+    min-height: 100vh
+    width: 100%
 
 .my-card1
   body.screen--xl &
-    width: fit-content
-    max-width: 40%
-    height: 45vh
-    // height: 579px
+    width: 40%
     border-radius: 15px
     margin-right: 2%
     margin-left: 1%
   body.screen--lg &
     width: fit-content
     max-width: 40%
-    height: 70vh
-    // height: 579px
     border-radius: 15px
     margin-right: 2%
     margin-left: 1%
   body.screen--md &
-    width: fit-content
-    min-width: 35%
-    height: 95vh
-    // height: 579px
+    width: 40%
     border-radius: 15px
-    margin-right: 2%
-    margin-left: 1%
 
 .my-card2
   body.screen--xl &
-    width: 65%
-    height: 45vh
+    max-width: 55%
     border-radius: 15px
   body.screen--lg &
-    width: 65%
-    height: 70vh
+    width: 55%
     border-radius: 15px
   body.screen--md &
-    width: 65%
-    height: 95vh
+    width: 58%
     border-radius: 15px
   body.screen--sm &
     width: 100%
@@ -260,13 +335,13 @@ const Store = useCounterStore();
     // font-size: 27px
     color: #27141A
   body.screen--md &
-    margin: none
+    // margin: none
     font-family: "Catellosdemo"
     font-weight: 400
-    min-width: 250px
+    width: 250px
     // margin-left: 62px
     // margin-top: 18px
-    margin-bottom: 2%
+    margin-bottom: 5%
     line-height: 1px
     font-size: 210%
     // font-size: 27px

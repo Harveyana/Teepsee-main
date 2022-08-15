@@ -18,8 +18,8 @@
       <div class="input row">
         <div class="inputBox">
           <q-input
-            v-model="Oldpass"
-            :type="[Store.hide1 ? 'text' : 'password']"
+            v-model="password.oldPassword"
+            :type="Store.hide1 ? 'text' : 'password'"
             borderless
             class="inputEdit"
           >
@@ -28,8 +28,8 @@
         <q-btn
           flat
           class="toggle"
-          :label="[Store.hide1 ? 'Hide' : 'Show']"
-          :class="[Store.hide1 ? 'activeClass' : 'notactive']"
+          :label="Store.hide1 ? 'Hide' : 'Show'"
+          :class="Store.hide1 ? 'activeClass' : 'notactive'"
           style=""
           @click="Store.hide1 = !Store.hide1"
         />
@@ -43,8 +43,8 @@
         <div class="inputBox">
           <q-input
             class="inputEdit"
-            v-model="Newpass"
-            :type="[Store.hide2 ? 'text' : 'password']"
+            v-model="password.newPassword"
+            :type="Store.hide2 ? 'text' : 'password'"
             borderless
           >
           </q-input>
@@ -52,8 +52,8 @@
         <q-btn
           flat
           class="toggle"
-          :label="[Store.hide2 ? 'Hide' : 'Show']"
-          :class="[Store.hide2 ? 'activeClass' : 'notactive']"
+          :label="Store.hide2 ? 'Hide' : 'Show'"
+          :class="Store.hide2 ? 'activeClass' : 'notactive'"
           style="background: #f5f5f5"
           @click="Store.hide2 = !Store.hide2"
         />
@@ -66,9 +66,9 @@
       <div class="input row">
         <div class="inputBox">
           <q-input
-            v-model="ConfirmPass"
+            v-model="password.confirmPass"
             class="inputEdit"
-            :type="[Store.hide3 ? 'text' : 'password']"
+            :type="Store.hide3 ? 'text' : 'password'"
             borderless
           >
           </q-input>
@@ -76,23 +76,48 @@
         <q-btn
           flat
           class="toggle"
-          :label="[Store.hide3 ? 'Hide' : 'Show']"
-          :class="[Store.hide3 ? 'activeClass' : 'notactive']"
+          :label="Store.hide3 ? 'Hide' : 'Show'"
+          :class="Store.hide3 ? 'activeClass' : 'notactive'"
           style="background: #f5f5f5"
           @click="Store.hide3 = !Store.hide3"
         />
       </div>
     </div>
     <!-- Enter old password -->
-    <q-btn text-color="white" class="EditButton" label="Update" />
+    <q-btn
+      text-color="white"
+      class="EditButton"
+      label="Update"
+      @click="updatePass(password)"
+    />
   </q-banner>
 </template>
 
 <script setup>
 import { useCounterStore } from "stores/counter";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 const Store = useCounterStore();
+const password = reactive({
+  oldPassword: "",
+  newPassword: "",
+  confirmPass: "",
+});
 
+const updatePass = (payload) => {
+  if (
+    payload.oldPassword.length === 0 ||
+    payload.newPassword.length === 0 ||
+    payload.confirmPass.length === 0
+  ) {
+    Store.notifyUser(Store.defaultPic, "Please Complete Your Details");
+  } else {
+    if (payload.newPassword.toLowerCase() === payload.confirmPass.toLowerCase()) {
+      Store.changePassWord(payload);
+    } else {
+      Store.notifyUser(Store.defaultPic, "Your New Passwords don't Match");
+    }
+  }
+};
 // const hide1 = ref(false);
 // const hide2 = ref(false);
 // const hide3 = ref(false);
