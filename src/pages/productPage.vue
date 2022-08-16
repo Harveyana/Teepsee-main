@@ -294,6 +294,7 @@ const addToCart = (name, image, quantity, price) => {
   console.log(items);
   // };
 };
+
 const reduceQuantity = function (name, quantity) {
   const items = $q.localStorage.getItem("cartItems");
   const item = items.find((item) => item.name === name);

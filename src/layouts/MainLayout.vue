@@ -51,7 +51,7 @@
        -->
           <q-item outline class="navbar">
             <q-btn
-              to="/categories"
+              to="/categories/general"
               color="white"
               flat
               label="Categories"
@@ -311,7 +311,7 @@
           color="white"
           class="bg-white hero-button"
           size="15px"
-          to="/account"
+          to="/categories/general"
           text-color="black"
           flat
           label="Get Started"

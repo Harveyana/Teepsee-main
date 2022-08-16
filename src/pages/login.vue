@@ -27,17 +27,17 @@
       <q-card class="box-container q-mt-lg q-mt-xs-xl" style="">
         <q-card
           class="HeaderName bg-transparent"
-          style="border: 1px solid; position: relative; top: 3%; z-index: 5"
+          style="position: relative; top: 3%; z-index: 5"
           ><h3 class="Header card-header" style="">Login</h3>
           <h4 class="NameClass">Enter your details to access account</h4>
         </q-card>
-        <q-card class="Input1 column" style="border: 1px solid">
+        <q-card class="Input1 column" style="">
           <h4 class="NameClass" style="position: relative; top: 5px; color: #1f1e26">
             Email
           </h4>
           <q-input filled type="text" v-model="formData.email" style="" />
         </q-card>
-        <q-card class="Input2 column" style="border: 1px solid">
+        <q-card class="Input2 column" style="">
           <h4 class="NameClass" style="position: relative; top: 5px; color: #1f1e26">
             Password
           </h4>
@@ -46,7 +46,7 @@
             Forgot Password?
           </h4>
         </q-card>
-        <q-card class="btns column items-center" style="border: 1px solid">
+        <q-card class="btns column items-center" style="">
           <q-btn
             text-color="white"
             class="checkoutBtn self-center"
@@ -104,13 +104,11 @@ const formData = ref({
   body.screen--xs &
     width: 25%
 .box-container
-  border: 1px solid
   width: 75%
   height: 80%
   body.screen--xs &
     width: 82%
 .container
-  border: 1px solid
   border-radius: 15px
   max-width: 38%
   min-width: 38%

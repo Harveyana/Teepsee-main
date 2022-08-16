@@ -224,6 +224,7 @@
                 top: -6px;
                 right: 15px;
               "
+              v-if="cartQuantity"
               >{{ cartQuantity }}</small
             >
           </q-card-section>
