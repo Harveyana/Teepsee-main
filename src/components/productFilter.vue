@@ -1,8 +1,8 @@
 <template>
-  <q-card flat class="col-3 sidebar justify-between gt-xs" style="">
-    <q-list style="width: 100%">
+  <q-card flat class="col-3 sidebar justify-center gt-xs no-wrap q-pt-md" style="">
+    <q-card class="column flex justify-start no-wrap" style="width: 100%">
       <!-- search bar -->
-      <q-item style="width: inherit">
+      <q-card class="flex row justify-center" style="width: 100%">
         <q-input
           class="search"
           dense
@@ -15,24 +15,30 @@
             <q-icon name="search" />
           </template>
         </q-input>
-      </q-item>
+      </q-card>
       <!-- checklist -->
-      <q-item class="column q-mt-md">
-        <div class="text-h2 priceFilterHeader" style="">Price</div>
-        <q-item-section class="q-mt-sm">
-          <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
-          <q-checkbox color="yellow" v-model="ri" label="₦10,000--₦50,000" />
-          <q-checkbox color="yellow" v-model="rig" label="₦50,000--₦100,000" />
-          <q-checkbox color="yellow" v-model="righ" label="₦100,000--₦300,000" />
-          <q-checkbox color="yellow" v-model="right" label="₦300,000--₦500,000" />
-          <q-checkbox color="yellow" v-model="righti" label="₦500,000 and above" />
-        </q-item-section>
-      </q-item>
+      <q-card class="flex row self-start q-px-md q-mt-md">
+        <q-card class="column">
+          <div class="text-h2 priceFilterHeader" style="">Price</div>
+          <q-item-section class="q-mt-sm">
+            <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
+            <q-checkbox color="yellow" v-model="ri" label="₦10,000--₦50,000" />
+            <q-checkbox color="yellow" v-model="rig" label="₦50,000--₦100,000" />
+            <q-checkbox color="yellow" v-model="righ" label="₦100,000--₦300,000" />
+            <q-checkbox color="yellow" v-model="right" label="₦300,000--₦500,000" />
+            <q-checkbox color="yellow" v-model="righti" label="₦500,000 and above" />
+          </q-item-section>
+        </q-card>
+      </q-card>
       <!-- input custom checklist -->
       <q-item class="column">
         <div class="text-h2 CustomPriceFilter" style="">Custom Price range</div>
-        <q-card flat class="row items-center q-px-md q-mt-md" style="max-width: 100%">
-          <div class="col" style="margin-right: 10px">
+        <q-card
+          flat
+          class="row justify-between items-center q-px-md q-mt-md"
+          style="width: 100%"
+        >
+          <div class="col" style="margin-right: 2%; width: 35%">
             <q-input
               borderless
               dense
@@ -42,7 +48,7 @@
               style=""
             />
           </div>
-          <div class="col" style="">
+          <div class="col" style="margin-right: 2%; width: 35%">
             <q-input
               borderless
               dense
@@ -52,14 +58,14 @@
               style=""
             />
           </div>
-          <q-item class="col">
+          <q-card class="col" style="width: 20%">
             <q-btn
               class="filterButton"
               label="Go"
               style=""
               @click="Store.priceQuery(custom.min, custom.max)"
             />
-          </q-item>
+          </q-card>
         </q-card>
       </q-item>
       <q-item class="column q-mt-md">
@@ -85,7 +91,7 @@
           />
         </q-item-section>
       </q-item>
-    </q-list>
+    </q-card>
   </q-card>
 </template>
 <script setup>
@@ -115,8 +121,9 @@ watch(
 <style scoped lang="sass">
 .sidebar
   height: inherit
+  max-height: 630px
   border-radius: 15px
-  max-width: fit-content
+  // max-width: fit-content
   width: 30%
   body.screen--sm &
     min-width: 30%
@@ -125,7 +132,7 @@ watch(
   padding-left: 10px
   margin-top: 15px
   border-radius: 10px
-  width: 100%
+  width: 85%
   height: 45px
   font-size: 18px
   border: 0.5px solid grey
@@ -143,9 +150,11 @@ watch(
   color: #27141a
 .filterInput
   background: #dddddd
+  height: 38px
   padding-left: 10px
-  padding-bottom: 10px
-  max-width: 100px
+  // padding-bottom: 50px
+  width: 100%
+  // max-width: 100px
   border-radius: 10px
   font-size: 14px
   border: 0.5px solid grey
@@ -155,6 +164,7 @@ watch(
   background-color: #27141a
   color: white
   border-radius: 10px
+  width: 100%
 .brandsHeader
   font-size: 20px
   line-height: normal
