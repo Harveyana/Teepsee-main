@@ -1,5 +1,8 @@
 <template>
-  <div class="allproducts row wrap justify-center q-gutter-md">
+  <div
+    class="allproducts row wrap justify-center overflow-hidden"
+    style="width: 100%;"
+  >
     <!-- product -->
     <productVue
       v-for="product in Store.products.value"
@@ -87,17 +90,8 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="sass">
-// .skeleton
-//   height: 95vh
-//   width: 100%
-//   // padding: 10px 0 20px 0
-//   max-width: 1180px
+// .allproducts
+
+
 //   body.screen--sm &
-//     width: 66%
-//   body.screen--xs &
-//     width: 100vw
-//     // display: flex
-//     // flex-direction: column
-//     // align-items: center
-//     // justify-contents: center
 </style>

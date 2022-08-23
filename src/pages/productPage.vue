@@ -1,9 +1,12 @@
 <template>
-  <q-page class="flex flex-center q-pa-md overflow-hidden" style="background: #e5e5e5">
-    <div class="container row no-wrap items-center justify-center q-gutter-lg" style="">
+  <q-page class="flex flex-center overflow-hidden" style="background: #e5e5e5">
+    <div
+      class="container row no-wrap items-center justify-center q-gutter-sm-lg q-gutter-md-lg q-gutter-lg-lg q-gutter-xl-lg"
+      style=""
+    >
       <q-card
         flat
-        class="bg-transparent product-images column no-wrap items-center justify-center q-gutter-md q-pr-md q-pb-md"
+        class="bg-transparent product-images column no-wrap items-center justify-center q-gutter-sm-md q-gutter-md-md q-gutter-lg-md q-gutter-xl-md q-pr-sm-md q-pr-md-md q-pr-lg-md q-pr-xl-md q-pb-sm-md q-pb-md-md q-pb-lg-md q-pb-xl-md"
         style=""
       >
         <!-- main image -->
@@ -15,7 +18,7 @@
             arrows
             navigation
             infinite
-            class="image-carousel"
+            class="image-carousel flex justify-center"
             style=""
           >
             <q-carousel-slide
@@ -24,24 +27,8 @@
               :name="(index = +1)"
               class="product-image"
               :img-src="image"
-              style=""
+              style="min-width: 200px"
             />
-            <!-- <q-carousel-slide
-              :name="2"
-              class="product-image"
-              img-src="../assets/product1.png"
-            />
-            <q-carousel-slide
-              :name="3"
-              class="product-image"
-              img-src="../assets/product1.png"
-            /> -->
-            <!-- <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style="width: 60%; object-fit: cover"
-            /> -->
           </q-carousel>
         </q-card>
         <q-inner-loading :showing="Store.ShowLoading">
@@ -64,7 +51,7 @@
               :src="productDetails.images[0]"
               spinner-color="white"
               class="product-image"
-              style="width: 70%; object-fit: cover"
+              style="width: 50%; height: 90%; object-fit: cover"
             />
             <q-inner-loading :showing="Store.ShowLoading">
               <q-spinner-gears size="50px" color="primary" />
@@ -78,7 +65,7 @@
               :src="productDetails.images[1]"
               spinner-color="white"
               class="product-image"
-              style="width: 70%; object-fit: cover"
+              style="width: 50%; height: 90%; object-fit: cover"
             />
             <q-inner-loading :showing="Store.ShowLoading">
               <q-spinner-gears size="50px" color="primary" />
@@ -93,7 +80,7 @@
               :src="productDetails.images[2]"
               spinner-color="white"
               class="product-image"
-              style="width: 70%; object-fit: cover"
+              style="width: 50%; height: 90%; object-fit: cover"
             />
             <q-inner-loading :showing="Store.ShowLoading">
               <q-spinner-gears size="50px" color="primary" />
@@ -294,6 +281,7 @@ const addToCart = (name, image, quantity, price) => {
   console.log(items);
   // };
 };
+
 const reduceQuantity = function (name, quantity) {
   const items = $q.localStorage.getItem("cartItems");
   const item = items.find((item) => item.name === name);
@@ -316,18 +304,23 @@ onMounted(() => {
 .container
   body.screen--xl &
     width: 60%
-    height: 70vh
+    height: 1000px
+    // height: 35vh
   body.screen--lg &
     width: 100%
-    height: 90vh
+    height: 700px
+    // height: 70vh
   body.screen--md &
     width: 100%
-    height: 110vh
+    height: 700px
+    // height: 105vh
   body.screen--sm &
     width: 100%
-    height: 110vh
+    height: 700px
+    // height: 85vh
   body.screen--xs &
     flex-direction: column
+    flex-wrap: nowrap
     width: 100vw
     height: fit-content
 
@@ -346,29 +339,30 @@ onMounted(() => {
     height: 100%
   body.screen--xs &
     border-radius: 12px
-    margin-top: -1%
-    padding: 0px
+    // margin-top: -1%
+    // padding: 0px
     width: 95%
-    height: 60vh
-    // margin-bottom: 30%
-    position: relative
-    top: 20%
+    // height: 60vh
+    // // margin-bottom: 30%
+    // position: relative
+    // top: 20%
 
 .image-carousel
-  body.screen--xl &
-    width: 50%
-  body.screen--lg &
-    width: 50%
-  body.screen--md &
-    width: 50%
-    height: 70%
-  body.screen--sm &
-    width: 60%
-    height: 70%
+  min-width: 100%
+  // body.screen--xl &
+  //   width: 50%
+  // body.screen--lg &
+  //   width: 50%
+  // body.screen--md &
+  //   width: 50%
+  //   height: 70%
+  // body.screen--sm &
+  //   width: 60%
+  //   height: 70%
   body.screen--xs &
+    min-width: 100%
     border-radius: 18px
-    width: 70%
-    height: 80%
+    height: 320px
 
 
 .image-container
@@ -390,13 +384,13 @@ onMounted(() => {
     border-radius: 15px
   body.screen--xs &
     border-radius: 18px
-    margin-left: -0.5%
-    margin-top: -1%
-    padding: 0px
-    height: 100%
+    // margin-left: -0.5%
+    // margin-top: -1%
+    // padding: 0px
+    // height: 100%
     width: 100%
-    position: relative
-    top: 8%
+    // position: relative
+    // top: 8%
 .product-details
   width: 45%
   height: 100%
@@ -579,6 +573,7 @@ onMounted(() => {
     flex-direction: column
     align-items: center
     width: 40%
+    margin-top: -1%
 .quantity-counter
   body.screen--xl &
     border: 1px solid black

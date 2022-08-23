@@ -122,7 +122,9 @@
       </q-item>
 
       <!-- Sign up button -->
-      <q-item clickable v-else="!Store.isLoggedIn">
+      <!-- <q-item clickable v-else="!Store.isLoggedIn">
+
+
         <q-item-section avatar>
           <q-btn
             text-color="white"
@@ -140,7 +142,7 @@
             "
           />
         </q-item-section>
-      </q-item>
+      </q-item> -->
 
       <!-- Categories  -->
 

@@ -1,5 +1,8 @@
 <template>
-  <q-page class="flex flex-center q-pa-md overflow-hidden" style="background: #e5e5e5">
+  <q-page
+    class="flex flex-center q-pa-xs-none q-pa-sm-md q-pa-md-md q-pa-lg-md overflow-hidden"
+    style="background: #e5e5e5"
+  >
     <q-card
       flat
       class="row justify-end bg-transparent"
@@ -13,12 +16,12 @@
           transition-hide="flip-down"
           style="width: 100%"
         >
-          <q-banner class="scroll filterContainerMobile">
-            <q-list style="width: 100%">
+          <q-banner class="scroll filterContainerMobile" style="width: 100%">
+            <q-card flat style="width: 100%">
               <!-- checklist -->
-              <q-item class="column q-mt-md">
+              <q-card class="column q-mt-md" style="width: 100%">
                 <div class="text-h2 priceFilterHeader" style="">Price</div>
-                <q-item-section class="q-mt-sm">
+                <q-card class="q-mt-sm" style="width: 100%">
                   <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
                   <q-checkbox color="yellow" v-model="ri" label="₦10,000--₦50,000" />
                   <q-checkbox color="yellow" v-model="rig" label="₦50,000--₦100,000" />
@@ -29,17 +32,17 @@
                     v-model="righti"
                     label="₦500,000 and above"
                   />
-                </q-item-section>
-              </q-item>
+                </q-card>
+              </q-card>
               <!-- input custom checklist -->
-              <q-item class="column" style="width: 100%">
+              <q-card class="column" style="width: 100%">
                 <div class="text-h2 CustomPriceFilter" style="">Custom Price range</div>
                 <q-card
                   flat
                   class="row items-center q-px-md q-mt-md"
                   style="max-width: 100%"
                 >
-                  <div class="col row no-wrap" style="margin-right: 10px">
+                  <div class="col row no-wrap" style="margin-right: 2%; width: 35%">
                     <q-input
                       borderless
                       dense
@@ -49,7 +52,7 @@
                       style=""
                     />
                   </div>
-                  <div class="col row no-wrap" style="">
+                  <div class="col row no-wrap" style="margin-right: 2%; width: 35%">
                     <q-input
                       borderless
                       dense
@@ -59,17 +62,17 @@
                       style=""
                     />
                   </div>
-                  <q-item class="col">
+                  <q-card class="col" style="width: 20%">
                     <q-btn
                       class="filterButton"
                       label="Go"
                       style=""
                       @click="Store.priceQuery(custom.min, custom.max)"
                     />
-                  </q-item>
+                  </q-card>
                 </q-card>
-              </q-item>
-              <q-item class="column q-mt-md">
+              </q-card>
+              <q-card class="column q-mt-md">
                 <div class="text-h2 brandsHeader" style="">Brands</div>
                 <q-item-section class="q-mt-sm">
                   <q-checkbox
@@ -91,8 +94,8 @@
                     false-value="nil"
                   />
                 </q-item-section>
-              </q-item>
-            </q-list>
+              </q-card>
+            </q-card>
           </q-banner>
         </q-popup-proxy>
       </q-icon>
@@ -106,7 +109,7 @@
       <!-- products -->
       <q-card
         flat
-        class="col-8 products bg-transparent items-center scroll hide-scrollbar"
+        class="col-8 products bg-transparent flex justify-center items-stretch scroll hide-scrollbar"
         style=""
       >
         <!-- shopProducts -->
@@ -172,25 +175,24 @@ onMounted(() => {
 </script>
 <style scoped lang="sass">
 .container
-  height: fit-content
   width: 90%
+  max-height: 630px
   body.screen--xl &
     width: 60%
+    height: 1000px
   body.screen--sm &
     width: 100%
 .products
-  height: 95vh
-  padding: 10px 0 20px 0
-  width: 75%
-  max-width: 1180px
+  width: 60%
+  max-height: 630px
+  // max-width: 1180px
   body.screen--sm &
-    width: 66%
+    width: 62%
+    max-height: 640px
   body.screen--xs &
-    width: 100vw
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-contents: center
+    width: 100%
+    max-height: 700px
+
 .sidebar
   height: inherit
   border-radius: 15px
@@ -220,9 +222,11 @@ onMounted(() => {
   color: #27141a
 .filterInput
   background: #dddddd
+  height: 38px
   padding-left: 10px
-  padding-bottom: 10px
-  max-width: 100px
+  // padding-bottom: 50px
+  width: 100%
+  // max-width: 100px
   border-radius: 10px
   font-size: 14px
   border: 0.5px solid grey

@@ -15,21 +15,21 @@
     >
       <q-card class="image" style="">
         <q-img
-          src="../assets/product1.png"
+          :src="productImage"
           spinner-color="black"
           class="favourite"
           style="width: 100%"
         />
       </q-card>
       <q-card class="gt-xs Name" style="width: 50%">
-        <h4 class="productName NameClass" style="">Henessey</h4>
-        <h4 class="productCat" style="">Cognac</h4>
+        <h4 class="productName NameClass" style="">{{ productName }}</h4>
+        <h4 class="productCat" style="">{{ productCategory }}</h4>
       </q-card>
       <q-card class="column lt-sm Name no-wrap" style="width: 50%; height: 90%">
         <h4 class="productName NameClass" style="font-family: 'Manrope-semiBold'">
           Henessey
         </h4>
-        <h4 class="productPrice NameClass" style="color: #27141a">₦5,000</h4>
+        <h4 class="productPrice NameClass" style="color: #27141a">{{ productPrice }}</h4>
         <!-- counter -->
         <!-- counter -->
         <q-card
@@ -58,21 +58,21 @@
       class="gt-xs row ProductPrice flex flex-center"
       style="width: 15%; position: relative; left: 3%"
     >
-      <h4 class="productPrice NameClass" style="">₦5,000</h4>
+      <h4 class="productPrice NameClass" style="">{{ productPrice }}</h4>
     </q-card>
     <!-- Product Quantity -->
     <q-card
       class="gt-xs row productQuantityLabel flex flex-center"
       style="width: 8%; position: relative; right: 1%"
     >
-      <h4 class="productQuantity NameClass" style="">2</h4>
+      <h4 class="productQuantity NameClass" style="">{{ productQuantity }}</h4>
     </q-card>
     <!-- Product SubTotal -->
     <q-card
       class="gt-xs row productSubTotalLabel flex flex-center"
       style="width: 15%; position: relative; right: 2%"
     >
-      <h4 class="productSubTotal NameClass" style="">₦10,000</h4>
+      <h4 class="productSubTotal NameClass" style="">{{ SubTotal }}</h4>
     </q-card>
     <q-card
       class="gt-xs row Remove flex flex-center"
@@ -83,14 +83,59 @@
         name="img:/Removebtn.svg"
         style="cursor: pointer"
         size="25px"
+        @click="removeItem()"
       />
     </q-card>
   </q-card>
 </template>
 
-<script setup>
+<script>
 import { ref } from "vue";
-const counter = ref(1);
+import { useCounterStore } from "stores/counter";
+import { useQuasar } from "quasar";
+
+export default {
+  name: "cartProduct",
+
+  props: {
+    productName: String,
+    productPrice: String,
+    productCategory: String,
+    productImage: String,
+    productQuantity: String,
+  },
+  data() {
+    return {
+      Store: useCounterStore(),
+      $q: useQuasar(),
+      counter: ref(1),
+    };
+  },
+  methods: {
+    removeItem() {
+      const items = this.$q.localStorage.getItem("cartItems");
+      const item = items.find((item) => item.name === this.productName);
+      if (item) {
+        // item.quantity -= quantity;
+        // cart.value = item.quantity;
+        let id = indexOf(item);
+        items.remove(id);
+      }
+
+      // then put it back.
+      this.$q.localStorage.set("cartItems", items);
+      console.log(items);
+      // };
+    },
+  },
+  computed: {
+    // a computed getter
+    SubTotal() {
+      // `this` points to the component instance
+      return this.productPrice * this.productQuantity;
+    },
+  },
+};
 </script>
 <style scoped lang="sass">
 .NameClass

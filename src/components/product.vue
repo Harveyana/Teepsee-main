@@ -1,71 +1,74 @@
 <template>
-  <q-card clickable flat class="product flex-center" to="/product">
+  <q-card
+    clickable
+    flat
+    class="product column no-wrap items-stretch q-mb-md q-mx-sm-sm q-mx-md-sm q-mx-lg-sm q-mx-xl-sm q-mx-xs-none"
+    to="/product"
+  >
     <!-- product head -->
-    <q-card-section class="">
-      <q-card flat class="row no-wrap items-center">
-        <div class="sale-tag" style="padding: 4px">
-          <small class="saleTag" style="" v-if="productTag">{{ productTag }}</small>
-        </div>
-        <q-space />
-        <div class="sale-tag">
-          <q-img
-            src="../assets/favourite.svg"
-            spinner-color="white"
-            class="favourite"
-            v-if="favourite"
-            style="width: 25px"
-            @click="favourite = !favourite"
-          />
-          <!-- <router-link to="/product" style="text-decoration: none"> -->
-          <q-img
-            src="../assets/favourite2.svg"
-            spinner-color="white"
-            class="favourite"
-            v-else="!favourite"
-            style="width: 25px; z-index: 5"
-            @click="favourite = !favourite"
-          />
-          <!-- </router-link> -->
-        </div>
-      </q-card>
-    </q-card-section>
+    <q-card
+      flat
+      class="row no-wrap items-center q-pt-sm q-px-sm justify-between"
+      style="width: 100%"
+    >
+      <div class="sale-tag" style="padding: 4px">
+        <small class="saleTag" style="font-size: 12px" v-if="productTag">{{
+          productTag
+        }}</small>
+      </div>
+      <div class="favourite-tag">
+        <q-img
+          src="../assets/favourite.svg"
+          spinner-color="white"
+          class="favourite"
+          v-if="favourite"
+          style="width: 25px"
+          @click="favourite = !favourite"
+        />
+        <!-- <router-link to="/product" style="text-decoration: none"> -->
+        <q-img
+          src="../assets/favourite2.svg"
+          spinner-color="white"
+          class="favourite"
+          v-else="!favourite"
+          style="width: 25px; z-index: 5"
+          @click="favourite = !favourite"
+        />
+        <!-- </router-link> -->
+      </div>
+    </q-card>
     <!-- product head -->
 
     <!-- product-image -->
-    <q-card-section class="">
-      <q-card
-        flat
-        class="fit row wrap justify-center items-center content-center container-card"
-        style=""
-        to="/product"
-      >
-        <div class="justify-center image-container" style="">
-          <q-img
-            :src="productImage"
-            spinner-color="white"
-            class="product-image"
-            style=""
-          />
-        </div>
+    <q-card class="column no-wrap flex-center" style="width: 100%">
+      <q-card flat class="container-card flex-center" to="/product">
+        <q-img :src="productImage" spinner-color="white" class="product-image" style="" />
       </q-card>
       <q-separator style="position: relative; top: -25px" />
-    </q-card-section>
+    </q-card>
     <!-- product image -->
 
+    <!-- :style="{ backgroundImage: 'url(' + productImage + ')' }" -->
+
     <!-- product details -->
-    <router-link :to="{ path: `/product/${productId}` }" style="text-decoration: none">
-      <q-card-section class="details-container" style="">
-        <div class="row no-wrap">
-          <div class="column">
-            <div class="text-h2 product-name" style="">{{ productName }}</div>
-            <div class="text-h2 product-cat" style="">{{ productCategory }}</div>
-          </div>
-          <q-space />
-          <div>
-            <div class="text-h2 product-price" style="">₦{{ productPrice }}</div>
-          </div>
+    <router-link
+      :to="{ path: `/product/${productId}` }"
+      style="text-decoration: none; width: 100%"
+    >
+      <q-card
+        flat
+        class="details-container row no-wrap q-px-sm bg-transparent q-pb-sm overflow-hidden"
+        style="width: 100%; border-radius: 15px"
+      >
+        <div class="column no-wrap">
+          <div class="text-h2 product-name" style="">{{ productName }}</div>
+          <div class="text-h2 product-cat" style="">{{ productCategory }}</div>
         </div>
-      </q-card-section>
+        <q-space />
+        <div>
+          <div class="text-h2 product-price" style="">₦{{ productPrice }}</div>
+        </div>
+      </q-card>
     </router-link>
     <!-- product-details -->
     <q-inner-loading :showing="Store.ShowLoading">
@@ -101,16 +104,29 @@ export default {
 </script>
 <style scoped lang="sass">
 .product
-  width: fit-content
+  width: 24%
   min-width: 200px
-  height: 250px
+  max-width: 200px
+  // max-width: 24%
+  // min-width: 200px
+  // height: 240px
   border-radius: 15px
+  body.screen--md &
+    width: 24%
+    min-width: 200px
+    max-width: 200px
+
   body.screen--sm &
-    min-width: 150px
-    height: 180px
+    width: 24%
+    // min-width: 150px
+    // height: 180px
   body.screen--xs &
-    min-width: 150px
-    height: 180px
+    min-width: 45%
+    max-width: 45%
+    flex-wrap: nowrap
+    margin-left: 1%
+    margin-right: 1%
+
 .saleTag
   font-size: 15px
   background: #e6b41d
@@ -123,40 +139,48 @@ export default {
   body.screen--xs &
     font-size: 10px
 .container-card
-  position: relative
-  top: -30px
+  height: 150px
+  width: 50%
 
-.image-container
-  width: fit-content
-  max-height: 130px
-  min-height: 130px
-.details-container
-  position: relative
-  top: -48px
-  body.screen--sm &
-    position: relative
-    top: -105px
-  body.screen--xs &
-    position: relative
-    top: -108px
-    max-height: 79px
-    min-height: 79px
+  // height: 25vh
+  // overflow: hidden
+  // background-size: cover
+  // background-position: center
+  // position: relative
+  // top: -30px
+
+// .image-container
+//   width: fit-content
+//   max-height: 130px
+//   min-height: 130px
+// .details-container
+//   position: relative
+//   top: -48px
+//   body.screen--sm &
+//     position: relative
+//     top: -105px
+//   body.screen--xs &
+//     position: relative
+//     top: -108px
+//     max-height: 79px
+//     min-height: 79px
 .product-image
-  max-width: 110px
-  min-width: 110px
-  max-height: 128px
-  min-height: 128px
-  object-fit: contain
-  body.screen--sm &
-    width: 70px
-    max-height: 90px
-    min-height: 90px
-  body.screen--xs &
-    max-width: 70px
-    min-width: 70px
-    max-height: 80px
-    min-height: 80px
-    object-fit: contain
+  // width: 100%
+  // height: auto
+  // max-width: 80px
+  height: 100%
+  width: 100%
+  object-fit: cover
+  // body.screen--sm &
+  //   width: 70px
+  //   max-height: 90px
+  //   min-height: 90px
+  // body.screen--xs &
+  //   max-width: 70px
+  //   min-width: 70px
+  //   max-height: 80px
+  //   min-height: 80px
+  //   object-fit: contain
 .product-name
   font-size: 16px
   letter-spacing: 0.5px

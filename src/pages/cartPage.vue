@@ -28,14 +28,22 @@
         <q-list class="scroll hide-scrollbar" style="">
           <!--  Product -->
           <!--  Product -->
+          <cartProductVue
+            v-for="product in cartProducts"
+            :productName="product.name.slice(0, 10) + '..'"
+            :productImage="product.image"
+            :productPrice="product.price"
+            :productCategory="product.category"
+            :productQuantity="product.quantity"
+            :key="product.name"
+          ></cartProductVue>
+          <!-- <cartProductVue></cartProductVue>
           <cartProductVue></cartProductVue>
           <cartProductVue></cartProductVue>
           <cartProductVue></cartProductVue>
           <cartProductVue></cartProductVue>
           <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
+          <cartProductVue></cartProductVue> -->
           <!-- Product -->
         </q-list>
 
@@ -132,6 +140,23 @@
 import cartProductVue from "src/components/cartProduct.vue";
 import Chasers from "../components/Chasers.vue";
 import RecentlyViewed from "src/components/RecentlyViewed.vue";
+import { useQuasar } from "quasar";
+import { ref, reactive, onMounted, computed } from "vue";
+
+const $q = useQuasar();
+const cartProducts = ref([]);
+const fetchCart = () => {
+  const items = $q.localStorage.getItem("cartItems") || [];
+  // add to it, only if it's empty
+  if (items) {
+    console.log(items);
+    cartProducts.value = [...items];
+  }
+};
+
+onMounted(() => {
+  fetchCart();
+});
 </script>
 <style scoped lang="sass">
 .card-header

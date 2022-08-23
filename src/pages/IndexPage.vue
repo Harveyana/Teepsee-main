@@ -1,12 +1,29 @@
 <template>
   <q-page class="items-center overflow-hidden" style="background: #e5e5e5">
-    <div class="features column items-center">
-      <div class="text-h1 text1">How to get Teepsee</div>
-      <div class="text-h1 text2 self-start">Shop Now</div>
-      <div class="feature-list row no-wrap" style="margin-left: auto; margin-right: auto">
+    <!-- hero -->
+    <MainHero></MainHero>
+    <!-- hero -->
+
+    <div class="features column justify-center items-center no-wrap">
+      <q-card
+        flat
+        class="gt-xs row justify-center no-wrap bg-transparent"
+        style="width: 100%"
+      >
+        <div class="text-h1 text1">How to get Teepsee</div>
+      </q-card>
+      <q-card
+        flat
+        class="lt-sm row justify-start no-wrap bg-transparent"
+        style="width: 100%"
+      >
+        <div class="text-h1 text2 self-start">Shop Now</div>
+      </q-card>
+
+      <div class="feature-list row no-wrap justify-around" style="">
         <q-card flat class="my-card"> </q-card>
         <q-card flat class="my-card2"> </q-card>
-        <q-card flat class="my-card3 self-center"> </q-card>
+        <q-card flat class="my-card3"> </q-card>
       </div>
       <div class="text-h1 text3 self-start">Shop Now</div>
       <q-toolbar
@@ -45,18 +62,31 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "IndexPage",
-});
+<script setup>
+import MainHero from "../components/mainHero.vue";
+// // import MainHero from "src/components/mainHero.vue";
+// import mainHero from "src/components/mainHero.vue";
 </script>
 
 <style scoped lang="sass">
 // body.screen--md &
 //   body.screen--sm &
 //   body.screen--xs &
+
+.logo
+  // body.screen--sm &
+  //   min-width: 10%
+  // body.screen--md &
+  //   min-width: 10%
+  //   position: relative
+  //   right: 16%
+  // body.screen--lg &
+  //   min-width: 10%
+  //   position: relative
+  //   right: 25%
+  // body.screen--xl &
+  //   min-width: 10%
+
 .features
   height: fit-content
   width: 100%
@@ -72,41 +102,27 @@ export default defineComponent({
   body.screen--sm &
     margin-bottom: 5%
 .feature-list
-  // margin: auto
-  // padding-left: 4%
-  // padding-right: 4%
-  width: 100%
-  // height: 50%
+  width: 93%
   body.screen--xs &
-    padding-left: 4%
-    padding-right: 4%
     width: 100%
+    height: 850px
     flex-direction: column
-    position: relative
-    left: 9px
-  body.screen--md &
-    padding-left: 4%
-    padding-right: 4%
-    width: 100%
-  body.screen--lg &
-    padding-left: 4%
-    padding-right: 4%
-    width: 100%
-  body.screen--xl &
-    padding-left: 4%
-    padding-right: 4%
-    width: 100%
+    align-items: center
+    justify-content: space-around
+  // body.screen--md &
+  //   padding-left: 4%
+  //   padding-right: 4%
+  //   width: 100%
+  // body.screen--lg &
+  //   padding-left: 4%
+  //   padding-right: 4%
+  //   width: 100%
+  // body.screen--xl &
+  //   padding-left: 4%
+  //   padding-right: 4%
+  //   width: 100%
 .text2
-  body.screen--xl &
-    display: none
-  body.screen--lg &
-    display: none
-  body.screen--md &
-    display: none
-  body.screen--sm &
-    display: none
   body.screen--xs &
-    margin: none
     font-family: "Catellosdemo"
     margin-left: 21px
     margin-bottom: -10px
@@ -150,180 +166,184 @@ export default defineComponent({
     margin-top: -10px
     font-size: 32px
 .text1
-  body.screen--xl &
-    margin: none
-    margin-top: 18px
-    margin-bottom: 18px
-    font-family: "Catellosdemo"
-    font-size: 445%
-    // font-size: 64px
-  body.screen--lg &
-    margin: none
-    margin-top: 18px
-    margin-bottom: 18px
-    font-family: "Catellosdemo"
-    font-size: 445%
-    // font-size: 64px
-  body.screen--md &
-    margin: none
-    margin-top: 18px
-    margin-bottom: 18px
-    font-family: "Catellosdemo"
-    font-size: 445%
-    // font-size: 64px
+  font-family: "Catellosdemo"
+  font-size: 445%
+  // font-size: 64px
   body.screen--sm &
     margin: none
     font-family: "Catellosdemo"
     font-size: 370%
     // font-size: 50px
-  body.screen--xs &
-    margin: none
-    display: none
-    font-family: "Catellosdemo"
-    font-size: 32px
+  // body.screen--xs &
+  //   margin: none
+  //   display: none
+  //   font-family: "Catellosdemo"
+  //   font-size: 32px
 
 .my-card
-  body.screen--xl &
-    background: url("../assets/feature1.svg")
-    margin-right: 2%
-    background-size: contain
-    height: 53vh
-    // min-height: 340px
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
-  body.screen--lg &
-    background: url("../assets/feature1.svg")
-    margin-right: 2%
-    background-size: contain
-    height: 53vh
-    // min-height: 340px
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
-  body.screen--md &
-    background: url("../assets/feature1.svg")
-    margin-right: 2%
-    background-size: contain
-    height: 53vh
-    // min-height: 340px
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
+  background: url("../assets/feature1.svg")
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center
+  height: 350px
+  // min-height: 340px
+  width: 30%
+  object-fit: cover
+  // min-width: 390px
+  border-radius: 10px
+
+  // body.screen--lg &
+  //   background: url("../assets/feature1.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   height: 53vh
+  //   // min-height: 340px
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--md &
+  //   background: url("../assets/feature1.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   height: 53vh
+  //   // min-height: 340px
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
   body.screen--sm &
-    background: url("../assets/feature1.svg")
-    margin-right: 16px
     background-size: contain
-    // min-height: 170px
-    height: 48vh
-    // min-width: 210px
-    width: 62vh
-    border-radius: 10px
+    background-repeat: no-repeat
+    background-position: center
+    height: 200px
+    width: 30%
+    border-radius: 20px
   body.screen--xs &
-    background: url("../assets/feature1.svg")
-    margin-right: 16px
-    background-size: contain
-    height: 90vw
-    width: 100%
-    // min-height: 250px
-    // min-width: 300px
+    height: 270px
+    width: 90%
     border-radius: 10px
-    align-self: center
 .my-card2
-  body.screen--xl &
-    background: url("../assets/feature2.svg")
-    margin-right: 2%
-    background-size: contain
-    // min-height: 340px
-    height: 53vh
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
-  body.screen--lg &
-    background: url("../assets/feature2.svg")
-    margin-right: 2%
-    background-size: contain
-    // min-height: 340px
-    height: 53vh
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
-  body.screen--md &
-    background: url("../assets/feature2.svg")
-    margin-right: 2%
-    background-size: contain
-    // min-height: 340px
-    height: 53vh
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
+  background: url("../assets/feature2.svg")
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center
+  // min-height: 340px
+  height: 350px
+  width: 30%
+  // min-width: 390px
+  border-radius: 10px
   body.screen--sm &
-    background: url("../assets/feature2.svg")
     background-size: contain
-    margin-right: 16px
-    height: 48vh
-    // min-height: 170px
-    width: 62vh
-    // min-width: 210px
-    border-radius: 10px
+    background-repeat: no-repeat
+    background-position: center
+    height: 200px
+    width: 30%
+    border-radius: 20px
   body.screen--xs &
-    background: url("../assets/feature2.svg")
-    background-size: contain
-    margin-right: 16px
-    align-self: center
-    // height: 50vh
-    height: 90vw
-    width: 100%
-    // width: 57vh
-    // min-height: 250px
-    // min-width: 300px
-    margin-top: 18px
+    height: 270px
+    width: 90%
     border-radius: 10px
+
+  // body.screen--xl &
+
+  // body.screen--lg &
+  //   background: url("../assets/feature2.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--md &
+  //   background: url("../assets/feature2.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--sm &
+  //   background: url("../assets/feature2.svg")
+  //   background-size: contain
+  //   margin-right: 16px
+  //   height: 48vh
+  //   // min-height: 170px
+  //   width: 62vh
+  //   // min-width: 210px
+  //   border-radius: 10px
+  // body.screen--xs &
+  //   background: url("../assets/feature2.svg")
+  //   background-size: contain
+  //   margin-right: 16px
+  //   align-self: center
+  //   // height: 50vh
+  //   height: 90vw
+  //   width: 100%
+  //   // width: 57vh
+  //   // min-height: 250px
+  //   // min-width: 300px
+  //   margin-top: 18px
+  //   border-radius: 10px
 .my-card3
-  body.screen--xl &
-    background: url("../assets/feature3.svg")
-    background-size: contain
-    // min-height: 340px
-    height: 53vh
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
-  body.screen--lg &
-    background: url("../assets/feature3.svg")
-    background-size: contain
-    // min-height: 340px
-    height: 53vh
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
-  body.screen--md &
-    background: url("../assets/feature3.svg")
-    background-size: contain
-    // min-height: 340px
-    height: 53vh
-    width: 62vh
-    // min-width: 390px
-    border-radius: 10px
+  background: url("../assets/feature3.svg")
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center
+  // min-height: 340px
+  height: 350px
+  width: 30%
+  // min-width: 390px
+  border-radius: 10px
   body.screen--sm &
-    background: url("../assets/feature3.svg")
     background-size: contain
-    height: 48vh
-    // min-height: 170px
-    width: 62vh
-    // min-width: 210px
-    border-radius: 10px
+    background-repeat: no-repeat
+    background-position: center
+    height: 200px
+    width: 30%
+    border-radius: 20px
   body.screen--xs &
-    background: url("../assets/feature3.svg")
-    background-size: contain
-    // height: 50vh
-    height: 90vw
-    // width: 57vh
-    width: 100%
-    // min-height: 250px
-    // min-width: 300px
-    margin-top: 18px
-    margin-right: 13px
+    height: 270px
+    width: 90%
     border-radius: 10px
+  // body.screen--xl &
+
+  // body.screen--lg &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--md &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--sm &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   height: 48vh
+  //   // min-height: 170px
+  //   width: 62vh
+  //   // min-width: 210px
+  //   border-radius: 10px
+  // body.screen--xs &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   // height: 50vh
+  //   height: 90vw
+  //   // width: 57vh
+  //   width: 100%
+  //   // min-height: 250px
+  //   // min-width: 300px
+  //   margin-top: 18px
+  //   margin-right: 13px
+  //   border-radius: 10px
 .shop-features
   body.screen--sm &
     width: 100%
