@@ -73,19 +73,101 @@
 
       </div> -->
     </div>
+    <q-card
+      flat
+      class="testimonial flex row justify-center items-center bg-white q-px-xs-none q-px-sm-xl q-px-md-xl q-px-lg-xl q-px-xl-xl"
+      style="width: 100%"
+    >
+      <q-card
+        class="row justify-xs-center justify-sm-end justify-md-end justify-lg-end justify-xl-end"
+        style="width: 100%"
+      >
+        <q-card
+          flat
+          class="head row items-center justify-xs-center justify-sm-between justify-md-between justify-lg-between justify-xl-between"
+          style="width: 62%"
+        >
+          <div style="" class="text-h1 text-black">Testimonials</div>
+          <q-card class="row items-center justify-center" style="">
+            <q-tabs
+              v-model="tab"
+              dense
+              class="text-grey"
+              active-color="primary"
+              indicator-color="primary"
+              align="justify"
+              narrow-indicator
+            >
+              <q-tab
+                class=""
+                name="previous"
+                icon="img:/left.svg"
+                style="background: #f5f5f5"
+              />
+              <q-tab class="bg-primary" name="next" icon="img:/right.svg" />
+            </q-tabs>
+          </q-card>
+        </q-card>
+      </q-card>
+
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="previous">
+          <div
+            flat
+            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
+            style=""
+          >
+            <!-- testimony -->
+            <!-- testimony -->
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+          </div>
+        </q-tab-panel>
+
+        <q-tab-panel name="next">
+          <div
+            flat
+            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
+            style="width: 100%"
+          >
+            <!-- testimony -->
+            <!-- testimony -->
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </q-page>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import MainHero from "../components/mainHero.vue";
+import Testimony from "../components/testimony.vue";
+
+const tab = ref("previous");
 // // import MainHero from "src/components/mainHero.vue";
 // import mainHero from "src/components/mainHero.vue";
 </script>
 
 <style scoped lang="sass">
+.text-black
+  font-family: 'Catellosdemo'
+  font-size: 50px
+  body.screen--xs &
+    font-size: 30px
+.testimony-container
+  width: 100%
 // body.screen--md &
 //   body.screen--sm &
-//   body.screen--xs &
+  body.screen--xs &
+    flex-direction: column
+
 
 .logo
   // body.screen--sm &
