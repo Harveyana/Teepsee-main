@@ -10,7 +10,7 @@
         class="gt-xs row justify-center no-wrap bg-transparent"
         style="width: 100%"
       >
-        <div class="text-h1 text1">How to get Teepsee</div>
+        <div class="text-h1 text1 q-py-md">How to get Teepsee</div>
       </q-card>
       <q-card
         flat
@@ -26,52 +26,148 @@
         <q-card flat class="my-card3"> </q-card>
       </div>
       <div class="text-h1 text3 self-start">Shop Now</div>
-      <q-toolbar
-        class="bg-transparent shop-features items-center justify-center rounded-borders"
+      <div
+        flat
+        class="row no-wrap bg-transparent shop-features items-center justify-between"
       >
-        <q-card flat class="wine"> </q-card>
-        <q-card flat class="champagne"> </q-card>
-      </q-toolbar>
+        <q-card flat class="wine">
+          <div class="text-h1 featureText text-white">Shop Wine</div>
+        </q-card>
+        <q-card flat class="champagne">
+          <div class="text-h1 featureText text-white">Shop Champagne</div>
+        </q-card>
+      </div>
       <!-- <div class="shop-features row no-wrap">
 
       </div> -->
-      <q-card flat class="ShopVodka"> </q-card>
+      <q-card flat class="ShopVodka">
+        <div class="text-h1 featureText text-white">Shop Vodka</div>
+      </q-card>
 
-      <q-toolbar
-        class="bg-transparent shop-features2 items-center justify-center rounded-borders"
+      <div
+        flat
+        class="row no-wrap bg-transparent shop-features2 items-center justify-between"
       >
-        <q-card flat class="ShopWhiskey"> </q-card>
-        <q-card flat class="ShopBrandy"> </q-card>
-      </q-toolbar>
+        <q-card flat class="ShopWhiskey"
+          ><div class="text-h1 featureText text-white">Shop Whiskey</div>
+        </q-card>
+        <q-card flat class="ShopBrandy">
+          <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
+        >
+      </div>
 
-      <!-- <div class="shop-features2 row">
+      <q-card flat class="PartyCombo">
+        <div class="text-h1 featureText text-white">Party Combo</div>
+      </q-card>
 
-      </div> -->
-      <q-card flat class="PartyCombo"> </q-card>
-      <q-toolbar
-        class="bg-transparent shop-features2 items-center justify-center rounded-borders"
-      >
-        <q-card flat class="ShopTequila"> </q-card>
-        <q-card flat class="ShopCognac"> </q-card>
-      </q-toolbar>
+      <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
+        <q-card flat class="ShopTequila"
+          ><div class="text-h1 featureText text-white">Shop Tequila</div>
+        </q-card>
+        <q-card flat class="ShopCognac"
+          ><div class="text-h1 featureText text-white">Shop Cognac</div>
+        </q-card>
+      </div>
 
       <!-- <div class="shop-features2 row">
 
       </div> -->
     </div>
+    <q-card
+      flat
+      class="testimonial flex row justify-center items-center bg-white q-px-xs-none q-px-sm-xl q-px-md-xl q-px-lg-xl q-px-xl-xl"
+      style="width: 100%"
+    >
+      <q-card
+        class="row justify-xs-center justify-sm-end justify-md-end justify-lg-end justify-xl-end"
+        style="width: 100%"
+      >
+        <q-card
+          flat
+          class="head row items-center justify-xs-center justify-sm-between justify-md-between justify-lg-between justify-xl-between"
+          style="width: 62%"
+        >
+          <div style="" class="text-h1 text-black">Testimonials</div>
+          <q-card class="row items-center justify-center" style="">
+            <q-tabs
+              v-model="tab"
+              dense
+              class="text-grey"
+              active-color="primary"
+              indicator-color="primary"
+              align="justify"
+              narrow-indicator
+            >
+              <q-tab
+                class=""
+                name="previous"
+                icon="img:/left.svg"
+                style="background: #f5f5f5"
+              />
+              <q-tab class="bg-primary" name="next" icon="img:/right.svg" />
+            </q-tabs>
+          </q-card>
+        </q-card>
+      </q-card>
+
+      <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="previous">
+          <div
+            flat
+            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
+            style=""
+          >
+            <!-- testimony -->
+            <!-- testimony -->
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+          </div>
+        </q-tab-panel>
+
+        <q-tab-panel name="next">
+          <div
+            flat
+            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
+            style="width: 100%"
+          >
+            <!-- testimony -->
+            <!-- testimony -->
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+            <Testimony></Testimony>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </q-page>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import MainHero from "../components/mainHero.vue";
+import Testimony from "../components/testimony.vue";
+
+const tab = ref("previous");
 // // import MainHero from "src/components/mainHero.vue";
 // import mainHero from "src/components/mainHero.vue";
 </script>
 
 <style scoped lang="sass">
+.text-black
+  font-family: 'Catellosdemo'
+  font-size: 50px
+  body.screen--xs &
+    font-size: 30px
+.testimony-container
+  width: 100%
 // body.screen--md &
 //   body.screen--sm &
-//   body.screen--xs &
+  body.screen--xs &
+    flex-direction: column
+
 
 .logo
   // body.screen--sm &
@@ -86,7 +182,22 @@ import MainHero from "../components/mainHero.vue";
   //   right: 25%
   // body.screen--xl &
   //   min-width: 10%
-
+.featureText
+  font-family: "Catellosdemo"
+  font-size: 40px
+  position: relative
+  left: 5%
+  top: 75%
+  body.screen--xs &
+    font-size: 24px
+    position: relative
+    left: 5%
+    top: 70%
+  body.screen--sm &
+    font-size: 24px
+    position: relative
+    left: 5%
+    top: 70%
 .features
   height: fit-content
   width: 100%
@@ -345,12 +456,15 @@ import MainHero from "../components/mainHero.vue";
   //   margin-right: 13px
   //   border-radius: 10px
 .shop-features
+  width: 100%
+  padding-left: 5%
+  padding-right: 5%
   body.screen--sm &
     width: 100%
-    padding-left: 4%
-    padding-right: 4%
-    align-items: center
-    justify-content: center
+    // padding-left: 4%
+    // padding-right: 4%
+    // align-items: center
+    // justify-content: center
   body.screen--xs &
     // width: 100%
     // padding-left: 4%
@@ -360,361 +474,168 @@ import MainHero from "../components/mainHero.vue";
     // align-items: center
     // justify-content: center
 .shop-features2
-  body.screen--xl &
-    margin-top: 2%
-  body.screen--lg &
-    margin-top: 2%
-  body.screen--md &
-    margin-top: 2%
+  width: 100%
+  padding-left: 5%
+  padding-right: 5%
   body.screen--sm &
-    margin-top: 1.8%
+    width: 100%
   body.screen--xs &
-    margin-top: 5%
-    display: flex
     flex-direction: column
-    align-items: center
-    justify-content: center
+    // align-items: center
+    // justify-content: center
 
 // Feature 2 and 3////////////
 
 .wine
-  body.screen--xl &
-    background: url("../assets/shopfeature2.svg")
-    background-repeat: no-repeat
-    background-position-y: -187px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 65vh
-    width: 44%
+  background: url("../assets/shopfeature2.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 49%
     // min-height: 450px
     // min-width: 595px
+  // body.screen--xl &
+
   body.screen--lg &
-    background: url("../assets/shopfeature2.svg")
-    background-repeat: no-repeat
-    background-position-y: -107px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--md &
-    background: url("../assets/shopfeature2.svg")
-    background-repeat: no-repeat
-    background-position-y: -87px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 73vh
-    width: 44%
-    // width: 93vh
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--sm &
-    background: url("../assets/shopfeature2.svg")
-    background-repeat: no-repeat
-    background-position-y: -40px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 18px
-    height: 53vh
-    width: 48%
-    // min-height: 200px
-    // min-width: 325px
+
+    height: 300px
+    min-height: 300px
+
   body.screen--xs &
-    background: url("../assets/shopfeature2.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    background-size: cover
+
     margin-bottom: 18px
-    height: 90vw
+    // height: 90vw
+    height: 300px
+    min-height: 300px
     width: 100%
-    // min-height: 300px
-    // min-width: 300px
+
 
 .champagne
-  body.screen--xl &
-    background: url("../assets/shopfeature1.svg")
-    background-repeat: no-repeat
-    background-position-y: -170px
-    border-radius: 15px
-    background-size: cover
-    height: 65vh
-    width: 44%
-    // width: 86vh
-    // min-height: 450px
-    // min-width: 595px
-  body.screen--lg &
-    background: url("../assets/shopfeature1.svg")
-    background-repeat: no-repeat
-    background-position-y: -100px
-    border-radius: 15px
-    background-size: cover
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
-  body.screen--md &
-    background: url("../assets/shopfeature1.svg")
-    background-repeat: no-repeat
-    background-position-y: -100px
-    border-radius: 15px
-    background-size: cover
-    height: 73vh
-    width: 44%
-    // width: 95vh
-    // min-height: 450px
-    // min-width: 595px
+  background: url("../assets/shopfeature1.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 49%
   body.screen--sm &
-    background: url("../assets/shopfeature1.svg")
-    background-repeat: no-repeat
-    background-position-y: -40px
-    border-radius: 15px
-    background-size: cover
-    height: 53vh
-    width: 48%
-    // min-height: 200px
-    // min-width: 325px
+    height: 300px
+    min-height: 300px
   body.screen--xs &
-    background: url("../assets/shopfeature1.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    background-size: cover
-    height: 90vw
+    margin-bottom: 18px
+    height: 300px
+    min-height: 300px
     width: 100%
-    // min-height: 300px
-    // min-width: 300px
 
 // Feature 4////////////
 
 .ShopVodka
+  background: url("../assets/shopfeature3.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  margin-bottom: 25px
+  margin-top: 25px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 89%
   body.screen--xl &
-    background: url("../assets/shopfeature3.svg")
-    background-repeat: no-repeat
-    background-position-y: -38px
-    border-radius: 15px
-    margin-top: 25px
-    background-size: cover
-    height: 73vh
-    width: 89%
-    // min-height: 450px
-    // min-width: 1215px
-  body.screen--lg &
-    background: url("../assets/shopfeature3.svg")
-    background-repeat: no-repeat
-    background-position-y: -16px
-    border-radius: 15px
-    margin-top: 25px
-    background-size: cover
-    height: 73vh
-    width: 89%
-    // min-height: 450px
-    // min-width: 1215px
-  body.screen--md &
-    background: url("../assets/shopfeature3.svg")
-    background-repeat: no-repeat
-    background-position-y: -56px
-    border-radius: 15px
-    margin-top: 25px
-    background-size: cover
-    height: 73vh
-    width: 89%
-    // min-height: 450px
-    // min-width: 1215px
-  body.screen--sm &
-    background: url("../assets/shopfeature3.svg")
-    background-repeat: no-repeat
-    background-position-y: -10px
-    border-radius: 15px
-    margin-top: 18px
-    background-size: cover
-    height: 53vh
-    width: 90%
-    // margin-left: 4%
-    // margin-right: 4%
-    // width: 125vh
-    // min-height: 230px
-    // min-width: 670px
-  body.screen--xs &
-    background: url("../assets/mobileShopfeature3.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    margin-top: 18px
-    background-size: cover
-    height: 90vw
-    width: 92%
-    // min-height: 300px
-    // min-width: 300px
 
+  body.screen--lg &
+
+  body.screen--md &
+
+  body.screen--sm &
+    height: 300px
+    min-height: 300px
+  body.screen--xs &
+    margin-bottom: 18px
+    height: 300px
+    min-height: 300px
+    width: 90%
 
 // Feature 5 and 6////////////
 
 .ShopWhiskey
+  background: url("../assets/shopfeature4.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 49%
   body.screen--xl &
-    background: url("../assets/shopfeature4.svg")
-    background-repeat: no-repeat
-    background-position-y: -187px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--lg &
-    background: url("../assets/shopfeature4.svg")
-    background-repeat: no-repeat
-    background-position-y: -107px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--md &
-    background: url("../assets/shopfeature4.svg")
-    background-repeat: no-repeat
-    background-position-y: -90px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 73vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--sm &
-    background: url("../assets/shopfeature4.svg")
-    background-repeat: no-repeat
-    background-position-y: -40px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 18px
-    height: 53vh
-    width: 45%
-    // min-height: 200px
-    // min-width: 325px
+    height: 300px
+    min-height: 300px
   body.screen--xs &
-    background: url("../assets/shopfeature4.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    background-size: cover
     margin-bottom: 18px
-    height: 90vw
+    height: 300px
+    min-height: 300px
     width: 100%
-    // min-height: 300px
-    // min-width: 300px
 
 .ShopBrandy
+  background: url("../assets/shopfeature5.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 49%
   body.screen--xl &
-    background: url("../assets/shopfeature5.svg")
-    background-repeat: no-repeat
-    background-position-y: -170px
-    border-radius: 15px
-    background-size: cover
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--lg &
-    background: url("../assets/shopfeature5.svg")
-    background-repeat: no-repeat
-    background-position-y: -100px
-    border-radius: 15px
-    background-size: cover
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
   body.screen--md &
-    background: url("../assets/shopfeature5.svg")
-    background-repeat: no-repeat
-    background-position-y: -100px
-    border-radius: 15px
-    background-size: cover
-    height: 73vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
   body.screen--sm &
-    background: url("../assets/shopfeature5.svg")
-    background-repeat: no-repeat
-    background-position-y: -40px
-    border-radius: 15px
-    background-size: cover
-    height: 53vh
-    width: 45%
-    // min-height: 200px
-    // min-width: 325px
+    height: 300px
+    min-height: 300px
   body.screen--xs &
-    background: url("../assets/shopfeature5.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    background-size: cover
-    height: 90vw
+    margin-bottom: 18px
+    height: 300px
+    min-height: 300px
     width: 100%
-    // min-height: 300px
-    // min-width: 300px
 
 // Feature 6  ////////////
 
 .PartyCombo
-  body.screen--xl &
-    background: url("../assets/shopfeature6.svg")
-    background-repeat: no-repeat
-    background-position-y: -38px
-    border-radius: 15px
-    margin-top: 25px
-    background-size: cover
-    height: 73vh
-    width: 89%
-    // min-height: 450px
-    // min-width: 1215px
+  background: url("../assets/shopfeature6.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  margin-bottom: 25px
+  margin-top: 25px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 89%
   body.screen--lg &
-    background: url("../assets/shopfeature6.svg")
-    background-repeat: no-repeat
-    background-position-y: -16px
-    border-radius: 15px
-    margin-top: 25px
-    background-size: cover
-    height: 73vh
-    width: 89%
-    // min-height: 450px
-    // min-width: 1215px
+
   body.screen--md &
-    background: url("../assets/shopfeature6.svg")
-    background-repeat: no-repeat
-    background-position-y: -56px
-    border-radius: 15px
-    margin-top: 25px
-    background-size: cover
-    height: 73vh
-    width: 89%
-    // min-height: 450px
-    // min-width: 1215px
+
   body.screen--sm &
-    background: url("../assets/shopfeature6.svg")
-    background-repeat: no-repeat
-    background-position-y: -10px
-    border-radius: 15px
-    margin-top: 18px
-    background-size: cover
-    height: 53vh
-    width: 90%
-    // min-height: 230px
-    // min-width: 670px
+    height: 300px
+    min-height: 300px
   body.screen--xs &
-    background: url("../assets/mobileShopfeature6.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    margin-top: 18px
-    background-size: cover
-    height: 90vw
-    width: 92%
-    // min-height: 300px
-    // min-width: 300px
+    margin-bottom: 18px
+    height: 300px
+    min-height: 300px
+    width: 90%
 
 
 
@@ -722,109 +643,62 @@ import MainHero from "../components/mainHero.vue";
 
 
 .ShopTequila
-  body.screen--xl &
-    background: url("../assets/shopfeature7.svg")
-    background-repeat: no-repeat
-    background-position-y: -117px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 65vh
-    width: 44%
+  background: url("../assets/shopfeature7.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 49%
     // min-height: 450px
     // min-width: 595px
+  // body.screen--xl &
+
   body.screen--lg &
-    background: url("../assets/shopfeature7.svg")
-    background-repeat: no-repeat
-    background-position-y: -67px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 2%
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--md &
-    background: url("../assets/shopfeature7.svg")
-    background-repeat: no-repeat
-    background-position-y: -50px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 25px
-    height: 73vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--sm &
-    background: url("../assets/shopfeature7.svg")
-    background-repeat: no-repeat
-    background-position-y: -20px
-    border-radius: 15px
-    background-size: cover
-    margin-right: 18px
-    height: 53vh
-    width: 45%
-    // min-height: 200px
-    // min-width: 325px
+
+    height: 300px
+    min-height: 300px
+
   body.screen--xs &
-    background: url("../assets/shopfeature7.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    background-size: cover
+
     margin-bottom: 18px
-    height: 90vw
+    // height: 90vw
+    height: 300px
+    min-height: 300px
     width: 100%
-    // min-height: 300px
-    // min-width: 300px
 
 .ShopCognac
-  body.screen--xl &
-    background: url("../assets/shopfeature8.svg")
-    background-repeat: no-repeat
-    background-position-y: -117px
-    border-radius: 15px
-    background-size: cover
-    height: 65vh
-    width: 44%
+  background: url("../assets/shopfeature8.svg")
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 15px
+  background-size: cover
+  height: 500px
+  min-height: 500px
+  width: 49%
     // min-height: 450px
     // min-width: 595px
+  // body.screen--xl &
+
   body.screen--lg &
-    background: url("../assets/shopfeature8.svg")
-    background-repeat: no-repeat
-    background-position-y: -67px
-    border-radius: 15px
-    background-size: cover
-    height: 65vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--md &
-    background: url("../assets/shopfeature8.svg")
-    background-repeat: no-repeat
-    background-position-y: -50px
-    border-radius: 15px
-    background-size: cover
-    height: 73vh
-    width: 44%
-    // min-height: 450px
-    // min-width: 595px
+
   body.screen--sm &
-    background: url("../assets/shopfeature8.svg")
-    background-repeat: no-repeat
-    background-position-y: -20px
-    border-radius: 15px
-    background-size: cover
-    height: 53vh
-    width: 45%
-    // min-height: 200px
-    // min-width: 325px
+
+    height: 300px
+    min-height: 300px
+
   body.screen--xs &
-    background: url("../assets/shopfeature8.svg")
-    background-repeat: no-repeat
-    border-radius: 15px
-    background-size: cover
-    height: 90vw
+
+    margin-bottom: 18px
+    // height: 90vw
+    height: 300px
+    min-height: 300px
     width: 100%
-    // min-height: 300px
-    // min-width: 300px
 </style>
