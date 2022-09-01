@@ -11,7 +11,7 @@
       <q-list
         class="row q-gutter-lg no-wrap bg-transparent"
         style="width: 100%; height: fit-content"
-        v-if="Store.products.value"
+        v-if="recentProducts"
       >
         <product
           v-for="product in recentProducts"
@@ -27,7 +27,7 @@
       <q-list
         class="row q-gutter-lg no-wrap bg-transparent"
         style="width: 100%; height: fit-content"
-        v-if="!Store.products.value"
+        v-if="!recentProducts"
       >
         <product></product>
         <product></product>
