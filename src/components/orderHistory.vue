@@ -6,11 +6,14 @@
     transition-next="jump-up"
     class="overflow-hidden"
   >
-    <q-tab-panel :name="Store.orders" class="overflow-hidden">
-      <div class="orderContainer overflow-hidden" style="">
+    <q-tab-panel
+      :name="Store.orders"
+      class="scroll justify-center items-center content-center hide-scrollbar"
+    >
+      <div class="orderContainer" style="">
         <q-icon name="img:/back.svg" size="28px" class="flex lt-md q-ml-md q-mt-md" />
         <div class="text-h1 orderLabel" style="">Order History</div>
-        <q-card class="list scroll overflow-hidden">
+        <q-card flat class="list scroll overflow-hidden">
           <!-- list -->
           <!-- list -->
           <q-card
@@ -470,10 +473,13 @@ const Store = useCounterStore();
     margin-bottom: 30px
 
 .orderContainer
+  height: 102vh
   body.screen--xl &
+    height: 25vh
     width: 100%
   body.screen--lg &
     width: 100%
+    height: 50vh
   body.screen--md &
     padding-top: 45px
     width: 100%

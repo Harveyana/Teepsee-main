@@ -11,6 +11,7 @@
       <q-icon name="img:/filter.svg" size="30px" class="filter lt-md">
         <q-popup-proxy
           cover
+          v-model="showhide"
           maxHeight="99vh"
           transition-show="flip-up"
           transition-hide="flip-down"
@@ -18,21 +19,65 @@
         >
           <q-banner class="scroll filterContainerMobile" style="width: 100%">
             <q-card flat style="width: 100%">
-              <!-- checklist -->
-              <q-card class="column q-mt-md" style="width: 100%">
+              <!-- <PriceFilters></PriceFilters> -->
+              <q-card class="column">
                 <div class="text-h2 priceFilterHeader" style="">Price</div>
-                <q-card class="q-mt-sm" style="width: 100%">
-                  <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
-                  <q-checkbox color="yellow" v-model="ri" label="₦10,000--₦50,000" />
-                  <q-checkbox color="yellow" v-model="rig" label="₦50,000--₦100,000" />
-                  <q-checkbox color="yellow" v-model="righ" label="₦100,000--₦300,000" />
-                  <q-checkbox color="yellow" v-model="right" label="₦300,000--₦500,000" />
-                  <q-checkbox
+                <q-item-section class="q-mt-sm">
+                  <q-radio
                     color="yellow"
-                    v-model="righti"
-                    label="₦500,000 and above"
+                    checked-icon="task_alt"
+                    unchecked-icon="panorama_fish_eye"
+                    v-model="price.filter"
+                    val="1"
+                    label="Under ₦10,000"
+                    @click="Store.priceQuery(0, 10000), (showhide = false)"
                   />
-                </q-card>
+                  <q-radio
+                    color="yellow"
+                    checked-icon="task_alt"
+                    unchecked-icon="panorama_fish_eye"
+                    v-model="price.filter"
+                    val="2"
+                    label="₦10,000--₦50,000"
+                    @click="Store.priceQuery(10000, 50000), (showhide = false)"
+                  />
+                  <q-radio
+                    color="yellow"
+                    checked-icon="task_alt"
+                    unchecked-icon="panorama_fish_eye"
+                    v-model="price.filter"
+                    val="3"
+                    label="₦50,000--₦100,000"
+                    @click="Store.priceQuery(50000, 100000), (showhide = false)"
+                  />
+                  <q-radio
+                    color="yellow"
+                    checked-icon="task_alt"
+                    unchecked-icon="panorama_fish_eye"
+                    v-model="price.filter"
+                    val="4"
+                    label="₦100,000--₦300,000"
+                    @click="Store.priceQuery(100000, 300000), (showhide = false)"
+                  />
+                  <q-radio
+                    color="yellow"
+                    checked-icon="task_alt"
+                    unchecked-icon="panorama_fish_eye"
+                    v-model="price.filter"
+                    val="5"
+                    label="₦300,000--₦500,000"
+                    @click="Store.priceQuery(300000, 500000), (showhide = false)"
+                  />
+                  <q-radio
+                    color="yellow"
+                    checked-icon="task_alt"
+                    unchecked-icon="panorama_fish_eye"
+                    v-model="price.filter"
+                    val="6"
+                    label="₦500,000 and above"
+                    @click="Store.priceQuery(500000, 20000000), (showhide = false)"
+                  />
+                </q-item-section>
               </q-card>
               <!-- input custom checklist -->
               <q-card class="column" style="width: 100%">
@@ -46,6 +91,8 @@
                     <q-input
                       borderless
                       dense
+                      type="number"
+                      prefix="₦"
                       v-model="custom.min"
                       label=""
                       class="filterInput"
@@ -56,6 +103,8 @@
                     <q-input
                       borderless
                       dense
+                      prefix="₦"
+                      type="number"
                       class="filterInput"
                       v-model="custom.max"
                       label=""
@@ -67,7 +116,9 @@
                       class="filterButton"
                       label="Go"
                       style=""
-                      @click="Store.priceQuery(custom.min, custom.max)"
+                      @click="
+                        Store.priceQuery(custom.min, custom.max), (showhide = false)
+                      "
                     />
                   </q-card>
                 </q-card>
@@ -80,18 +131,21 @@
                     label="Hennessey"
                     true-value="henessey"
                     false-value="nil"
+                    @click="showhide = false"
                   />
                   <q-checkbox
                     v-model="brand.Vodka"
                     label="Vodka"
                     true-value="vodka"
                     false-value="nil"
+                    @click="showhide = false"
                   />
                   <q-checkbox
                     v-model="brand.Azul"
                     label="Azul"
                     true-value="azul"
                     false-value="nil"
+                    @click="showhide = false"
                   />
                 </q-item-section>
               </q-card>
@@ -143,10 +197,17 @@ import { useCounterStore } from "stores/counter";
 import Product from "/src/components/product.vue";
 import RecentlyViewed from "src/components/RecentlyViewed.vue";
 import { useRouter, useRoute } from "vue-router";
-import { onMounted, reactive, watch } from "vue";
+import { onMounted, ref, reactive, watch } from "vue";
+import PriceFilters from "src/components/priceFilters.vue";
 const Store = useCounterStore();
 const router = useRouter();
+const showhide = ref(false);
 const route = useRoute();
+const shape = ref("");
+
+const price = reactive({
+  filter: "nil",
+});
 const brand = reactive({
   Hennessey: "nil",
   Vodka: "nil",
@@ -222,7 +283,7 @@ onMounted(() => {
   color: #27141a
 .filterInput
   background: #dddddd
-  height: 38px
+  // height: 38px
   padding-left: 10px
   // padding-bottom: 50px
   width: 100%

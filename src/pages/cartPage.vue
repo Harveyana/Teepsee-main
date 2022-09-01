@@ -6,7 +6,7 @@
     <h2 class="PageName self-start items-start" style="">Cart</h2>
     <div class="container row justify-between" style="">
       <q-card class="cart q-pb-md self-start" style="">
-        <q-card class="gt-xs card-headers q-mt-lg row justify-around">
+        <q-card class="gt-xs card-headers q-mt-lg row justify-around" v-if="cartProducts">
           <q-card class="ImageAndName"
             ><h3 class="ImageAndNameLabel card-header" style="">
               Product Image & Item Name
@@ -37,16 +37,21 @@
             :productQuantity="product.quantity"
             :key="product.name"
           ></cartProductVue>
-          <!-- <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue>
-          <cartProductVue></cartProductVue> -->
+
           <!-- Product -->
         </q-list>
-
+        <!-- Alternate -->
+        <q-card
+          class="scroll hide-scrollbar column flex-center"
+          style=""
+          v-if="!cartProducts"
+        >
+          <div class="text-h2 card-header q-mb-md">
+            Hey, you have no items in your cart
+          </div>
+          <q-icon size="45px" name="style" />
+        </q-card>
+        <!-- Alternate -->
         <q-separator class="" style="margin-bottom: 1%; height: 5px" />
         <q-btn
           to="/checkout"
@@ -54,6 +59,7 @@
           class="lt-sm checkoutBtn q-mt-xl"
           label="Checkout"
           style="position: relative; left: 10%"
+          v-if="cartProducts"
         />
         <!-- chasers -->
         <!-- chasers -->
@@ -89,7 +95,7 @@
         </q-card>
       </q-card>
       <q-card class="gt-xs row summary justify-center q-pa-lg" style="">
-        <q-card class="column summary-container" style="width: 100%">
+        <q-card class="column summary-container" style="width: 100%" v-if="cartProducts">
           <q-card><h3 class="summaryLabel card-header" style="">Summary</h3></q-card>
           <q-separator class="" style="" />
           <q-card class="summaryItems q-my-lg">
@@ -176,6 +182,11 @@ onMounted(() => {
     font-family: 'Catellosdemo'
     font-size: 125%
   body.screen--sm &
+    line-height: 5px
+    color: #1f1e26
+    font-family: 'Catellosdemo'
+    font-size: 125%
+  body.screen--xs &
     line-height: 5px
     color: #1f1e26
     font-family: 'Catellosdemo'
@@ -326,6 +337,7 @@ onMounted(() => {
 .scroll
   width: 100%
   max-height: 300px
+  min-height: 100px
   body.screen--xs &
     width: 100%
     max-height: 400px

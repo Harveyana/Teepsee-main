@@ -68,7 +68,7 @@
                 v-model="data.name"
                 class="Firstname inputEdit"
                 type="text"
-                placeholder="Obiajulu"
+                :placeholder="Store.user.name"
               />
             </q-card>
 
@@ -87,7 +87,7 @@
                 v-model="data.lastName"
                 class="Lastname inputEdit"
                 type="text"
-                placeholder="Anayo"
+                :placeholder="Store.user.lastName"
               />
             </q-card>
           </q-card>
@@ -107,7 +107,7 @@
                 v-model="data.email"
                 class="Firstname inputEdit"
                 type="text"
-                placeholder="obiianayo@gmail.com"
+                :placeholder="Store.user.email"
               />
             </div>
 
@@ -126,7 +126,7 @@
                 v-model="data.phoneNumber"
                 class="Lastname inputEdit"
                 type="text"
-                placeholder="08120686653"
+                :placeholder="Store.user.phoneNumber"
               />
             </div>
           </q-card>

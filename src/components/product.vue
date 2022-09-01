@@ -21,18 +21,18 @@
           src="../assets/favourite.svg"
           spinner-color="white"
           class="favourite"
-          v-if="favourite"
+          v-if="includesFavourites"
           style="width: 25px"
-          @click="favourite = !favourite"
+          @click="Store.removeFavourites(productId)"
         />
         <!-- <router-link to="/product" style="text-decoration: none"> -->
         <q-img
           src="../assets/favourite2.svg"
           spinner-color="white"
           class="favourite"
-          v-else="!favourite"
+          v-if="!includesFavourites"
           style="width: 25px; z-index: 5"
-          @click="favourite = !favourite"
+          @click="Store.addToFavourites(productId)"
         />
         <!-- </router-link> -->
       </div>
@@ -40,12 +40,32 @@
     <!-- product head -->
 
     <!-- product-image -->
-    <q-card class="column no-wrap flex-center" style="width: 100%">
-      <q-card flat class="container-card flex-center" to="/product">
-        <q-img :src="productImage" spinner-color="white" class="product-image" style="" />
+    <router-link
+      :to="{ path: `/product/${productId}` }"
+      style="text-decoration: none; width: 100%"
+      @click="
+        addTorecently(
+          productName,
+          productPrice,
+          productCategory,
+          productImage,
+          productTag,
+          productId
+        )
+      "
+    >
+      <q-card flat class="column no-wrap flex-center" style="width: 100%">
+        <q-card flat class="container-card flex-center" to="/product">
+          <q-img
+            :src="productImage"
+            spinner-color="white"
+            class="product-image"
+            style=""
+          />
+        </q-card>
+        <q-separator style="position: relative; top: -25px" />
       </q-card>
-      <q-separator style="position: relative; top: -25px" />
-    </q-card>
+    </router-link>
     <!-- product image -->
 
     <!-- :style="{ backgroundImage: 'url(' + productImage + ')' }" -->
@@ -54,6 +74,16 @@
     <router-link
       :to="{ path: `/product/${productId}` }"
       style="text-decoration: none; width: 100%"
+      @click="
+        addTorecently(
+          productName,
+          productPrice,
+          productCategory,
+          productImage,
+          productTag,
+          productId
+        )
+      "
     >
       <q-card
         flat
@@ -80,7 +110,8 @@
 <script>
 import { useCounterStore } from "stores/counter";
 import { useRouter, useRoute } from "vue-router";
-
+import { computed, onMounted } from "vue";
+import { useQuasar } from "quasar";
 export default {
   name: "product",
 
@@ -91,15 +122,57 @@ export default {
     productImage: String,
     productTag: String,
     productId: String,
+    favouriters: Array,
   },
   data() {
     return {
-      favourite: false,
       Store: useCounterStore(),
       router: useRouter(),
       route: useRoute(),
+      $q: useQuasar(),
     };
   },
+  methods: {
+    addTorecently(name, price, category, image, tag, id) {
+      let recents = this.$q.localStorage.getItem("recentItems") || [];
+      if (recents.length < 20) {
+        recents.push({
+          name,
+          price,
+          category,
+          image,
+          tag,
+          id,
+        });
+        this.$q.localStorage.set("recentItems", recents);
+
+        console.log(recents);
+      } else {
+        recents.splice(0, 1);
+        recents.push({
+          name,
+          price,
+          category,
+          image,
+          tag,
+          id,
+        });
+        this.$q.localStorage.set("recentItems", recents);
+        console.log(recents);
+      }
+    },
+  },
+  computed: {
+    // a computed getter
+    includesFavourites() {
+      if (this.favouriters) {
+        return this.favouriters.includes(this.Store.userId);
+      }
+    },
+  },
+  // onMounted() {
+  //   console.log("this.props.favouriters");
+  // },
 };
 </script>
 <style scoped lang="sass">

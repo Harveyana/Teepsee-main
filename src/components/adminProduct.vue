@@ -89,36 +89,7 @@
                   style="border-radius: 15px; width: 60%"
                 />
               </q-card>
-              <!-- Product Category -->
-              <!-- <q-card class="input3" style="width: 80%">
-                <h4 class="NameClass">Product Category</h4>
-                <q-input
-                  filled
-                  label="Product Category"
-                  v-model="product.category"
-                  style="border-radius: 15px; width: 60%"
-                />
-              </q-card> -->
-              <!-- Product Description -->
-              <!-- <q-card class="input3" style="width: 80%">
-                <h4 class="NameClass">Product Description</h4>
-                <q-input
-                  filled
-                  label="Product Description"
-                  v-model="product.description"
-                  style="border-radius: 15px; width: 100%"
-                />
-              </q-card>
-              <q-card class="input4" style="width: 80%">
-                <h4 class="NameClass">Product Brand</h4>
-                <q-input
-                  filled
-                  label="Product Brand"
-                  v-model="product.brand"
-                  style="border-radius: 15px; width: 60%"
-                />
-              </q-card> -->
-              <!-- inputs -->
+
             </q-card>
 
             <!-- q-uploader -->

@@ -112,41 +112,20 @@
         </q-item-section>
       </q-item>
 
-      <!-- Categories Button -->
-      <!-- login button -->
-      <q-item clickable>
-        <q-item-section>
+      <q-item clickable v-if="!Store.isLoggedIn">
+        <q-item-section avatar>
           <q-btn
             text-color="white"
             class="cta"
+            to="/login"
             label="Login"
             style="
               font-size: 17px;
-              width: 60%;
+              min-width: 155px;
               margin-left: 18px;
               margin-top: 25px;
               border-radius: 15px;
               background-color: #27141a;
-              text-transform: capitalize;
-              font-family: 'Manrope-SemiBold';
-            "
-          />
-        </q-item-section>
-      </q-item>
-
-      <!-- Sign up button -->
-      <q-item clickable>
-        <q-item-section>
-          <q-btn
-            text-color="white"
-            class="cta"
-            label="Sign up"
-            style="
-              font-size: 17px;
-              width: 60%;
-              margin-left: 18px;
-              border-radius: 15px;
-              background-color: #e6b41d;
               text-transform: capitalize;
               font-family: 'Manrope-SemiBold';
             "
@@ -172,7 +151,6 @@
       <q-separator inset style="margin-top: 17px" />
 
       <q-list padding class="overflow-hidden">
-
         <q-item clickable padding class="self-start" style="margin-top: 20px">
           <q-item-section>
             <div class="text-h6 acc-link">General</div>

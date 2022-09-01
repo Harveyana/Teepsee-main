@@ -1,5 +1,5 @@
 <template>
-  <q-card class="container row flex flex-center q-pt-xl" style="">
+  <q-card class="container row flex flex-center q-pt-xl overflow-hidden" style="">
     <img
       alt="teepsee logo"
       src="~assets/engrave-yel.svg"
@@ -9,22 +9,25 @@
     <q-icon
       name="img:/roundedClose.svg"
       size="28px"
-      class="flex lt-md q-ml-md q-mt-md"
-      style="position: absolute; top: 2%; right: 4%"
+      class="flex q-ml-md q-mt-md"
+      style="position: absolute; top: 2%; right: 6%"
       @click="Store.showReviewBox = false"
     />
     <q-card class="box-container column q-mb-xl q-mt-xs-sm flex-center" style="">
       <q-card class="HeaderName column bg-transparent flex-center" style="z-index: 5"
-        ><h3 class="Header card-header" style="font-size: 200%; line-height: 1px">
+        ><div
+          class="text-h3 Header card-header"
+          style="font-size: 200%; line-height: 1px"
+        >
           Hello Anayo
-        </h3>
-        <h4 class="NameClass">Please rate your drink</h4>
+        </div>
+        <div class="text-h4 NameClass q-mt-sm">Please rate your drink</div>
       </q-card>
 
       <q-card
         flat
         class="scroll no-wrap hide-scrollbar"
-        style="width: 100%; height: 130px"
+        style="width: 100%; height: 230px"
       >
         <q-list class="column no-wrap" style="max-width: 100%">
           <q-card flat class="Input2 column flex-center" style="min-width: 100%">
@@ -36,12 +39,30 @@
             />
             <q-rating
               v-model="ratingModel"
-              class="q-mt-md"
+              class="q-my-md"
               size="2.4em"
               :max="5"
               color="secondary"
               style=""
             />
+            <div class="row justify-around items-center no-wrap" style="width: 100%">
+              <q-input
+                borderless
+                type="text"
+                class=""
+                placeholder="Drop a comment"
+                v-model="formData.password"
+                style="
+                  width: 75%;
+                  height: 45px;
+                  padding-left: 25px;
+                  border: 1px solid #e0e0e0;
+                  border-radius: 15px;
+                "
+              />
+              <!-- <q-icon name="send" size="30px" /> -->
+              <q-btn flat icon="send" class="sendBtn" style="width: 20%" />
+            </div>
           </q-card>
           <q-card
             flat
@@ -56,17 +77,35 @@
             />
             <q-rating
               v-model="ratingModel"
-              class="q-mt-md"
+              class="q-my-md"
               size="2.4em"
               :max="5"
               color="secondary"
               style=""
             />
+            <div class="row justify-around items-center no-wrap" style="width: 100%">
+              <q-input
+                borderless
+                type="text"
+                class=""
+                placeholder="Drop a comment"
+                v-model="formData.password"
+                style="
+                  width: 75%;
+                  height: 45px;
+                  padding-left: 25px;
+                  border: 1px solid #e0e0e0;
+                  border-radius: 15px;
+                "
+              />
+              <!-- <q-icon name="send" size="30px" /> -->
+              <q-btn flat icon="send" class="sendBtn" style="width: 20%" />
+            </div>
           </q-card>
         </q-list>
       </q-card>
       <q-card class="btns column items-center" style="width: 100%">
-        <q-input
+        <!-- <q-input
           borderless
           type="textarea"
           class="q-mt-md"
@@ -78,13 +117,8 @@
             border: 1px solid #e0e0e0;
             border-radius: 15px;
           "
-        />
-        <q-btn
-          text-color="white"
-          class="checkoutBtn self-center"
-          label="Submit"
-          style=""
-        />
+        /> -->
+        <q-btn text-color="white" class="checkoutBtn self-center" label="Done" style="" />
       </q-card>
     </q-card>
   </q-card>
@@ -140,6 +174,11 @@ const formData = ref({
   background-repeat: no-repeat
   // height: 90vh
   // width: 100vw
+.sendBtn
+  border-radius: 15px
+  width: 100%
+  height: 40px
+  background: whitesmoke
 .checkoutBtn
   margin-top: 8px
   border-radius: 8px
@@ -150,27 +189,27 @@ const formData = ref({
   background: #27141a
 .NameClass
   body.screen--xl &
-    line-height: 5px
+    line-height: 35px
     color: #666666
     font-family: 'Manrope-semiBold'
     font-size: 120%
   body.screen--lg &
-    line-height: 5px
+    line-height: 35px
     color: #666666
     font-family: 'Manrope-semiBold'
     font-size: 120%
   body.screen--md &
-    line-height: 0px
+    line-height: 35px
     color: #666666
     font-family: 'Manrope-semiBold'
     font-size: 120%
   body.screen--sm &
-    line-height: 5px
+    line-height: 35px
     color: #666666
     font-family: 'Manrope-semiBold'
     font-size: 120%
   body.screen--xs &
-    line-height: 15px
+    line-height: 25px
     color: #666666
     font-family: 'Manrope-semiBold'
     font-size: 110%
