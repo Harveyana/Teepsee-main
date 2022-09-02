@@ -51,10 +51,16 @@
     <!-- results -->
     <q-card flat v-if="showResults" class="scroll" style="width: 100%; max-height: 300px">
       <q-card flat class="" style="width: 100%">
-        <q-card flat class="row imagebox" style="width: 100%">
+        <q-card
+          flat
+          class="row imagebox"
+          style="width: 100%"
+          v-for="product in productList"
+          :key="product.id"
+        >
           <q-card style="width: 35%; height: 100px">
             <q-img
-              src="../assets/product1.png"
+              :src="product.images[0]"
               spinner-color="white"
               class="product-image"
               style=""
@@ -75,91 +81,7 @@
               </div>
             </q-card>
             <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-            </q-card>
-          </q-card>
-        </q-card>
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style=""
-            />
-          </q-card>
-          <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
-          >
-            <q-card>
-              <div class="text-h2 product-name" style="">
-                {{ product.name.slice(0, 9) + ".." }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h3 product-price" style="">
-                {{ product.price }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-            </q-card>
-          </q-card>
-        </q-card>
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style=""
-            />
-          </q-card>
-          <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
-          >
-            <q-card>
-              <div class="text-h2 product-name" style="">
-                {{ product.name.slice(0, 9) + ".." }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h3 product-price" style="">
-                {{ product.price }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-            </q-card>
-          </q-card>
-        </q-card>
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style=""
-            />
-          </q-card>
-          <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
-          >
-            <q-card>
-              <div class="text-h2 product-name" style="">
-                {{ product.name.slice(0, 9) + ".." }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h3 product-price" style="">
-                {{ product.price }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
+              <div class="text-h5 product-cat" style="">{{ product.category }}</div>
             </q-card>
           </q-card>
         </q-card>
@@ -189,27 +111,32 @@ export default {
     const showSearch = ref(false);
     const showResults = ref(false);
     const searchResults = ref("");
-    const product = {
-      name: "Hennessey",
-      price: "₦5,000",
-      cat: "Cognac",
-    };
+    // const product = {
+    //   name: "Hennessey",
+    //   price: "₦5,000",
+    //   cat: "Cognac",
+    // };
     return {
       link,
       Store,
       showSearch,
       showResults,
-      product,
+      searchResults,
     };
   },
   computed: {
     // a computed getter
-    productList() {
+    productList: function () {
       // `this` points to the component instance
-      if (this.showSearch == true) {
-        return this.Store.products.value.filter((product) =>
-          product.name.toLowerCase().includes(this.searchResults.toLowerCase())
-        );
+      // if (this.showSearch == true) {
+      //   return this.Store.products.value.filter((product) =>
+      //     product.name.toLowerCase().includes(this.searchResults.toLowerCase())
+      //   );
+      // }
+      if (this.Store.products.value) {
+        return this.Store.products.value.filter((product) => {
+          return product.name.toLowerCase().match(this.searchResults.toLowerCase());
+        });
       }
     },
   },

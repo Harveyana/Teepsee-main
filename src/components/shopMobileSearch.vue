@@ -14,12 +14,7 @@
       @click="showSearch = true"
     />
   </q-card>
-  <q-banner
-    class="text-white searchResults lt-md"
-    v-if="showSearch"
-    style="z-index: 10"
-    @mouseleave="(showSearch = false), (showResults = false)"
-  >
+  <q-banner class="text-white searchResults lt-md" v-if="showSearch" style="z-index: 10">
     <q-icon
       name="img:/close.svg"
       class="flex"
@@ -31,6 +26,7 @@
         outlined
         bottom-slots
         color="grey"
+        v-model="searchResults"
         rounded
         label=" Search Products"
         style="width: 100%; border-radius: 30px; margin-top: 30px"
@@ -51,18 +47,24 @@
     <!-- results -->
     <q-card flat v-if="showResults" class="scroll" style="width: 100%; max-height: 300px">
       <q-card flat class="" style="width: 100%">
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
+        <q-card
+          flat
+          class="row imagebox"
+          style="width: 100%; border: 1px solid"
+          v-for="product in productList"
+          :key="product.id"
+        >
+          <q-card style="width: 35%">
             <q-img
-              src="../assets/product1.png"
+              :src="product.images[0]"
               spinner-color="white"
               class="product-image"
               style=""
             />
           </q-card>
           <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
+            class="column items-start justify-center no-wrap q-my-sm"
+            style="width: 60%"
           >
             <q-card>
               <div class="text-h2 product-name" style="">
@@ -75,91 +77,7 @@
               </div>
             </q-card>
             <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-            </q-card>
-          </q-card>
-        </q-card>
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style=""
-            />
-          </q-card>
-          <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
-          >
-            <q-card>
-              <div class="text-h2 product-name" style="">
-                {{ product.name.slice(0, 9) + ".." }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h3 product-price" style="">
-                {{ product.price }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-            </q-card>
-          </q-card>
-        </q-card>
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style=""
-            />
-          </q-card>
-          <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
-          >
-            <q-card>
-              <div class="text-h2 product-name" style="">
-                {{ product.name.slice(0, 9) + ".." }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h3 product-price" style="">
-                {{ product.price }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-            </q-card>
-          </q-card>
-        </q-card>
-        <q-card flat class="row imagebox" style="width: 100%">
-          <q-card style="width: 35%; height: 100px">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="product-image"
-              style=""
-            />
-          </q-card>
-          <q-card
-            class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
-          >
-            <q-card>
-              <div class="text-h2 product-name" style="">
-                {{ product.name.slice(0, 9) + ".." }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h3 product-price" style="">
-                {{ product.price }}
-              </div>
-            </q-card>
-            <q-card>
-              <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
+              <div class="text-h5 product-cat" style="">{{ product.category }}</div>
             </q-card>
           </q-card>
         </q-card>
@@ -199,23 +117,26 @@ export default {
       Store,
       showSearch,
       showResults,
+      searchResults,
       product,
     };
   },
   computed: {
     // a computed getter
-    productList() {
+    productList: function () {
       // `this` points to the component instance
-      if (this.showSearch == true) {
-        return this.Store.products.value.filter((product) =>
-          product.name.toLowerCase().includes(this.searchResults.toLowerCase())
-        );
-      }
+      // if (this.showSearch == true) {
+      //   return this.Store.products.value.filter((product) =>
+      //     product.name.toLowerCase().includes(this.searchResults.toLowerCase())
+      //   );
+      // }
+      return this.Store.products.value.filter((product) => {
+        return product.name.toLowerCase().match(this.searchResults.toLowerCase());
+      });
     },
   },
   mounted() {
     this.Store.Fetchproducts("general");
-    console.log(`the component is now mounted.`);
   },
 };
 </script>
@@ -254,7 +175,7 @@ export default {
     border-radius: 15px
   body.screen--xs &
     min-width: 100%
-    height: 110px
+    // height: 110px
     border-radius: 15px
 
 .product
@@ -338,16 +259,16 @@ export default {
   body.screen--sm &
     font-size: 10px
   body.screen--xs &
-    font-size: 10px
+    font-size: 15px
 .product-cat
   font-size: 13px
   line-height: normal
   font-family: 'Manrope-Regular'
   color: #27141a
   body.screen--sm &
-    font-size: 7px
+    font-size: 10px
   body.screen--xs &
-    font-size: 7px
+    font-size: 10px
 .product-price
   font-size: 15px
   line-height: normal
