@@ -11,22 +11,23 @@
       <q-list
         class="row q-gutter-lg no-wrap bg-transparent"
         style="width: 100%; height: fit-content"
-        v-if="Store.products.value"
+        v-if="recentProducts"
       >
         <product
-          v-for="product in Store.products.value"
+          v-for="product in recentProducts"
           :productName="product.name.slice(0, 10) + '..'"
-          :productImage="product.images[0]"
+          :productImage="product.image"
           :productPrice="product.price"
           :productCategory="product.category"
           :productTag="product.tag"
+          :productId="product.id"
           :key="product.name"
         ></product>
       </q-list>
       <q-list
         class="row q-gutter-lg no-wrap bg-transparent"
         style="width: 100%; height: fit-content"
-        v-if="!Store.products.value"
+        v-if="!recentProducts"
       >
         <product></product>
         <product></product>
@@ -46,7 +47,20 @@
 <script setup>
 import { useCounterStore } from "stores/counter";
 import Product from "src/components/product.vue";
+import { useQuasar } from "quasar";
+import { ref, reactive, onMounted, computed } from "vue";
+const $q = useQuasar();
+const recentProducts = ref([]);
 const Store = useCounterStore();
+const fetchRecent = () => {
+  const recents = $q.localStorage.getItem("recentItems") || [];
+  if (recents.lenght > 0) {
+    recentProducts.value = [...recents];
+  }
+};
+onMounted(() => {
+  fetchRecent();
+});
 </script>
 <style scoped lang="sass">
 .recentlyViewed

@@ -10,7 +10,7 @@
           <q-list
             class="column items-center justify-center q-py-xl q-px-xl"
             bordered
-            style="border: 1px solid; width: 100%"
+            style="width: 100%"
           >
             <q-card
               flat
@@ -139,7 +139,7 @@
             {{ lorem }}
           </q-card-section> -->
         </q-card>
-        <q-card class="my-card2 scroll hide-scrollbar" style="border: 1px solid">
+        <q-card class="my-card2 scroll hide-scrollbar" style="">
           <!-- Profile -->
           <profileVue />
           <!-- Profile -->

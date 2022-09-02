@@ -2,7 +2,7 @@
   <div class="allproducts row wrap justify-center overflow-hidden" style="width: 100%">
     <!-- product -->
     <productVue
-      v-for="product in Store.products.value"
+      v-for="product in Store.favourites.value"
       :productName="product.name.slice(0, 10) + '..'"
       :productImage="product.images[0]"
       :productPrice="product.price"
@@ -10,7 +10,7 @@
       :productTag="product.tag"
       :productId="product.id"
       :favouriters="product.favouriters"
-      :key="product.index"
+      :key="product.name"
     ></productVue>
   </div>
   <!-- show skeleton is loading  -->
@@ -83,9 +83,9 @@ const Store = useCounterStore();
 //   });
 // };
 
-// onMounted(() => {
-//   Store.Fetchproducts();
-// });
+onMounted(() => {
+  Store.fetchFavourites();
+});
 </script>
 <style scoped lang="sass">
 // .allproducts

@@ -18,7 +18,8 @@
       </q-card>
       <!-- checklist -->
       <q-card class="flex row self-start q-px-md q-mt-md">
-        <q-card class="column">
+        <PriceFilters></PriceFilters>
+        <!-- <q-card class="column">
           <div class="text-h2 priceFilterHeader" style="">Price</div>
           <q-item-section class="q-mt-sm">
             <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
@@ -28,7 +29,7 @@
             <q-checkbox color="yellow" v-model="right" label="₦300,000--₦500,000" />
             <q-checkbox color="yellow" v-model="righti" label="₦500,000 and above" />
           </q-item-section>
-        </q-card>
+        </q-card> -->
       </q-card>
       <!-- input custom checklist -->
       <q-item class="column">
@@ -44,6 +45,8 @@
               dense
               v-model="custom.min"
               label=""
+              type="number"
+              prefix="₦"
               class="filterInput"
               style=""
             />
@@ -54,6 +57,8 @@
               dense
               class="filterInput"
               v-model="custom.max"
+              type="number"
+              prefix="₦"
               label=""
               style=""
             />
@@ -97,6 +102,7 @@
 <script setup>
 import { useCounterStore } from "stores/counter";
 import { ref, watch, reactive, computed } from "vue";
+import PriceFilters from "./priceFilters.vue";
 const Store = useCounterStore();
 
 const brand = reactive({
@@ -150,7 +156,7 @@ watch(
   color: #27141a
 .filterInput
   background: #dddddd
-  height: 38px
+  // height: 38px
   padding-left: 10px
   // padding-bottom: 50px
   width: 100%

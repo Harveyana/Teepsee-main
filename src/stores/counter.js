@@ -12,7 +12,7 @@ import { createUserWithEmailAndPassword,
   signOut
  } from "firebase/auth"
  import { ref,  uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
- import { collection, query, arrayUnion, onSnapshot, where, doc, addDoc, getDocs, updateDoc } from "firebase/firestore";
+ import { collection, query, arrayUnion, arrayRemove, onSnapshot, where, doc, addDoc, getDocs, updateDoc } from "firebase/firestore";
 
 import { Notify, LocalStorage, } from 'quasar'
 
@@ -40,12 +40,14 @@ export const useCounterStore = defineStore('counter', {
     hide1: false,
     hide2: false,
     hide3: false,
-    showReviewBox: ref(false),
+    showReviewBox: ref(true),
+    showTrackBox: ref(true),
     ShowChangePass: false,
     ShowNotification: false,
     Showsetup: true,
     ShowLoading: false,
     products: ref([]),
+    favourites: ref([]),
     filter: [],
     cat1: null,
     cat2: null,
@@ -127,9 +129,8 @@ export const useCounterStore = defineStore('counter', {
         console.log(err);
         this.loadSignUpBtn = false;
         Notify.create({
-          message: err.message.slice(10),
+          message: 'Connection Error',
           icon: 'announcement',
-          position: 'top-right',
           color: 'secondary'
         })
       })
@@ -149,9 +150,8 @@ export const useCounterStore = defineStore('counter', {
       .catch((err) => {
         this.loadSignUpBtn = false;
         Notify.create({
-          message: err.message.slice(10),
+          message: 'Connection Error',
           icon: 'announcement',
-          position: 'top-right',
           color: 'secondary'
         })
       })
@@ -198,7 +198,7 @@ export const useCounterStore = defineStore('counter', {
           console.log(error);
           const errorMessage = error.message;
           Notify.create({
-          message: error.Message,
+          message: 'Connection Error',
           icon: 'announcement',
           color: 'secondary'
         })
@@ -213,7 +213,7 @@ export const useCounterStore = defineStore('counter', {
          this.router.push('/account');
          console.log(userCredential.user);
 
-         this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`)
+         this.notifyUser(userCredential.user.photoURL, `Welcome back ${userCredential.user.displayName}`)
          LocalStorage.set('username', userCredential.user.displayName);
           this.loadSignUpBtn = false;
         }).catch((error) => {
@@ -221,7 +221,7 @@ export const useCounterStore = defineStore('counter', {
           console.log(error);
           const errorMessage = error.message;
           Notify.create({
-          message: error.Message,
+          message: 'Connection Error',
           icon: 'announcement',
           color: 'secondary'
         })
@@ -246,8 +246,6 @@ export const useCounterStore = defineStore('counter', {
         LocalStorage.remove('isLoggedIn');
         LocalStorage.remove('username');
         this.router.push('/login');
-        this.notifyUser(this.defaultPic, `Bye dear ${this.user.displayName}`)
-
         console.log('User logged out');
       }).catch((error) => {
         // An error happened.
@@ -347,6 +345,24 @@ export const useCounterStore = defineStore('counter', {
         this.products.value = [...group];
         console.log(group);
         if (this.products.value.length > 0) {
+          this.ShowLoading = false;
+        }else{
+          this.notifyUser(this.user.profilePic, "No product Found");
+          this.ShowLoading = false;
+        }
+      });
+    },
+    fetchFavourites(){
+      this.ShowLoading = true;
+      const queryProduct = query(collection(db, "products"), where("favouriters", "array-contains", this.userId));
+
+      onSnapshot(queryProduct, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.favourites.value = [...group];
+        console.log(group);
+        if (this.favourites.value.length > 0) {
           this.ShowLoading = false;
         }
       });
@@ -479,6 +495,22 @@ export const useCounterStore = defineStore('counter', {
       if (this.user === null) {
         this.namePrompt = true;
       }
+    },
+    addToFavourites(productId) {
+      const productToUpdate = doc(db, "products", productId);
+      updateDoc(productToUpdate, {
+        favouriters: arrayUnion(this.userId)
+      }).then(()=>{
+        this.notifyUser(this.user.profilePic, " added to favourites");
+      })
+    },
+    removeFavourites(productId) {
+      const productToUpdate = doc(db, "products", productId);
+      updateDoc(productToUpdate, {
+        favouriters: arrayRemove(this.userId)
+      }).then(()=>{
+        this.notifyUser(this.user.profilePic, " removed from favourites");
+      })
     },
     increment() {
       this.counter++;

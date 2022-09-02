@@ -1,6 +1,6 @@
 <template>
-  <div class="flex row justify-center">
-    <q-layout view="hhh lpr fff" class="layout overflow-hidden">
+  <div class="flex row justify-center hide-scrollbar">
+    <q-layout view="hhh lpr fff" class="layout overflow-hidden hide-scrollbar">
       <!-- Mobile Sidebar  -->
 
       <mainDrawerVue />

@@ -3,7 +3,7 @@
     class="column hero flex items-start q-px-lg"
     style="
       width: 100%;
-      background-image: url('/heroback.svg');
+      background-image: url('/faqBack.svg');
       background-size: cover;
       background-repeat: no-repeat;
     "
@@ -73,7 +73,7 @@
       <q-card flat outline class="row no-wrap q-mr-md bg-transparent" style="width: 20%">
         <q-card
           clickable
-          class="profile row no-wrap flex justify-between items-center bg-transparent"
+          class="profile row no-wrap flex flex-center justify-between bg-transparent"
           style="width: 60%; cursor: pointer"
           v-if="Store.isLoggedIn"
         >
@@ -85,7 +85,7 @@
             style="width: 25%; border-radius: 50%; border: 1x solid"
           />
 
-          <router-link to="/account" class="" style="text-decoration: none">
+          <router-link to="/account" style="text-decoration: none">
             <div
               to="/account"
               class="text-h3 userName no-wrap"
@@ -164,21 +164,7 @@
           spinner-color="black"
           style="width: 100%"
       /></q-card>
-      <!-- <q-card
-        flat
-        class="bg-transparent"
-        style="width: 5%; position: relative; top: 0px; left: 12%"
-      >
-        <q-btn
-          dense
-          flat
-          round
-          size="13px"
-          icon="img:/vector.png"
-          style=""
-          @click="showSearch = true"
-        />
-      </q-card> -->
+
       <MobileSearch></MobileSearch>
 
       <q-card flat class="bg-transparent" style="width: 5%">
@@ -191,36 +177,6 @@
         />
       </q-card>
     </q-card>
-    <!-- mobile-nav -->
-    <!-- hero-items -->
-    <q-card flat class="column no-wrap hero-cta bg-transparent" style="width: 100%">
-      <q-card class="bg-transparent" style="width: 100%">
-        <h1 class="hero-text text-white" style="">Get Teepsee</h1>
-      </q-card>
-      <q-card class="bg-transparent" style="width: 100%">
-        <h4 class="hero-subtext text-white">
-          Wine, Liquor, Ice, Mixers and some other cool stuff? We got it
-        </h4>
-      </q-card>
-      <q-card class="bg-transparent" style="width: 100%">
-        <q-btn
-          color="white"
-          class="bg-white hero-button"
-          size="15px"
-          to="/categories/general"
-          text-color="black"
-          flat
-          label="Get Started"
-        />
-      </q-card>
-    </q-card>
-    <!-- hero-items -->
-    <!-- search results template -->
-
-    <!-- mobile search results  -->
-
-    <!-- mobile search results -->
-    <!-- search results template -->
   </q-card>
 </template>
 
@@ -293,13 +249,13 @@ export default {
     border-radius: 15px
 
 .hero
-  height: 600px
+  height: 350px
   body.screen--xl &
-    height: 1000px
+    height: 500px
   body.screen--lg &
-    height: 870px
+    height: 470px
   body.screen--xs &
-    height: 370px
+    height: 220px
 
 .hero-cta
   position: relative

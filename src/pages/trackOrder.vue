@@ -1,173 +1,125 @@
 <template>
-  <q-page class="items-center overflow-hidden hide-scrollbar" style="background: #e5e5e5">
+  <q-page class="items-center overflow-hidden" style="background: #e5e5e5">
     <!-- hero -->
-    <MainHero></MainHero>
+    <TrackPageHero></TrackPageHero>
     <!-- hero -->
 
-    <div class="features column justify-center items-center no-wrap">
-      <q-card
-        flat
-        class="gt-xs row justify-center no-wrap bg-transparent"
-        style="width: 100%"
-      >
-        <div class="text-h1 text1 q-py-md">How to get Teepsee</div>
-      </q-card>
-      <q-card
-        flat
-        class="lt-sm row justify-start no-wrap bg-transparent"
-        style="width: 100%"
-      >
-        <div class="text-h1 text2 self-start">Shop Now</div>
-      </q-card>
-
-      <div class="feature-list row no-wrap justify-around" style="">
-        <q-card flat class="my-card"> </q-card>
-        <q-card flat class="my-card2"> </q-card>
-        <q-card flat class="my-card3"> </q-card>
-      </div>
-      <div class="text-h1 text3 self-start">Shop Now</div>
-      <div
-        flat
-        class="row no-wrap bg-transparent shop-features items-center justify-between"
-      >
-        <q-card flat class="wine">
-          <div class="text-h1 featureText text-white">Shop Wine</div>
-        </q-card>
-        <q-card flat class="champagne">
-          <div class="text-h1 featureText text-white">Shop Champagne</div>
-        </q-card>
-      </div>
-      <!-- <div class="shop-features row no-wrap">
-
-      </div> -->
-      <q-card flat class="ShopVodka">
-        <div class="text-h1 featureText text-white">Shop Vodka</div>
-      </q-card>
-
-      <div
-        flat
-        class="row no-wrap bg-transparent shop-features2 items-center justify-between"
-      >
-        <q-card flat class="ShopWhiskey"
-          ><div class="text-h1 featureText text-white">Shop Whiskey</div>
-        </q-card>
-        <q-card flat class="ShopBrandy">
-          <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
-        >
-      </div>
-
-      <q-card flat class="PartyCombo">
-        <div class="text-h1 featureText text-white">Party Combo</div>
-      </q-card>
-
-      <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
-        <q-card flat class="ShopTequila"
-          ><div class="text-h1 featureText text-white">Shop Tequila</div>
-        </q-card>
-        <q-card flat class="ShopCognac"
-          ><div class="text-h1 featureText text-white">Shop Cognac</div>
-        </q-card>
-      </div>
-
-      <!-- <div class="shop-features2 row">
-
-      </div> -->
-    </div>
-    <q-card
-      flat
-      class="testimonial flex row justify-center items-center bg-white q-px-xs-none q-px-sm-xl q-px-md-xl q-px-lg-xl q-px-xl-xl"
-      style="width: 100%"
+    <div
+      class="track-container column justify-center items-center no-wrap"
+      style="position: relative; bottom: 85px"
     >
-      <q-card
-        class="row justify-xs-center justify-sm-end justify-md-end justify-lg-end justify-xl-end"
-        style="width: 100%"
-      >
-        <q-card
-          flat
-          class="head row items-center justify-xs-center justify-sm-between justify-md-between justify-lg-between justify-xl-between"
-          style="width: 62%"
+      <q-card class="track-box column justify-center items-start" style="">
+        <div style="" class="text-h1 text-black">Enter Tracking Number</div>
+        <div
+          class="text-h4 q-my-md-sm q-my-xl-sm q-my-lg-sm q-my-sm-none sub-heading"
+          style=""
         >
-          <div style="" class="text-h1 text-black">Testimonials</div>
-          <q-card class="row items-center justify-center" style="">
-            <q-tabs
-              v-model="tab"
-              dense
-              class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
-              align="justify"
-              narrow-indicator
-            >
-              <q-tab
-                class=""
-                name="previous"
-                icon="img:/left.svg"
-                style="background: #f5f5f5"
-              />
-              <q-tab class="bg-primary" name="next" icon="img:/right.svg" />
-            </q-tabs>
-          </q-card>
-        </q-card>
-      </q-card>
-
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="previous">
-          <div
-            flat
-            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
+          Please provide your tracking number to know the status of your package
+        </div>
+        <div class="input-container row justify-between items-center" style="width: 100%">
+          <q-input
+            borderless
+            label="Enter tracking code"
+            class="q-pl-md track-input"
+            v-model="text"
+            dense
             style=""
-          >
-            <!-- testimony -->
-            <!-- testimony -->
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-          </div>
-        </q-tab-panel>
-
-        <q-tab-panel name="next">
-          <div
-            flat
-            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
-            style="width: 100%"
-          >
-            <!-- testimony -->
-            <!-- testimony -->
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
-    </q-card>
+          />
+          <q-btn
+            text-color="white"
+            class="submit-btn bg-primary"
+            label="Track order"
+            style=""
+          />
+        </div>
+      </q-card>
+    </div>
+    <q-dialog class="" v-model="Store.showTrackBox" persistent>
+      <Track></Track>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import MainHero from "../components/mainHero.vue";
-import Testimony from "../components/testimony.vue";
+import { useCounterStore } from "stores/counter";
 
-const tab = ref("previous");
+import { ref } from "vue";
+import TrackPageHero from "../components/trackPageHero.vue";
+import Track from "../components/track.vue";
+
+const Store = useCounterStore();
 </script>
 
 <style scoped lang="sass">
+.track-input
+  border-radius: 10px
+  height: 44px
+  width: 69%
+  background: #f5f5f5
+  border: 1px solid black
+  body.screen--sm &
+    height: 44px
+  body.screen--xs &
+    width: 60%
+.track-box
+  width: 80%
+  border-radius: 15px
+  height: 180px
+  padding-left: 5%
+  padding-right: 5%
+  body.screen--sm &
+    height: 130px
+
 .text-black
   font-family: 'Catellosdemo'
-  font-size: 50px
-  body.screen--xs &
+  line-height: 10px
+  font-size: 40px
+  body.screen--sm &
     font-size: 30px
+  body.screen--xs &
+    font-size: 22px
+
+.sub-heading
+  font-family: 'Manrope-SemiBold'
+  font-size: 20px
+  opacity: 0.5
+  body.screen--sm &
+    font-size: 14px
+    line-height: 30px
+  body.screen--xs &
+    font-size: 13px
+    line-height: 18px
+    margin-top: 10px
+    margin-bottom: 10px
+.submit-btn
+  width: 28%
+  height: 44px
+  border-radius: 10px
+  font-family: 'Manrope-Regular'
+  body.screen--xs &
+    width: 38%
+    font-size: 10px
 .testimony-container
   width: 100%
-
+// body.screen--md &
+//   body.screen--sm &
   body.screen--xs &
     flex-direction: column
 
 
 .logo
-
+  // body.screen--sm &
+  //   min-width: 10%
+  // body.screen--md &
+  //   min-width: 10%
+  //   position: relative
+  //   right: 16%
+  // body.screen--lg &
+  //   min-width: 10%
+  //   position: relative
+  //   right: 25%
+  // body.screen--xl &
+  //   min-width: 10%
 .featureText
   font-family: "Catellosdemo"
   font-size: 40px
@@ -184,7 +136,7 @@ const tab = ref("previous");
     position: relative
     left: 5%
     top: 70%
-.features
+.track-container
   height: fit-content
   width: 100%
   body.screen--xs &
@@ -206,7 +158,18 @@ const tab = ref("previous");
     flex-direction: column
     align-items: center
     justify-content: space-around
-
+  // body.screen--md &
+  //   padding-left: 4%
+  //   padding-right: 4%
+  //   width: 100%
+  // body.screen--lg &
+  //   padding-left: 4%
+  //   padding-right: 4%
+  //   width: 100%
+  // body.screen--xl &
+  //   padding-left: 4%
+  //   padding-right: 4%
+  //   width: 100%
 .text2
   body.screen--xs &
     font-family: "Catellosdemo"
@@ -254,20 +217,48 @@ const tab = ref("previous");
 .text1
   font-family: "Catellosdemo"
   font-size: 445%
+  // font-size: 64px
   body.screen--sm &
     margin: none
     font-family: "Catellosdemo"
     font-size: 370%
+    // font-size: 50px
+  // body.screen--xs &
+  //   margin: none
+  //   display: none
+  //   font-family: "Catellosdemo"
+  //   font-size: 32px
+
 .my-card
   background: url("../assets/feature1.svg")
   background-size: cover
   background-repeat: no-repeat
   background-position: center
   height: 350px
+  // min-height: 340px
   width: 30%
   object-fit: cover
+  // min-width: 390px
   border-radius: 10px
 
+  // body.screen--lg &
+  //   background: url("../assets/feature1.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   height: 53vh
+  //   // min-height: 340px
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--md &
+  //   background: url("../assets/feature1.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   height: 53vh
+  //   // min-height: 340px
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
   body.screen--sm &
     background-size: contain
     background-repeat: no-repeat
@@ -301,13 +292,57 @@ const tab = ref("previous");
     width: 90%
     border-radius: 10px
 
+  // body.screen--xl &
+
+  // body.screen--lg &
+  //   background: url("../assets/feature2.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--md &
+  //   background: url("../assets/feature2.svg")
+  //   margin-right: 2%
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--sm &
+  //   background: url("../assets/feature2.svg")
+  //   background-size: contain
+  //   margin-right: 16px
+  //   height: 48vh
+  //   // min-height: 170px
+  //   width: 62vh
+  //   // min-width: 210px
+  //   border-radius: 10px
+  // body.screen--xs &
+  //   background: url("../assets/feature2.svg")
+  //   background-size: contain
+  //   margin-right: 16px
+  //   align-self: center
+  //   // height: 50vh
+  //   height: 90vw
+  //   width: 100%
+  //   // width: 57vh
+  //   // min-height: 250px
+  //   // min-width: 300px
+  //   margin-top: 18px
+  //   border-radius: 10px
 .my-card3
   background: url("../assets/feature3.svg")
   background-size: cover
   background-repeat: no-repeat
   background-position: center
+  // min-height: 340px
   height: 350px
   width: 30%
+  // min-width: 390px
   border-radius: 10px
   body.screen--sm &
     background-size: contain
@@ -320,16 +355,62 @@ const tab = ref("previous");
     height: 270px
     width: 90%
     border-radius: 10px
+  // body.screen--xl &
 
+  // body.screen--lg &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--md &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   // min-height: 340px
+  //   height: 53vh
+  //   width: 62vh
+  //   // min-width: 390px
+  //   border-radius: 10px
+  // body.screen--sm &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   height: 48vh
+  //   // min-height: 170px
+  //   width: 62vh
+  //   // min-width: 210px
+  //   border-radius: 10px
+  // body.screen--xs &
+  //   background: url("../assets/feature3.svg")
+  //   background-size: contain
+  //   // height: 50vh
+  //   height: 90vw
+  //   // width: 57vh
+  //   width: 100%
+  //   // min-height: 250px
+  //   // min-width: 300px
+  //   margin-top: 18px
+  //   margin-right: 13px
+  //   border-radius: 10px
 .shop-features
   width: 100%
   padding-left: 5%
   padding-right: 5%
   body.screen--sm &
     width: 100%
+    // padding-left: 4%
+    // padding-right: 4%
+    // align-items: center
+    // justify-content: center
   body.screen--xs &
+    // width: 100%
+    // padding-left: 4%
+    // padding-right: 4%
+    // display: flex
     flex-direction: column
-
+    // align-items: center
+    // justify-content: center
 .shop-features2
   width: 100%
   padding-left: 5%
@@ -338,12 +419,13 @@ const tab = ref("previous");
     width: 100%
   body.screen--xs &
     flex-direction: column
-
+    // align-items: center
+    // justify-content: center
 
 // Feature 2 and 3////////////
 
 .wine
-  background: url("../assets/winefeature.svg")
+  background: url("../assets/shopfeature2.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
@@ -351,6 +433,9 @@ const tab = ref("previous");
   height: 500px
   min-height: 500px
   width: 49%
+    // min-height: 450px
+    // min-width: 595px
+  // body.screen--xl &
 
   body.screen--lg &
 
@@ -371,7 +456,7 @@ const tab = ref("previous");
 
 
 .champagne
-  background: url("../assets/champagnefeature.svg")
+  background: url("../assets/shopfeature1.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
@@ -391,7 +476,7 @@ const tab = ref("previous");
 // Feature 4////////////
 
 .ShopVodka
-  background: url("../assets/vodkafeature.svg")
+  background: url("../assets/shopfeature3.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
@@ -419,7 +504,7 @@ const tab = ref("previous");
 // Feature 5 and 6////////////
 
 .ShopWhiskey
-  background: url("../assets/whiskeyfeature.svg")
+  background: url("../assets/shopfeature4.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
@@ -467,7 +552,7 @@ const tab = ref("previous");
 // Feature 6  ////////////
 
 .PartyCombo
-  background: url("../assets/partycombo.svg")
+  background: url("../assets/shopfeature6.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
@@ -496,7 +581,7 @@ const tab = ref("previous");
 
 
 .ShopTequila
-  background: url("../assets/tequilafeature.svg")
+  background: url("../assets/shopfeature7.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
@@ -504,7 +589,9 @@ const tab = ref("previous");
   height: 500px
   min-height: 500px
   width: 49%
-
+    // min-height: 450px
+    // min-width: 595px
+  // body.screen--xl &
 
   body.screen--lg &
 
@@ -532,6 +619,9 @@ const tab = ref("previous");
   height: 500px
   min-height: 500px
   width: 49%
+    // min-height: 450px
+    // min-width: 595px
+  // body.screen--xl &
 
   body.screen--lg &
 

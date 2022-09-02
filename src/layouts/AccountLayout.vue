@@ -1,5 +1,5 @@
 <template>
-  <div class="flex row justify-center">
+  <div class="flex row justify-center overflow-hidden">
     <q-layout view="hhh lpr fff layout">
       <q-header flat class="header no-shadow" style="background: #e5e5e5">
         <div class="con">
@@ -12,31 +12,19 @@
                 style="min-width: 220px"
               />
             </q-item>
-
-            <q-item>
-              <div class="input q-ml-md">
-                <img src="/search.png" alt="" />
-                <input
-                  class="search q-pl-xl"
-                  type="text"
-                  placeholder="search"
-                  @keydown="showsearch = true"
-                />
-              </div>
-            </q-item>
-
+            <shopSearch></shopSearch>
             <q-item outline class="navbar">
               <q-btn
                 flat
                 label="Categories"
                 class="nav q-ml-md"
-                to="/categories"
+                to="/categories/general"
                 style="position: relative; left: 20%"
               />
             </q-item>
 
             <q-item outline class="navbar">
-              <q-btn flat label="Track Order" class="nav" />
+              <q-btn flat to="/track" label="Track Order" class="nav" />
             </q-item>
 
             <!-- <q-item outline class="navbar"
@@ -44,78 +32,13 @@
           /></q-item> -->
 
             <q-item outline class="navbar"
-              ><q-btn flat label="Cart" icon="img:/buy2.png" class="nav" />
+              ><q-btn flat to="/cart" label="Cart" icon="img:/buy2.png" class="nav" />
             </q-item>
 
             <!-- <q-item outline class="q-mr-md"
             ><q-btn text-color="white" to="/account" class="cta" label="Sign Up"
           /></q-item> -->
           </q-toolbar>
-          <!-- search results -->
-          <q-banner
-            class="gt-sm searchResults"
-            v-if="showsearch"
-            style=""
-            @mouseleave="showsearch = false"
-          >
-            <q-list>
-              <q-item clickable class="row">
-                <q-card class="row" style="height: 110px; border-radius: 15px">
-                  <q-card style="flex-center">
-                    <q-img
-                      src="../assets/product1.png"
-                      spinner-color="white"
-                      class="product-image"
-                      style="width: 80px; object-fit: cover;object-position"
-                    />
-                  </q-card>
-                  <q-card class="column">
-                    <q-card-section>
-                      <div
-                        class="text-h2"
-                        style="
-                          font-size: 18px;
-                          color: #27141a;
-                          line-height: 1px;
-                          font-family: 'Manrope-Bold';
-                        "
-                      >
-                        Hennessey
-                      </div>
-                    </q-card-section>
-                    <q-card-section>
-                      <div
-                        class="text-h3"
-                        style="
-                          font-size: 15px;
-                          color: #27141a;
-                          line-height: 1px;
-                          font-family: 'Manrope-Bold';
-                        "
-                      >
-                        ₦5,000
-                      </div>
-                    </q-card-section>
-                    <q-card-section>
-                      <div
-                        class="text-h5"
-                        style="
-                          font-size: 12px;
-                          color: #27141a;
-                          line-height: 10px;
-                          font-family: 'Manrope-SemiBold';
-                        "
-                      >
-                        Cognac
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-card>
-              </q-item>
-            </q-list>
-          </q-banner>
-
-          <!-- search results -->
         </div>
 
         <!-- Mobile toolbar Mobile toolbar -->
@@ -131,15 +54,7 @@
 
             <q-space />
 
-            <q-btn
-              dense
-              flat
-              round
-              size="13px"
-              icon="img:/search.svg"
-              style="position: relative; top: 0px; left: 15px"
-              @click="showsearch = true"
-            />
+            <ShopMobileSearch></ShopMobileSearch>
             <q-card-section
               class="Cart-Top"
               style="position: relative; top: 0px; right: -15px"
@@ -162,74 +77,6 @@
               >
             </q-card-section>
           </q-toolbar>
-
-          <!-- mobile search results -->
-          <q-banner
-            class="text-white searchResults lt-md"
-            v-if="showsearch"
-            style="z-index: 10"
-            @mouseleave="(showsearch = false), (showResults = false)"
-          >
-            <q-icon
-              name="img:/close.svg"
-              class="flex"
-              style="position: absolute; top: 25px; right: 25px; z-index: 10"
-              @click="(showsearch = false), (showResults = false)"
-            />
-            <q-item clickable>
-              <q-input
-                outlined
-                bottom-slots
-                color="grey"
-                rounded
-                label=" Search Products"
-                style="width: 280px; border-radius: 30px; margin-top: 20px"
-                @keydown="showResults = true"
-              >
-                <template v-slot:prepend>
-                  <q-icon
-                    name="img:/wineCup.svg"
-                    size="35px"
-                    class="searchIcon"
-                    style="height: 10px; transform: rotate(40deg)"
-                  />
-                </template>
-                <template v-slot:hint> Search Products </template>
-              </q-input>
-            </q-item>
-            <!-- results -->
-            <q-list v-if="showResults">
-              <q-item clickable class="row no-wrap">
-                <q-card class="row imagebox" style="">
-                  <q-card style="">
-                    <q-img
-                      src="../assets/product1.png"
-                      spinner-color="white"
-                      class="product-image"
-                      style=""
-                    />
-                  </q-card>
-                  <q-card class="column">
-                    <q-card-section>
-                      <div class="text-h2 product-name" style="">
-                        {{ product.name.slice(0, 9) + ".." }}
-                      </div>
-                    </q-card-section>
-                    <q-card-section>
-                      <div class="text-h3 product-price" style="">
-                        {{ product.price }}
-                      </div>
-                    </q-card-section>
-                    <q-card-section>
-                      <div class="text-h5 product-cat" style="">{{ product.cat }}</div>
-                    </q-card-section>
-                  </q-card>
-                </q-card>
-              </q-item>
-            </q-list>
-            <!-- results -->
-          </q-banner>
-          <!-- mobile search results -->
         </div>
 
         <!-- hero items -->
@@ -255,6 +102,8 @@ import { ref } from "vue";
 import footerVue from "src/components/footer.vue";
 import AccountDrawer from "/src/components/accountDrawer.vue";
 import ReviewEntry from "/src/components/reviewEntry.vue";
+import shopSearch from "src/components/shopSearch.vue";
+import ShopMobileSearch from "../components/shopMobileSearch.vue";
 import { useCounterStore } from "stores/counter";
 
 const leftDrawerOpen = ref(false);
@@ -484,18 +333,7 @@ const product = {
   body.screen--md &
     display: none
 .logo
-  body.screen--sm &
-    min-width: 10%
-  body.screen--md &
-    min-width: 10%
-    position: relative
-    right: 16%
-  body.screen--lg &
-    min-width: 10%
-    position: relative
-    right: 25%
-  body.screen--xl &
-    min-width: 10%
+  min-width: 10%
 .nav
   body.screen--sm &
     font-size: 60%
@@ -567,84 +405,4 @@ const product = {
 .link >a
   text-decoration: none
   color: white
-
-.input
-  body.screen--md &
-    position: relative
-    right: 25%
-  body.screen--lg &
-    position: relative
-    right: 30%
-  body.screen--xl &
-    position: relative
-    right: 30%
-
-.input >img
-  body.screen--md &
-    position: absolute
-    top: 15px
-    left: 9%
-  body.screen--lg &
-    position: absolute
-    top: 15px
-    left: 15px
-  body.screen--xl &
-    position: absolute
-    top: 15px
-    left: 15px
-.search
-  body.screen--md &
-    border-radius: 15px
-    min-height: 50px
-    min-width: 160%
-    outline: none
-    background: transparent
-    border: 1px solid #27141A
-    color: #27141A
-    font-size: 120%
-    // padding-left: 40%
-  body.screen--lg &
-    border-radius: 15px
-    min-height: 50px
-    min-width: 180%
-    outline: none
-    // margin-right: 70px
-    background: transparent
-    border: 1px solid #27141A
-    color: #27141A
-    font-size: 120%
-    // padding-left: 40%
-  body.screen--xl &
-    border-radius: 15px
-    min-height: 50px
-    min-width: 180%
-    outline: none
-    background: transparent
-    border: 1px solid #27141A
-    color: #27141A
-    font-size: 120%
-    // padding-left: 40%
-  body.screen--sm &
-    border-radius: 15px
-    min-height: 45px
-    min-width: 120%
-    outline: none
-    background: transparent
-    border: 1px solid #27141A
-    color: #27141A
-    font-size: 130%
-    // padding-left: 40px
-
-
-::placeholder  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #27141A
-  opacity: 1 /* Firefox */
-
-
-:-ms-input-placeholder  /* Internet Explorer 10-11 */
-  color: #27141A
-
-
-::-ms-input-placeholder  /* Microsoft Edge */
-  color: #27141A
 </style>

@@ -5,14 +5,14 @@
     transition-prev="jump-up"
     transition-next="jump-up"
   >
-    <q-tab-panel :name="Store.settings" style="width: 100%; border: 1px solid">
+    <q-tab-panel :name="Store.settings" style="width: 100%">
       <div
         class="settingsContainer justify-center items-center content-center"
-        style="width: 100%; border: 1px solid"
+        style="width: 100%"
       >
         <div
           class="overflow-hidden row settingsContainer justify-start items-center content-center"
-          style="width: 100%; border: 1px solid"
+          style="width: 100%"
         >
           <q-card flat class="">
             <q-icon

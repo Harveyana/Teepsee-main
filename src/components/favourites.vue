@@ -7,11 +7,13 @@
   >
     <q-tab-panel :name="Store.favourites" style="width: 100%">
       <q-card
-        class="mainContainer scroll justify-center items-center content-center"
+        flat
+        class="mainContainer scroll justify-center items-center content-center hide-scrollbar"
         style=""
       >
         <q-card
-          class="settingContainer scroll justify-center items-center content-center"
+          flat
+          class="settingContainer justify-center items-center content-center"
           style="width: 100%; height: 100%"
         >
           <!-- <q-icon
@@ -23,7 +25,7 @@
           <div class="text-h1 settingsLabel" style="" v-show="Store.Showsetup">
             Favourites
           </div>
-          <shopProductsVue />
+          <FavouriteProducts></FavouriteProducts>
         </q-card>
       </q-card>
     </q-tab-panel>
@@ -32,7 +34,8 @@
 
 <script setup>
 import { useCounterStore } from "stores/counter";
-import shopProductsVue from "./shopProducts.vue";
+import { onMounted } from "vue";
+import FavouriteProducts from "./favouriteProducts.vue";
 const Store = useCounterStore();
 
 // const hide1 = ref(false);
@@ -40,16 +43,19 @@ const Store = useCounterStore();
 // const hide3 = ref(false);
 // const ShowChangePass = ref(false);
 // const Showsetup = ref(true);
+onMounted(() => {
+  Store.Fetchproducts("general");
+});
 </script>
 
 <style scoped lang="sass">
 .mainContainer
   width: 100%
-  height: 90vh
+  height: 102vh
   body.screen--lg &
-    height: 66vh
+    height: 50vh
   body.screen--xl &
-    height: 43vh
+    height: 25vh
 
 .EditButton
   body.screen--xl &
