@@ -48,6 +48,8 @@ export const useCounterStore = defineStore('counter', {
     ShowLoading: false,
     products: ref([]),
     favourites: ref([]),
+    recentlyViewed: ref([]),
+    cartProducts: ref([]),
     filter: [],
     cat1: null,
     cat2: null,
