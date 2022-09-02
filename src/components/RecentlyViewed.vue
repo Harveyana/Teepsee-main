@@ -11,23 +11,24 @@
       <q-list
         class="row q-gutter-lg no-wrap bg-transparent"
         style="width: 100%; height: fit-content"
-        v-if="recentProducts"
+        v-if="Store.recentlyViewed.value"
       >
         <product
-          v-for="product in recentProducts"
+          v-for="product in Store.recentlyViewed.value"
           :productName="product.name.slice(0, 10) + '..'"
           :productImage="product.image"
           :productPrice="product.price"
           :productCategory="product.category"
           :productTag="product.tag"
           :productId="product.id"
+          :favouriters="product.favourites"
           :key="product.name"
         ></product>
       </q-list>
       <q-list
         class="row q-gutter-lg no-wrap bg-transparent"
         style="width: 100%; height: fit-content"
-        v-if="!recentProducts"
+        v-if="!Store.recentlyViewed.value"
       >
         <product></product>
         <product></product>
@@ -54,9 +55,7 @@ const recentProducts = ref([]);
 const Store = useCounterStore();
 const fetchRecent = () => {
   const recents = $q.localStorage.getItem("recentItems") || [];
-  if (recents.lenght > 0) {
-    recentProducts.value = [...recents];
-  }
+  Store.recentlyViewed.value = [...recents];
 };
 onMounted(() => {
   fetchRecent();

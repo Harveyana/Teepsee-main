@@ -50,7 +50,8 @@
           productCategory,
           productImage,
           productTag,
-          productId
+          productId,
+          favouriters
         )
       "
     >
@@ -81,7 +82,8 @@
           productCategory,
           productImage,
           productTag,
-          productId
+          productId,
+          favouriters
         )
       "
     >
@@ -133,8 +135,9 @@ export default {
     };
   },
   methods: {
-    addTorecently(name, price, category, image, tag, id) {
+    addTorecently(name, price, category, image, tag, id, favouriters) {
       let recents = this.$q.localStorage.getItem("recentItems") || [];
+      const favourites = [...favouriters];
       if (recents.length < 20) {
         recents.push({
           name,
@@ -143,6 +146,7 @@ export default {
           image,
           tag,
           id,
+          favourites,
         });
         this.$q.localStorage.set("recentItems", recents);
 
@@ -156,6 +160,7 @@ export default {
           image,
           tag,
           id,
+          favourites,
         });
         this.$q.localStorage.set("recentItems", recents);
         console.log(recents);
