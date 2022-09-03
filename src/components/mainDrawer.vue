@@ -22,12 +22,12 @@
         class="self-start"
         style="margin-bottom: 8px; margin-top: 20px"
       >
-        <q-item-section avatar>
+        <q-item-section to="/track" avatar>
           <q-icon name="img:/profile.svg" style="margin-left: 16px" />
         </q-item-section>
         <q-space />
         <q-item-section>
-          <div class="text-h6 acc-link">Track order</div>
+          <div to="/track" class="text-h6 acc-link">Track order</div>
         </q-item-section>
       </q-item>
 
