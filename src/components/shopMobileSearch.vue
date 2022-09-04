@@ -47,14 +47,15 @@
     <!-- results -->
     <q-card flat v-if="showResults" class="scroll" style="width: 100%; max-height: 300px">
       <q-card flat class="" style="width: 100%">
-        <q-card
+        <router-link
+          :to="{ path: `/product/${product.id}` }"
           flat
           class="row imagebox"
-          style="width: 100%; border: 1px solid"
+          style="width: 100%; text-decoration: none"
           v-for="product in productList"
           :key="product.id"
         >
-          <q-card style="width: 35%">
+          <q-card flat style="width: 35%">
             <q-img
               :src="product.images[0]"
               spinner-color="white"
@@ -63,6 +64,7 @@
             />
           </q-card>
           <q-card
+            flat
             class="column items-start justify-center no-wrap q-my-sm"
             style="width: 60%"
           >
@@ -80,7 +82,7 @@
               <div class="text-h5 product-cat" style="">{{ product.category }}</div>
             </q-card>
           </q-card>
-        </q-card>
+        </router-link>
       </q-card>
     </q-card>
     <!-- results -->
@@ -107,18 +109,12 @@ export default {
     const showSearch = ref(false);
     const showResults = ref(false);
     const searchResults = ref("");
-    const product = {
-      name: "Hennessey",
-      price: "₦5,000",
-      cat: "Cognac",
-    };
     return {
       link,
       Store,
       showSearch,
       showResults,
       searchResults,
-      product,
     };
   },
   computed: {

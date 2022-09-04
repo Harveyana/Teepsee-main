@@ -70,6 +70,37 @@ export const useCounterStore = defineStore('counter', {
 
       })
     },
+    addTorecently(name, price, category, image, tag, id, favouriters) {
+      let recents = LocalStorage.getItem("recentItems") || [];
+      const favourites = [...favouriters];
+      if (recents.length < 20) {
+        recents.push({
+          name,
+          price,
+          category,
+          image,
+          tag,
+          id,
+          favourites,
+        });
+        LocalStorage.set("recentItems", recents);
+
+        console.log(recents);
+      } else {
+        recents.splice(0, 1);
+        recents.push({
+          name,
+          price,
+          category,
+          image,
+          tag,
+          id,
+          favourites,
+        });
+        LocalStorage.set("recentItems", recents);
+        console.log(recents);
+      }
+    },
     queryUser(userId) {
       const userQuery = query(collection(db, "users"), where("id", "==", userId));
       onSnapshot(userQuery, (querySnapshot)=>{

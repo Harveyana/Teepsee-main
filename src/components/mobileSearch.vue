@@ -14,12 +14,7 @@
       @click="showSearch = true"
     />
   </q-card>
-  <q-banner
-    class="text-white searchResults lt-md"
-    v-if="showSearch"
-    style="z-index: 10"
-    @mouseleave="(showSearch = false), (showResults = false)"
-  >
+  <q-banner class="text-white searchResults lt-md" v-if="showSearch" style="z-index: 10">
     <q-icon
       name="img:/close.svg"
       class="flex"
@@ -31,6 +26,7 @@
         outlined
         bottom-slots
         color="grey"
+        v-model="searchResults"
         rounded
         label=" Search Products"
         style="width: 100%; border-radius: 30px; margin-top: 30px"
@@ -49,16 +45,22 @@
     </q-card>
 
     <!-- results -->
-    <q-card flat v-if="showResults" class="scroll" style="width: 100%; max-height: 300px">
+    <q-card
+      flat
+      v-if="showResults"
+      class="scroll hide-scrollbar"
+      style="width: 100%; max-height: 300px"
+    >
       <q-card flat class="" style="width: 100%">
-        <q-card
+        <router-link
+          :to="{ path: `/product/${product.id}` }"
           flat
-          class="row imagebox"
-          style="width: 100%"
+          class="row imagebox q-my-sm"
+          style="width: 100%; text-decoration: none"
           v-for="product in productList"
           :key="product.id"
         >
-          <q-card style="width: 35%; height: 100px">
+          <q-card flat style="width: 35%">
             <q-img
               :src="product.images[0]"
               spinner-color="white"
@@ -67,8 +69,9 @@
             />
           </q-card>
           <q-card
+            flat
             class="column items-start justify-center no-wrap"
-            style="width: 60%; height: 100px"
+            style="width: 60%"
           >
             <q-card>
               <div class="text-h2 product-name" style="">
@@ -84,7 +87,7 @@
               <div class="text-h5 product-cat" style="">{{ product.category }}</div>
             </q-card>
           </q-card>
-        </q-card>
+        </router-link>
       </q-card>
     </q-card>
     <!-- results -->
@@ -111,11 +114,6 @@ export default {
     const showSearch = ref(false);
     const showResults = ref(false);
     const searchResults = ref("");
-    // const product = {
-    //   name: "Hennessey",
-    //   price: "₦5,000",
-    //   cat: "Cognac",
-    // };
     return {
       link,
       Store,
@@ -174,14 +172,11 @@ export default {
 
 .imagebox
   body.screen--md &
-    height: 110px
     border-radius: 15px
   body.screen--sm &
-    height: 110px
     border-radius: 15px
   body.screen--xs &
     min-width: 100%
-    height: 110px
     border-radius: 15px
 
 .product

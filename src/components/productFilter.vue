@@ -8,7 +8,7 @@
           dense
           borderless
           label="search for drinks"
-          v-model="text"
+          v-model="searchResults"
           style=""
         >
           <template v-slot:prepend>
@@ -104,6 +104,7 @@ import { useCounterStore } from "stores/counter";
 import { ref, watch, reactive, computed } from "vue";
 import PriceFilters from "./priceFilters.vue";
 const Store = useCounterStore();
+const searchResults = ref("");
 
 const brand = reactive({
   Hennessey: "nil",
@@ -123,6 +124,14 @@ watch(
   },
   { deep: true }
 );
+
+const productList = computed(() => {
+  if (Store.products.value) {
+    return Store.products.value.filter((product) => {
+      return product.name.toLowerCase().match(searchResults.toLowerCase());
+    });
+  }
+});
 </script>
 <style scoped lang="sass">
 .sidebar
