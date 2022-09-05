@@ -27,7 +27,7 @@
       </q-card>
       <q-card class="column lt-sm Name no-wrap" style="width: 50%; height: 90%">
         <h4 class="productName NameClass" style="font-family: 'Manrope-semiBold'">
-          Henessey
+          {{ productName }}
         </h4>
         <h4 class="productPrice NameClass" style="color: #27141a">{{ productPrice }}</h4>
         <!-- counter -->
@@ -74,10 +74,7 @@
     >
       <h4 class="productSubTotal NameClass" style="">{{ SubTotal }}</h4>
     </q-card>
-    <q-card
-      class="gt-xs row Remove flex flex-center"
-      style="position: relative; right: 3%"
-    >
+    <q-card class="row Remove flex flex-center" style="position: relative; right: 3%">
       <q-icon
         class="Removebtn"
         name="img:/Removebtn.svg"
@@ -114,17 +111,21 @@ export default {
   methods: {
     removeItem() {
       const items = this.$q.localStorage.getItem("cartItems");
-      const item = items.find((item) => item.name === this.productName);
-      if (item) {
+      let index = items.indexOf(this.productName);
+      // const item = items.find((item) => item.name == this.productName);
+      if (index) {
         // item.quantity -= quantity;
         // cart.value = item.quantity;
-        let itemId = indexOf(item);
-        items.remove(itemId);
+        items.splice(index, 1);
+        // let itemId = indexOf(item);
+        // items.remove(itemId);
+        this.$q.localStorage.set("cartItems", items);
+        this.Store.cartProducts.value = [...items];
+        console.log(items);
       }
 
       // then put it back.
-      this.$q.localStorage.set("cartItems", items);
-      console.log(items);
+
       // };
     },
   },
@@ -140,17 +141,17 @@ export default {
 <style scoped lang="sass">
 .NameClass
   body.screen--xl &
-    line-height: 5px
+    line-height: 15px
     color: #27141a
     font-family: 'Manrope-Bold'
     font-size: 100%
   body.screen--lg &
-    line-height: 5px
+    line-height: 15px
     color: #27141a
     font-family: 'Manrope-Bold'
     font-size: 100%
   body.screen--md &
-    line-height: 5px
+    line-height: 15px
     color: #27141a
     font-family: 'Manrope-Bold'
     font-size: 100%

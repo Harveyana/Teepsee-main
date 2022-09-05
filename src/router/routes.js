@@ -15,6 +15,13 @@ const routes = [
     ]
   },
   {
+    path: '/faqs',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/faqs.vue') }
+    ]
+  },
+  {
     path: '/account',
     component: () => import('layouts/AccountLayout.vue'),
     meta:{
