@@ -243,6 +243,15 @@ const queryProduct = () => {
     //   cart.value = item.quantity;
     // }
     console.log(productDetails);
+    Store.addTorecently(
+      productDetails.name,
+      productDetails.price,
+      productDetails.category,
+      productDetails.images[0],
+      productDetails.tag,
+      productDetails.id,
+      productDetails.favouriters
+    );
   });
 };
 const addToCart = (name, image, quantity, price) => {

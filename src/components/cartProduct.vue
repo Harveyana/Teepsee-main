@@ -102,7 +102,7 @@ export default {
     productPrice: String,
     productCategory: String,
     productImage: String,
-    productQuantity: String,
+    productQuantity: Number,
   },
   data() {
     return {
@@ -118,8 +118,8 @@ export default {
       if (item) {
         // item.quantity -= quantity;
         // cart.value = item.quantity;
-        let id = indexOf(item);
-        items.remove(id);
+        let itemId = indexOf(item);
+        items.remove(itemId);
       }
 
       // then put it back.

@@ -28,7 +28,7 @@
             ><h3 class="RemoveLabel card-header" style="">Remove</h3></q-card
           >
         </q-card>
-        <q-list class="scroll hide-scrollbar" style="" v-if="Store.cartProducts.value">
+        <q-list class="scroll hide-scrollbar" style="" v-if="hasCart">
           <!--  Product -->
           <!--  Product -->
           <cartProductVue
@@ -47,7 +47,7 @@
         <q-card
           class="scroll hide-scrollbar column flex-center"
           style=""
-          v-else="!Store.cartProducts.value"
+          v-else="!hasCart"
         >
           <div class="text-h2 card-header q-mb-md">
             Hey, you have no items in your cart
@@ -62,7 +62,7 @@
           class="lt-sm checkoutBtn q-mt-xl"
           label="Checkout"
           style="position: relative; left: 10%"
-          v-if="Store.cartProducts.value"
+          v-if="hasCart"
         />
         <!-- chasers -->
         <!-- chasers -->
@@ -98,11 +98,7 @@
         </q-card>
       </q-card>
       <q-card class="gt-xs row summary justify-center q-pa-lg" style="">
-        <q-card
-          class="column summary-container"
-          style="width: 100%"
-          v-if="Store.cartProducts.value"
-        >
+        <q-card class="column summary-container" style="width: 100%" v-if="hasCart">
           <q-card><h3 class="summaryLabel card-header" style="">Summary</h3></q-card>
           <q-separator class="" style="" />
           <q-card class="summaryItems q-my-lg">
@@ -159,6 +155,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 const Store = useCounterStore();
 const $q = useQuasar();
 const cartProducts = ref([]);
+const hasCart = $q.localStorage.has("cartItems");
 const fetchCart = () => {
   const items = $q.localStorage.getItem("cartItems") || [];
   // add to it, only if it's empty

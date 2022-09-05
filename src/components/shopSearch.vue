@@ -18,15 +18,16 @@
     v-if="showSearch"
     @mouseleave="showSearch = false"
   >
-    <q-card flat class="scroll hideScrollbar" style="max-height: 300px">
+    <q-card flat class="scroll hide-scrollbar" style="max-height: 300px">
       <q-card flat clickable class="flex column no-wrap justify-center">
-        <q-card
+        <router-link
+          :to="{ path: `/product/${product.id}` }"
           class="row justify-start items-center imagebox q-mb-md"
-          style=""
+          style="text-decoration: none"
           v-for="product in productList"
           :key="product.id"
         >
-          <q-card style="">
+          <q-card flat style="">
             <q-img
               :src="product.images[0]"
               spinner-color="white"
@@ -34,7 +35,7 @@
               style=""
             />
           </q-card>
-          <q-card class="column justify-between items-start">
+          <q-card flat class="column justify-between items-start">
             <q-card>
               <div class="text-h2 product-name" style="">{{ product.name }}</div>
             </q-card>
@@ -49,7 +50,7 @@
               </div>
             </q-card>
           </q-card>
-        </q-card>
+        </router-link>
       </q-card>
     </q-card>
   </q-banner>
@@ -74,11 +75,6 @@ export default {
     const showSearch = ref(false);
     const showResults = ref(false);
     const searchResults = ref("");
-    // const product = {
-    //   name: "Hennessey",
-    //   price: "₦5,000",
-    //   cat: "Cognac",
-    // };
     return {
       link,
       Store,
