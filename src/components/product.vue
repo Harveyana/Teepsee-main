@@ -43,17 +43,6 @@
     <router-link
       :to="{ path: `/product/${productId}` }"
       style="text-decoration: none; width: 100%"
-      @click="
-        Store.addTorecently(
-          productName,
-          productPrice,
-          productCategory,
-          productImage,
-          productTag,
-          productId,
-          favouriters
-        )
-      "
     >
       <q-card flat class="column no-wrap flex-center" style="width: 100%">
         <q-card flat class="container-card flex-center" to="/product">
@@ -75,17 +64,6 @@
     <router-link
       :to="{ path: `/product/${productId}` }"
       style="text-decoration: none; width: 100%"
-      @click="
-        Store.addTorecently(
-          productName,
-          productPrice,
-          productCategory,
-          productImage,
-          productTag,
-          productId,
-          favouriters
-        )
-      "
     >
       <q-card
         flat

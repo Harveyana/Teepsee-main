@@ -52,16 +52,20 @@
               <q-item-section class="footer-head text-h6"> SUPPORT </q-item-section>
             </q-item>
 
-            <q-item clickable>
-              <q-item-section class="footerlink"> F.A.Q. </q-item-section>
+            <q-item clickable to="/faqs">
+              <q-item-section to="/faqs" class="footerlink text-white">
+                F.A.Q.
+              </q-item-section>
             </q-item>
 
             <q-item clickable>
               <q-item-section class="footerlink"> Live chat </q-item-section>
             </q-item>
 
-            <q-item clickable>
-              <q-item-section class="footerlink"> Phone call </q-item-section>
+            <q-item clickable to="/track">
+              <q-item-section to="/track" class="footerlink text-white">
+                Track
+              </q-item-section>
             </q-item>
           </q-list>
         </div>

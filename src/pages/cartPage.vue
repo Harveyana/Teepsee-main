@@ -6,10 +6,7 @@
     <h2 class="PageName self-start items-start" style="">Cart</h2>
     <div class="container row justify-between" style="">
       <q-card class="cart q-pb-md self-start" style="">
-        <q-card
-          class="gt-xs card-headers q-mt-lg row justify-around"
-          v-if="Store.cartProducts.value"
-        >
+        <q-card class="gt-xs card-headers q-mt-lg row justify-around" v-if="cartlength">
           <q-card class="ImageAndName"
             ><h3 class="ImageAndNameLabel card-header" style="">
               Product Image & Item Name
@@ -28,7 +25,7 @@
             ><h3 class="RemoveLabel card-header" style="">Remove</h3></q-card
           >
         </q-card>
-        <q-list class="scroll hide-scrollbar" style="" v-if="hasCart">
+        <q-list class="scroll hide-scrollbar" style="" v-if="cartlength">
           <!--  Product -->
           <!--  Product -->
           <cartProductVue
@@ -47,7 +44,7 @@
         <q-card
           class="scroll hide-scrollbar column flex-center"
           style=""
-          v-else="!hasCart"
+          v-else="!hasCart || cartlength"
         >
           <div class="text-h2 card-header q-mb-md">
             Hey, you have no items in your cart
@@ -62,7 +59,7 @@
           class="lt-sm checkoutBtn q-mt-xl"
           label="Checkout"
           style="position: relative; left: 10%"
-          v-if="hasCart"
+          v-if="cartlength"
         />
         <!-- chasers -->
         <!-- chasers -->
@@ -164,6 +161,11 @@ const fetchCart = () => {
     Store.cartProducts.value = [...items];
   }
 };
+const cartlength = computed(() => {
+  if (Store.cartProducts.value) {
+    return Store.cartProducts.value.length > 0 ? true : false;
+  }
+});
 
 onMounted(() => {
   fetchCart();
