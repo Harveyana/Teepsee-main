@@ -1,139 +1,101 @@
 <template>
-  <q-page
-    class="column flex flex-center q-px-xl-xl q-px-lg-xl q-px-md-xl q-px-sm-xl q-px-xs-none"
-    style="background: #e5e5e5"
-  >
-    <h2 class="PageName self-start items-start" style="">Cart</h2>
-    <div class="container row justify-between" style="">
-      <q-card class="cart q-pb-md self-start" style="">
-        <q-card class="gt-xs card-headers q-mt-lg row justify-around" v-if="cartlength">
-          <q-card class="ImageAndName"
-            ><h3 class="ImageAndNameLabel card-header" style="">
-              Product Image & Item Name
-            </h3></q-card
-          >
-          <q-card class="Price"
-            ><h3 class="PriceLabel card-header" style="">Price</h3></q-card
-          >
-          <q-card class="Quantity"
-            ><h3 class="QuantityLabel card-header" style="">Quantity</h3></q-card
-          >
-          <q-card class="Sub-total"
-            ><h3 class="Sub-totalLabel card-header" style="">Sub-total</h3></q-card
-          >
-          <q-card class="Remove"
-            ><h3 class="RemoveLabel card-header" style="">Remove</h3></q-card
-          >
-        </q-card>
-        <q-list class="scroll hide-scrollbar" style="" v-if="cartlength">
-          <!--  Product -->
-          <!--  Product -->
-          <cartProductVue
-            v-for="product in Store.cartProducts.value"
-            :productName="product.name.slice(0, 10) + '..'"
-            :productImage="product.image"
-            :productPrice="product.price"
-            :productCategory="product.category"
-            :productQuantity="product.quantity"
-            :key="product.name"
-          ></cartProductVue>
-
-          <!-- Product -->
-        </q-list>
-        <!-- Alternate -->
-        <q-card
-          class="scroll hide-scrollbar column flex-center"
-          style=""
-          v-else="!hasCart || cartlength"
-        >
-          <div class="text-h2 card-header q-mb-md">
-            Hey, you have no items in your cart
-          </div>
-          <q-icon size="45px" name="style" />
-        </q-card>
-        <!-- Alternate -->
-        <q-separator class="" style="margin-bottom: 1%; height: 5px" />
-        <q-btn
-          to="/checkout"
-          text-color="white"
-          class="lt-sm checkoutBtn q-mt-xl"
-          label="Checkout"
-          style="position: relative; left: 10%"
-          v-if="cartlength"
-        />
-        <!-- chasers -->
-        <!-- chasers -->
-        <q-card class="gt-xs Chasers q-pl-lg">
-          <q-card class="column chaser-container q-mb-lg">
-            <h3 class="chaserHeading card-header q-mb-md" style="">
-              Hey, you’ll need some chasers for your drinks
-            </h3>
-            <q-card class="searchChaser q-mt-sm" style="width: 30%">
-              <!-- <q-input
-                class="search"
-                dense
-                borderless
-                label="search for Chasers"
-                v-model="text"
-                style=""
-              >
-                <template v-slot:prepend>
-                  <q-icon name="search" style="position: relative; left: 25%" />
-                </template>
-              </q-input> -->
-            </q-card>
-          </q-card>
-          <q-card class="chaserSearchResult scroll hide-scrollbar">
-            <!-- searchResult -->
-            <!-- searchResult -->
-            <!-- searchResult -->
-            <Chasers></Chasers>
-            <Chasers></Chasers>
-            <Chasers></Chasers>
-            <Chasers></Chasers>
-            <!-- searcResult -->
-            <!-- searcResult -->
-            <!-- searcResult -->
-          </q-card>
-        </q-card>
+  <q-card class="column summary-container" style="width: 100%" v-if="hasCart">
+    <q-card><h3 class="summaryLabel card-header" style="">Summary</h3></q-card>
+    <q-separator class="" style="" />
+    <q-card class="summaryItems q-my-lg">
+      <q-card class="row justify-between subtotal">
+        <h4 class="subtotalKey NameClassLess" style="">Subtotal</h4>
+        <h4 class="subtotalEntry NameClass" style="">₦{{ cartValue }}</h4>
       </q-card>
-      <q-card class="gt-xs row summary justify-center q-pa-lg" style="">
-        <CartSummary :key="Store.componentKey"></CartSummary>
+      <q-card class="row justify-between Delivery">
+        <h4 class="DeliveryKey NameClassLess" style="">Delivery Fee</h4>
+        <h4 class="DeliveryEntry NameClass" style="" v-if="cartValue > 1">₦1,047.00</h4>
       </q-card>
-    </div>
-    <RecentlyViewed></RecentlyViewed>
-  </q-page>
+      <q-card class="row justify-between Total">
+        <h4 class="TotalKey NameClass" style="">Total</h4>
+        <h4 class="TotalEntry NameClass" style="" v-if="cartValue > 1">
+          ₦{{ parseInt(cartValue + 1047) }}
+        </h4>
+      </q-card>
+    </q-card>
+    <q-separator class="" style="" />
+    <q-card
+      class="row no-wrap CouponInput justify-center self-center q-my-xl"
+      style="width: 80%; height: 41px; border-radius: 12px"
+    >
+      <!-- <q-input
+              class="discountEntry"
+              dense
+              borderless
+              label="Your discount code"
+              v-model="discountCode"
+              style=""
+            >
+            </q-input>
+            <q-btn text-color="black" class="AddToCartBtn" label="Apply" style="" /> -->
+      <h4 class="TotalEntry NameClass text-center" style="">Enter coupon at checkout</h4>
+    </q-card>
+    <q-btn
+      to="/checkout"
+      text-color="white"
+      class="checkoutBtn self-center"
+      label="Checkout"
+      style=""
+    />
+  </q-card>
 </template>
 
 <script setup>
-import cartProductVue from "src/components/cartProduct.vue";
-import Chasers from "../components/Chasers.vue";
-import RecentlyViewed from "src/components/RecentlyViewed.vue";
-import CartSummary from "src/components/cartSummary.vue";
 import { useCounterStore } from "stores/counter";
+// import { useRouter, useRoute } from "vue-router";
+import { computed, onMounted, watch, ref } from "vue";
 import { useQuasar } from "quasar";
-import { ref, reactive, onMounted, computed } from "vue";
 const Store = useCounterStore();
 const $q = useQuasar();
 const cartProducts = ref([]);
+const total = ref(0);
 const hasCart = $q.localStorage.has("cartItems");
-// const componentKey = ref(0);
-// const increaseKey = () => {
-//   componentKey.value++;
-// };
+// Store.$subscribe((mutation, state) => {});
 const fetchCart = () => {
   const items = $q.localStorage.getItem("cartItems") || [];
   // add to it, only if it's empty
   if (items) {
     console.log(items);
-    Store.cartProducts.value = [...items];
+    cartProducts.value = [...items];
   }
 };
-const cartlength = computed(() => {
-  if (Store.cartProducts.value) {
-    return Store.cartProducts.value.length > 0 ? true : false;
+const fetchValue = () => {
+  if (cartProducts.value) {
+    let priceArray = [];
+    cartProducts.value.forEach((item) => {
+      let cost = item.price * item.quantity;
+      priceArray.push(cost);
+    });
+    // arr.reduce(function (a, b) {
+    //   return a + b;
+    // });
+    return priceArray.reduce(function (a, b) {
+      return a + b;
+    }, 0);
+
+    // console.log(sum);
+    // total.value = priceArray;
+    // return Store.cartProducts.value.length > 0 ? true : false;
   }
+};
+const cartValue = computed(() => {
+  return fetchValue();
 });
+watch(cartProducts.value, () => {
+  fetchValue();
+});
+// watch(
+//   () => cartProducts.value,
+//   (newValue, oldValue) => {
+//     fetchValue();
+//   },
+//   { deep: true }
+// );
 
 onMounted(() => {
   fetchCart();

@@ -8,8 +8,8 @@
       dense
       flat
       round
-      size="13px"
-      icon="img:/vector.png"
+      size="16px"
+      icon="img:/searchWhite.svg"
       style=""
       @click="showSearch = true"
     />

@@ -1,31 +1,38 @@
 <template>
-  <q-card
-    class="column hero flex items-start q-px-lg"
-    style="
-      width: 100%;
-      background-image: url('/heroback.svg');
-      background-size: cover;
-      background-repeat: no-repeat;
-    "
+  <TransitionGroup
+    tag="contain"
+    duration="5"
+    appear
+    enter-active-class="animated bounceInLeft"
+    leave-active-class="animated bounceOutRight"
   >
     <q-card
-      flat
-      class="gt-sm q-mt-lg flex justify-between items-center row no-wrap navbar-desktop bg-transparent"
-      style="width: 100%"
+      class="column hero flex items-start q-px-lg"
+      style="
+        width: 100%;
+        background-image: url('/heroback.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+      "
     >
-      <!-- logo -->
-      <q-card flat class="bg-transparent" style="width: 15%">
-        <q-img
-          to="/"
-          class="logo"
-          src="~assets/Logo.svg"
-          spinner-color="black"
-          style="width: 100%"
-        />
-      </q-card>
-      <!-- logo -->
-      <!-- searchbar -->
-      <!-- <q-card flat class="bg-transparent" style="width: 30%">
+      <q-card
+        flat
+        class="gt-sm q-mt-lg flex justify-between items-center row no-wrap navbar-desktop bg-transparent"
+        style="width: 100%"
+      >
+        <!-- logo -->
+        <q-card flat class="bg-transparent" style="width: 15%">
+          <q-img
+            to="/"
+            class="logo"
+            src="~assets/Logo.svg"
+            spinner-color="black"
+            style="width: 100%"
+          />
+        </q-card>
+        <!-- logo -->
+        <!-- searchbar -->
+        <!-- <q-card flat class="bg-transparent" style="width: 30%">
         <div class="input q-ml-sm">
           <img src="/Vector.png" alt="" />
           <input
@@ -37,134 +44,139 @@
           />
         </div>
       </q-card> -->
-      <Search></Search>
-      <!-- searchbar -->
-      <!-- nav links -->
+        <Search></Search>
+        <!-- searchbar -->
+        <!-- nav links -->
+        <q-card
+          flat
+          class="nav-links row no-wrap justify-between bg-transparent"
+          style="width: 20%"
+        >
+          <q-card flat class="navbar bg-transparent" style="width: 40%">
+            <q-btn
+              to="/categories/general"
+              color="white"
+              flat
+              label="Categories"
+              class="nav"
+              style="width: 100%"
+            />
+          </q-card>
+          <q-card flat class="navbar bg-transparent no-wrap" style="width: 50%">
+            <q-btn
+              to="/cart"
+              color="white"
+              flat
+              label="Cart"
+              icon="img:/buy.png"
+              class="nav no-wrap"
+              style="width: 100%"
+            />
+          </q-card>
+        </q-card>
+        <!-- nav links -->
+
+        <!-- Auth buttons -->
+        <q-card
+          flat
+          outline
+          class="row no-wrap q-mr-md bg-transparent"
+          style="width: 20%"
+        >
+          <q-card
+            clickable
+            class="profile row no-wrap flex justify-between items-center bg-transparent"
+            style="width: 60%; cursor: pointer"
+            v-if="Store.isLoggedIn"
+          >
+            <q-img
+              to="/account"
+              :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+              spinner-color="white"
+              class="profile-Image"
+              style="width: 25%; border-radius: 50%; border: 1x solid"
+            />
+
+            <router-link to="/account" class="" style="text-decoration: none">
+              <div
+                to="/account"
+                class="text-h3 userName no-wrap"
+                style="
+                  font-family: 'Catellosdemo';
+                  font-weight: 400;
+                  line-height: 25px;
+                  font-size: 130%;
+                  color: #e6b41d;
+                "
+                v-if="Store.username !== null"
+              >
+                {{ Store.username }}
+              </div>
+            </router-link>
+          </q-card>
+          <q-card
+            class="AuthBtns row no-wrap bg-transparent"
+            style="width: 100%; border-radius: 12px; background: transparent"
+            v-else="!Store.isLoggedIn"
+          >
+            <q-btn
+              to="/login"
+              text-color="black"
+              class="Authbtn"
+              label="Log in"
+              style="
+                padding: 12px 15px 12px 30px;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+                background-color: #e6b41d;
+                border-radius: 12px;
+              "
+            />
+            <q-btn
+              color="white"
+              to="/signup"
+              text-color="black"
+              class="Authbtn"
+              label="Sign Up"
+              style="
+                padding: 12px 30px 12px 15px;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                border-radius: 12px;
+              "
+            />
+          </q-card>
+          <q-card
+            outline
+            class="bg-transparent navbar"
+            to=""
+            style="width: 30%"
+            v-if="Store.isLoggedIn"
+            ><q-btn
+              color="white"
+              flat
+              label=""
+              icon="img:/logoutMain.svg"
+              style="width: 100%; position: relative; left: 15%"
+              @click="Store.logOut()"
+          /></q-card>
+        </q-card>
+        <!-- Auth buttons -->
+      </q-card>
+      <!-- mobile-nav -->
       <q-card
         flat
-        class="nav-links row no-wrap justify-between bg-transparent"
-        style="width: 20%"
+        class="lt-md q-mt-sm row no-wrap navbar-mobile bg-transparent justify-between items-center"
+        style="width: 100%"
       >
-        <q-card flat class="navbar bg-transparent" style="width: 40%">
-          <q-btn
-            to="/categories/general"
-            color="white"
-            flat
-            label="Categories"
-            class="nav"
+        <q-card flat class="bg-transparent mobile-logo" style=""
+          ><q-img
+            class="mobile-logo"
+            src="~assets/Logo.svg"
+            spinner-color="black"
             style="width: 100%"
-          />
-        </q-card>
-        <q-card flat class="navbar bg-transparent no-wrap" style="width: 50%">
-          <q-btn
-            to="/cart"
-            color="white"
-            flat
-            label="Cart"
-            icon="img:/buy.png"
-            class="nav no-wrap"
-            style="width: 100%"
-          />
-        </q-card>
-      </q-card>
-      <!-- nav links -->
-
-      <!-- Auth buttons -->
-      <q-card flat outline class="row no-wrap q-mr-md bg-transparent" style="width: 20%">
-        <q-card
-          clickable
-          class="profile row no-wrap flex justify-between items-center bg-transparent"
-          style="width: 60%; cursor: pointer"
-          v-if="Store.isLoggedIn"
-        >
-          <q-img
-            to="/account"
-            :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
-            spinner-color="white"
-            class="profile-Image"
-            style="width: 25%; border-radius: 50%; border: 1x solid"
-          />
-
-          <router-link to="/account" class="" style="text-decoration: none">
-            <div
-              to="/account"
-              class="text-h3 userName no-wrap"
-              style="
-                font-family: 'Catellosdemo';
-                font-weight: 400;
-                line-height: 25px;
-                font-size: 130%;
-                color: #e6b41d;
-              "
-              v-if="Store.username !== null"
-            >
-              {{ Store.username }}
-            </div>
-          </router-link>
-        </q-card>
-        <q-card
-          class="AuthBtns row no-wrap bg-transparent"
-          style="width: 100%; border-radius: 12px; background: transparent"
-          v-else="!Store.isLoggedIn"
-        >
-          <q-btn
-            to="/login"
-            text-color="black"
-            class="Authbtn"
-            label="Log in"
-            style="
-              padding: 12px 15px 12px 30px;
-              border-top-right-radius: 0px;
-              border-bottom-right-radius: 0px;
-              background-color: #e6b41d;
-              border-radius: 12px;
-            "
-          />
-          <q-btn
-            color="white"
-            to="/signup"
-            text-color="black"
-            class="Authbtn"
-            label="Sign Up"
-            style="
-              padding: 12px 30px 12px 15px;
-              border-top-left-radius: 0px;
-              border-bottom-left-radius: 0px;
-              border-radius: 12px;
-            "
-          />
-        </q-card>
-        <q-card
-          outline
-          class="bg-transparent navbar"
-          to=""
-          style="width: 30%"
-          v-if="Store.isLoggedIn"
-          ><q-btn
-            color="white"
-            flat
-            label=""
-            icon="img:/logoutMain.svg"
-            style="width: 100%; position: relative; left: 15%"
-            @click="Store.logOut()"
         /></q-card>
-      </q-card>
-      <!-- Auth buttons -->
-    </q-card>
-    <!-- mobile-nav -->
-    <q-card
-      flat
-      class="lt-md q-mt-sm row no-wrap navbar-mobile bg-transparent justify-between items-center"
-      style="width: 100%"
-    >
-      <q-card flat class="bg-transparent mobile-logo" style=""
-        ><q-img
-          class="mobile-logo"
-          src="~assets/Logo.svg"
-          spinner-color="black"
-          style="width: 100%"
-      /></q-card>
-      <!-- <q-card
+        <!-- <q-card
         flat
         class="bg-transparent"
         style="width: 5%; position: relative; top: 0px; left: 12%"
@@ -179,49 +191,50 @@
           @click="showSearch = true"
         />
       </q-card> -->
-      <MobileSearch></MobileSearch>
+        <MobileSearch></MobileSearch>
 
-      <q-card flat class="bg-transparent" style="width: 5%">
-        <q-btn
-          dense
-          flat
-          round
-          icon="img:/mobileMenu.png"
-          @click="Store.toggleLeftDrawer()"
-        />
+        <q-card flat class="bg-transparent" style="width: 5%">
+          <q-btn
+            dense
+            flat
+            round
+            icon="img:/mobileMenu.png"
+            @click="Store.toggleLeftDrawer()"
+          />
+        </q-card>
       </q-card>
+      <!-- mobile-nav -->
+      <!-- hero-items -->
+      <q-card flat class="column no-wrap hero-cta bg-transparent" style="width: 100%">
+        <q-card class="bg-transparent" style="width: 100%">
+          <h1 class="hero-text text-white" style="">Get Teepsee</h1>
+        </q-card>
+        <q-card class="bg-transparent" style="width: 100%">
+          <h4 class="hero-subtext text-white">
+            Wine, Liquor, Ice, Mixers and some other cool stuff? We got it
+          </h4>
+        </q-card>
+        <q-card class="bg-transparent" style="width: 100%">
+          <q-btn
+            color="white"
+            class="bg-white hero-button"
+            size="15px"
+            to="/categories/general"
+            text-color="black"
+            flat
+            label="Get Started"
+          />
+        </q-card>
+      </q-card>
+      <!-- hero-items -->
+      <!-- search results template -->
+
+      <!-- mobile search results  -->
+
+      <!-- mobile search results -->
+      <!-- search results template -->
     </q-card>
-    <!-- mobile-nav -->
-    <!-- hero-items -->
-    <q-card flat class="column no-wrap hero-cta bg-transparent" style="width: 100%">
-      <q-card class="bg-transparent" style="width: 100%">
-        <h1 class="hero-text text-white" style="">Get Teepsee</h1>
-      </q-card>
-      <q-card class="bg-transparent" style="width: 100%">
-        <h4 class="hero-subtext text-white">
-          Wine, Liquor, Ice, Mixers and some other cool stuff? We got it
-        </h4>
-      </q-card>
-      <q-card class="bg-transparent" style="width: 100%">
-        <q-btn
-          color="white"
-          class="bg-white hero-button"
-          size="15px"
-          to="/categories/general"
-          text-color="black"
-          flat
-          label="Get Started"
-        />
-      </q-card>
-    </q-card>
-    <!-- hero-items -->
-    <!-- search results template -->
-
-    <!-- mobile search results  -->
-
-    <!-- mobile search results -->
-    <!-- search results template -->
-  </q-card>
+  </TransitionGroup>
 </template>
 
 <script>

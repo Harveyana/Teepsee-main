@@ -113,36 +113,7 @@ export default {
     };
   },
   methods: {
-    // addTorecently(name, price, category, image, tag, id, favouriters) {
-    //   let recents = this.$q.localStorage.getItem("recentItems") || [];
-    //   const favourites = [...favouriters];
-    //   if (recents.length < 20) {
-    //     recents.push({
-    //       name,
-    //       price,
-    //       category,
-    //       image,
-    //       tag,
-    //       id,
-    //       favourites,
-    //     });
-    //     this.$q.localStorage.set("recentItems", recents);
-    //     console.log(recents);
-    //   } else {
-    //     recents.splice(0, 1);
-    //     recents.push({
-    //       name,
-    //       price,
-    //       category,
-    //       image,
-    //       tag,
-    //       id,
-    //       favourites,
-    //     });
-    //     this.$q.localStorage.set("recentItems", recents);
-    //     console.log(recents);
-    //   }
-    // },
+
   },
   computed: {
     // a computed getter

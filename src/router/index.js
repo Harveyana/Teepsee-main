@@ -35,15 +35,16 @@ export default route(function (/* { store, ssrContext } */) {
     to.matched.some( route =>{
       const Store = useCounterStore();
       const logged = LocalStorage.getItem('isLoggedIn')
+      const logAuth = LocalStorage.getItem('logger')
       if(route.meta.requiresAuth && !logged){
         // if(!Store.isLoggedIn ){
           next({ path: '/login' })
         // }
       }
-      // if(route.meta.requiresNotLogged){
-      //   if(Store.isLoggedIn){
-      //     next({path: '/account'})
-      //   }
+      // if(route.meta.requiresAdmin && !logAuth){
+
+      //     next({path: '/'})
+
       // }
 
       // if(route.meta.requiresUser){

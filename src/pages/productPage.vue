@@ -255,19 +255,7 @@ const queryProduct = () => {
   });
 };
 const addToCart = (name, image, quantity, price) => {
-  // const docToUpdate = doc(db, "users", Store.userId);
-  // updateDoc(docToUpdate, {
-  //   cart: arrayUnion({
-  //     id: route.params.id,
-  //     name: productDetails.name,
-  //     image: productDetails.images[0],
-  //     price: productDetails.price,
-  //     count: counter,
-  //   }),
-  // }).then(() => {
-  //   this.notifyUser(this.user.profilePic, "Product Added to cart");
-  // });
-  // var addNewItem = function (name, image, quantity, price) {
+
   // retrieve it (Or create a blank array if there isn't any info saved yet),
   const items = $q.localStorage.getItem("cartItems") || [];
   // add to it, only if it's empty
