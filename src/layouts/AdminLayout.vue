@@ -40,7 +40,7 @@
       >
         <q-scroll-area class="fit">
           <q-list padding>
-            <q-item clickable v-ripple to="/admin/products">
+            <q-item clickable to="/admin/products">
               <q-item-section avatar>
                 <q-icon
                   name="shop"
@@ -51,7 +51,7 @@
               <q-item-section>Products </q-item-section>
             </q-item>
 
-            <q-item active clickable v-ripple to="/admin/users">
+            <q-item active clickable to="/admin/users">
               <q-item-section avatar>
                 <q-icon
                   name="people"
@@ -62,7 +62,7 @@
               <q-item-section> Users </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/admin/orders">
+            <q-item clickable to="/admin/orders">
               <q-item-section avatar>
                 <q-icon
                   name="store"
@@ -75,7 +75,7 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple to="/admin/coupons">
+            <q-item clickable to="/admin/coupons">
               <q-item-section avatar>
                 <q-icon
                   name="discount"
@@ -99,18 +99,35 @@
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
+<script setup>
+import { ref, onMounted, onBeforeMount } from "vue";
 import { useCounterStore } from "stores/counter";
-export default {
-  setup() {
-    return {
-      drawer: ref(false),
-      miniState: ref(true),
-      Store: useCounterStore(),
-    };
-  },
-};
+
+const drawer = ref(false);
+const miniState = ref(true);
+const Store = useCounterStore();
+
+// beforeRouteEnter (to, from, next) {
+//   if(to == '/admin/product'){
+//     Store.fetchAdmins();
+//   }
+// };
+
+// onBeforeMount(() => {
+//   Store.fetchAdmins();
+//   // const checkAdmin = () => {
+//   //   if (Store.user.status) {
+//   //     if (Store.user.status !== "admin") {
+//   //       $this.router.push("/");
+//   //     } else {
+//   //       console.log("checked Admin");
+//   //     }
+//   //   } else {
+//   //     $this.router.push("/");
+//   //   }
+//   // };
+//   // Store.fetchAdmins();
+// });
 </script>
 <style scoped lang="sass">
 .layout

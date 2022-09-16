@@ -1,5 +1,10 @@
 <template>
-  <q-card class="row product justify-between" style="width: 100%">
+  <q-card
+    class="row product justify-between"
+    style="width: 100%"
+    v-for="product in Store.products.value"
+    :key="product.id"
+  >
     <!-- Product image and name -->
     <q-card
       class="image-And-Name row no-wrap justify-between items-center"
@@ -7,19 +12,21 @@
     >
       <q-card class="image" style="width: 42%">
         <q-img
-          src="../assets/product3.svg"
+          :src="product.images[0]"
           spinner-color="black"
           class="favourite"
           style="width: 100%"
         />
       </q-card>
       <q-card class="Name" style="width: 57%">
-        <h4 class="productName NameClass no-wrap" style="">Coke (30cl)</h4>
+        <h4 class="productName NameClass no-wrap" style="">
+          {{ product.name.slice(0, 10) + ".." }}
+        </h4>
       </q-card>
     </q-card>
     <!-- Product Price -->
     <q-card class="row ProductPrice flex flex-center" style="width: 15%">
-      <h4 class="productPrice NameClass" style="">₦5,000</h4>
+      <h4 class="productPrice NameClass" style="">{{ product.price }}</h4>
     </q-card>
     <!-- Product Quantity -->
     <q-card
@@ -33,14 +40,22 @@
           clickable
           name="img:/decrementor.svg"
           style="cursor: pointer"
-          @click="counter--"
+          @click="counter--, reduceQuantity(productDetails.name, 1)"
         />
-        <h3 class="CounterNumber" style="">{{ counter }}</h3>
+        <h3 class="CounterNumber" style="">{{ cart }}</h3>
         <q-icon
           clickable
           name="img:/incrementor.svg"
           style="cursor: pointer"
-          @click="counter++"
+          @click="
+            counter++,
+              addToCart(
+                productDetails.name,
+                productDetails.images[0],
+                1,
+                productDetails.price
+              )
+          "
         />
       </q-card>
     </q-card>
@@ -55,8 +70,54 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
+import { useCounterStore } from "stores/counter";
+const Store = useCounterStore();
+const $q = useQuasar();
+const cart = ref(1);
 const counter = ref(1);
+
+const addToCart = (name, image, quantity, price) => {
+  // retrieve it (Or create a blank array if there isn't any info saved yet),
+  const items = $q.localStorage.getItem("cartItems") || [];
+  // add to it, only if it's empty
+  const item = items.find((item) => item.name === name);
+  if (item) {
+    item.quantity += quantity;
+    cart.value = item.quantity;
+    console.log(cart);
+  } else {
+    items.push({
+      name,
+      image,
+      quantity,
+      price,
+    });
+  }
+  // then put it back.
+  $q.localStorage.set("cartItems", items);
+
+  console.log(items);
+  // };
+};
+
+const reduceQuantity = function (name, quantity) {
+  const items = $q.localStorage.getItem("cartItems");
+  const item = items.find((item) => item.name === name);
+  if (item) {
+    item.quantity -= quantity;
+    cart.value = item.quantity;
+  }
+
+  // then put it back.
+  $q.localStorage.set("cartItems", items);
+  console.log(items);
+  // };
+};
+onMounted(() => {
+  Store.Fetchproducts("general");
+});
 </script>
 <style scoped lang="sass">
 .quantity-counter

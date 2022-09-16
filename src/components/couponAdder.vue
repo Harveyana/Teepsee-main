@@ -12,7 +12,7 @@
         <q-input
           filled
           label="Coupon Name"
-          v-model="text"
+          v-model="coupon.name"
           style="border-radius: 15px; width: 100%"
         />
       </q-card>
@@ -22,7 +22,7 @@
         <q-input
           filled
           label="Coupon Code"
-          v-model="text"
+          v-model="coupon.code"
           style="border-radius: 15px; width: 60%"
         />
       </q-card>
@@ -31,8 +31,9 @@
         <h4 class="NameClass">Coupon Discount</h4>
         <q-input
           filled
+          prefix="%"
           label="Coupon Discount"
-          v-model="text"
+          v-model="coupon.discount"
           style="border-radius: 15px; width: 60%"
         />
       </q-card>
@@ -42,12 +43,25 @@
   <!-- submitBtn and UploadBtn -->
   <!-- submitBtn and UploadBtn-->
   <q-card flat class="submitBtn q-ml-lg q-my-md" style="width: 20%">
-    <q-btn text-color="white" class="checkoutBtn" label="Submit" @click="" />
+    <q-btn
+      text-color="white"
+      class="checkoutBtn"
+      label="Submit"
+      @click="Store.addCoupon(coupon)"
+    />
   </q-card>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
+import { useCounterStore } from "stores/counter";
+const Store = useCounterStore();
+
+const coupon = reactive({
+  name: "",
+  code: "",
+  discount: "",
+});
 // const files = ref(null);
 </script>
 

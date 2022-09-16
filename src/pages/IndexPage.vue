@@ -1,8 +1,14 @@
 <template>
   <q-page class="items-center overflow-hidden hide-scrollbar" style="background: #e5e5e5">
     <!-- hero -->
-    <MainHero></MainHero>
-    <!-- hero -->
+    <transition
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <MainHero></MainHero>
+      <!-- hero -->
+    </transition>
 
     <div class="features column justify-center items-center no-wrap">
       <q-card
@@ -30,9 +36,15 @@
         flat
         class="row no-wrap bg-transparent shop-features items-center justify-between"
       >
-        <q-card flat class="wine">
-          <div class="text-h1 featureText text-white">Shop Wine</div>
-        </q-card>
+        <Transition
+          :duration="5000"
+          enter-active-class="animated bounceInLeft"
+          leave-active-class="animated bounceOutRight"
+        >
+          <q-card flat class="wine">
+            <div class="text-h1 featureText text-white">Shop Wine</div>
+          </q-card>
+        </Transition>
         <q-card flat class="champagne">
           <div class="text-h1 featureText text-white">Shop Champagne</div>
         </q-card>
@@ -69,6 +81,14 @@
         </q-card>
       </div>
 
+      <q-btn
+        round
+        color="white"
+        size="20px"
+        icon="img:/whatsapp.png"
+        class="whatsapp"
+        style=""
+      />
       <!-- <div class="shop-features2 row">
 
       </div> -->
@@ -154,6 +174,21 @@ const tab = ref("previous");
 </script>
 
 <style scoped lang="sass">
+// .enter-from,
+// .leave-to
+//   opacity:0
+
+// .enter-active,
+// .leave-active
+//   transition: opacity 6s ease
+.whatsapp
+  position: fixed
+  bottom: 8%
+  right: 3%
+  z-index: 99
+  body.screen--xs &
+   bottom: 3%
+
 .text-black
   font-family: 'Catellosdemo'
   font-size: 50px

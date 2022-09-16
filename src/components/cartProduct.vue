@@ -80,7 +80,7 @@
         name="img:/Removebtn.svg"
         style="cursor: pointer"
         size="25px"
-        @click="removeItem()"
+        @click="removeItem(), Store.componentKey++"
       />
     </q-card>
   </q-card>
@@ -128,6 +128,9 @@ export default {
 
       // };
     },
+    // increaseKey() {
+    //   $parent.increaseKey();
+    // },
   },
   computed: {
     // a computed getter

@@ -59,14 +59,14 @@
         <q-list class="scroll hide-scrollbar" style="">
           <!--  Product -->
           <!--  Product -->
-          <Coupon />
-          <Coupon />
-          <Coupon />
-          <Coupon />
-          <Coupon />
-          <Coupon />
-          <Coupon />
-          <Coupon />
+          <Coupon
+            v-for="coupon in Store.coupons.value"
+            :couponName="coupon.name"
+            :couponCode="coupon.code"
+            :couponDiscount="coupon.discount"
+            :couponUsers="coupon.users"
+            :key="coupon.discount"
+          ></Coupon>
 
           <!-- Product -->
         </q-list>
@@ -80,6 +80,12 @@
 <script setup>
 import Coupon from "src/components/coupon.vue";
 import CouponAdder from "src/components/couponAdder.vue";
+import { onMounted, ref } from "vue";
+import { useCounterStore } from "stores/counter";
+const Store = useCounterStore();
+onMounted(() => {
+  Store.fetchCoupons();
+});
 </script>
 <style scoped lang="sass">
 .search

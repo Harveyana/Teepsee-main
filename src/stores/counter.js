@@ -50,15 +50,36 @@ export const useCounterStore = defineStore('counter', {
     favourites: ref([]),
     recentlyViewed: ref([]),
     cartProducts: ref([]),
+    coupons: ref([]),
     filter: [],
     cat1: null,
     cat2: null,
     cat3: null,
     results: null,
+    componentKey: ref(0),
     loadSignUpBtn: false,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
+    fetchValue: () =>{
+      // const fetchValue = () => {
+        // if (cartProducts.value) {
+          const items = LocalStorage.getItem("cartItems") || []
+          let priceArray = [];
+          items.forEach((item) => {
+            let cost = item.price * item.quantity;
+            priceArray.push(cost);
+          });
+          // arr.reduce(function (a, b) {
+          //   return a + b;
+          // });
+          return priceArray.reduce(function (a, b) {
+            return a + b;
+          }, 0);
+          // return Store.cartProducts.value.length > 0 ? true : false;
+        // }
+      // };
+    },
   },
   actions: {
     notifyUser(avatar, message) {
@@ -110,6 +131,9 @@ export const useCounterStore = defineStore('counter', {
           Object.assign(this.user, doc.data());
           // Object.assign(this.userId, doc.id);
           this.userId = doc.id;
+          // if (doc.data().status =='admin') {
+          //   LocalStorage.set('logger', false);
+          // }
         });
 
       })
@@ -270,6 +294,7 @@ export const useCounterStore = defineStore('counter', {
           this.queryUser(user.uid);
 
           LocalStorage.set('isLoggedIn', true);
+
         }
       });
     },
@@ -400,6 +425,28 @@ export const useCounterStore = defineStore('counter', {
         }
       });
     },
+    fetchAdmins(){
+        if (this.user.status !== "admin") {
+          this.router.push("/");
+        } else {
+          console.log("checked Admin");
+          Fetchproducts("general");
+        }
+    },
+      // this.ShowLoading = true;
+      // const adminsQuery = query(collection(db, "admins"));
+
+      // onSnapshot(adminsQuery, (data) => {
+      //   let group = data.docs.map((item) => {
+      //     return item.data();
+      //   });
+      //   // this.favourites.value = [...group];
+      //   console.log(group);
+      //   if (group.length > 0) {
+      //     this.ShowLoading = false;
+      //   }
+      // });
+    // },
     updateData(payload,userId) {
       const docToUpdate = doc(db, "users", userId);
       this.ShowLoading = true;
@@ -544,6 +591,35 @@ export const useCounterStore = defineStore('counter', {
       }).then(()=>{
         this.notifyUser(this.user.profilePic, " removed from favourites");
       })
+    },
+    addCoupon(payload) {
+      if(payload.name && payload.code && payload.discount){
+        let colRef= collection(db, 'coupons',);
+        addDoc(colRef, {
+          name:payload.name,
+          code:payload.code,
+          discount: payload.discount,
+          users:[]
+        }).then(() =>{
+          this.notifyUser(this.defaultPic, 'Coupon Added');
+        })
+      }else{
+        this.notifyUser(this.defaultPic, 'Enter coupon details');
+      }
+
+    },
+    fetchCoupons() {
+      const colRef = collection(db, "coupons");
+      onSnapshot(colRef, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.coupons.value = [...group];
+        console.log(group);
+        // if (this.products.value.length > 0) {
+
+        // }
+      });
     },
     increment() {
       this.counter++;

@@ -11,7 +11,7 @@
     <!-- Product image and name -->
     <q-card class="image-And-Name row no-wrap flex flex-center" style="">
       <q-card class="gt-xs Name" style="width: 70%">
-        <h4 class="productName NameClass" style="">Henessey</h4>
+        <h4 class="productName NameClass" style="">{{ couponName }}</h4>
       </q-card>
     </q-card>
     <!-- Product Price -->
@@ -19,21 +19,21 @@
       class="row Discount flex flex-center"
       style="width: 15%; position: relative; left: 4.5%"
     >
-      <h4 class="Discount NameClass" style="">30%</h4>
+      <h4 class="Discount NameClass" style="">%{{ couponDiscount }}</h4>
     </q-card>
     <!-- Product Quantity -->
     <q-card
       class="row couponCodeLabel flex flex-center"
       style="width: 8%; position: relative; left: 8%"
     >
-      <h4 class="CouponCode NameClass" style="">SHOP20%OFF</h4>
+      <h4 class="CouponCode NameClass" style="">{{ couponCode }}</h4>
     </q-card>
     <!-- Product SubTotal -->
     <q-card
       class="gt-xs row CouponUsersLabel flex flex-center"
       style="width: 15%; position: relative; left: 9%"
     >
-      <h4 class="CouponUsers NameClass" style="">54</h4>
+      <h4 class="CouponUsers NameClass" style="">{{ parseInt(couponUsers.length) }}</h4>
     </q-card>
     <!-- <q-card class="row Edit flex flex-center" style="position: relative; right: 3%"> -->
     <q-popup-proxy
@@ -100,12 +100,28 @@
     </q-popup-proxy>
     <!-- </q-card> -->
   </q-card>
+  <!-- </q-card> -->
 </template>
 
-<script setup>
+<script>
 import { ref } from "vue";
-const confirm = ref(false);
-// const files = ref(null);
+import { useCounterStore } from "stores/counter";
+export default {
+  name: "coupon",
+
+  props: {
+    couponName: String,
+    couponCode: String,
+    couponDiscount: Number,
+    couponUsers: Array,
+  },
+  data() {
+    return {
+      Store: useCounterStore(),
+      confirm: ref(false),
+    };
+  },
+};
 </script>
 <style scoped lang="sass">
 .checkoutBtn

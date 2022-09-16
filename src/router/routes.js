@@ -77,7 +77,7 @@ const routes = [
       { path: '/admin/orders', component: () => import('pages/Orders.vue') },
     ],
     meta:{
-      requiresAuth: true
+      requiresAdmin: true
     }
   },
   {
