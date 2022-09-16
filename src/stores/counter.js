@@ -56,6 +56,7 @@ export const useCounterStore = defineStore('counter', {
     cat2: null,
     cat3: null,
     results: null,
+    cartTotal: ref(0),
     componentKey: ref(0),
     loadSignUpBtn: false,
   }),
@@ -619,6 +620,40 @@ export const useCounterStore = defineStore('counter', {
         // if (this.products.value.length > 0) {
 
         // }
+      });
+
+    },
+    initDiscount(code){
+      const num = parseFloat(code) / 100
+      console.log(num);
+      let percentNumber = this.cartTotal * num
+      console.log(percentNumber);
+      this.cartTotal = this.cartTotal - percentNumber
+      this.notifyUser(this.user.profilePic, "Discount Added");
+      this.ShowLoading = false;
+    },
+    getCoupon(discountCode){
+      this.ShowLoading = true;
+      const querycoupon = query(collection(db, "coupons"), where("code", "==", discountCode));
+      onSnapshot(querycoupon, (data) => {
+        let coupons = data.docs.map((item) => {
+          return item.data();
+        });
+        // this.products.value = [...group];
+        console.log(coupons);
+        let coupon = coupons[0]
+        let users = coupon.users
+        if (coupon) {
+          this.ShowLoading = false;
+          if(users.includes(this.user.email)){
+            this.notifyUser(this.user.profilePic, "Already Used")
+          }else{
+            this.initDiscount(coupon.discount);
+          }
+        }else{
+          this.notifyUser(this.user.profilePic, "invalid Coupon");
+          this.ShowLoading = false;
+        }
       });
     },
     increment() {

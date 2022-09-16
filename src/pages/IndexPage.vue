@@ -1,23 +1,25 @@
 <template>
   <q-page class="items-center overflow-hidden hide-scrollbar" style="background: #e5e5e5">
     <!-- hero -->
-    <transition
-      appear
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-    >
-      <MainHero></MainHero>
-      <!-- hero -->
-    </transition>
+
+    <MainHero></MainHero>
+    <!-- hero -->
 
     <div class="features column justify-center items-center no-wrap">
-      <q-card
-        flat
-        class="gt-xs row justify-center no-wrap bg-transparent"
+      <q-intersection
+        class=""
+        transition="jump-down"
+        transition-duration="2000"
         style="width: 100%"
       >
-        <div class="text-h1 text1 q-py-md">How to get Teepsee</div>
-      </q-card>
+        <q-card
+          flat
+          class="gt-xs row justify-center no-wrap bg-transparent"
+          style="width: 100%"
+        >
+          <div class="text-h1 text1 q-py-md">How to get Teepsee</div>
+        </q-card>
+      </q-intersection>
       <q-card
         flat
         class="lt-sm row justify-start no-wrap bg-transparent"
@@ -27,62 +29,134 @@
       </q-card>
 
       <div class="feature-list row no-wrap justify-around" style="">
-        <q-card flat class="my-card"> </q-card>
-        <q-card flat class="my-card2"> </q-card>
-        <q-card flat class="my-card3"> </q-card>
+        <q-intersection
+          class="card-intersection"
+          transition="slide-up"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="my-card q-mx-auto"> </q-card>
+        </q-intersection>
+        <q-intersection
+          class="card-intersection"
+          transition="slide-up"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="my-card2 q-mx-auto"> </q-card>
+        </q-intersection>
+        <q-intersection
+          class="card-intersection"
+          transition="slide-up"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="my-card3 q-mx-auto"> </q-card>
+        </q-intersection>
       </div>
       <div class="text-h1 text3 self-start">Shop Now</div>
       <div
         flat
         class="row no-wrap bg-transparent shop-features items-center justify-between"
       >
-        <Transition
-          :duration="5000"
-          enter-active-class="animated bounceInLeft"
-          leave-active-class="animated bounceOutRight"
+        <q-intersection
+          class="wine-intersection"
+          transition="slide-right"
+          transition-duration="2000"
+          style=""
         >
           <q-card flat class="wine">
             <div class="text-h1 featureText text-white">Shop Wine</div>
           </q-card>
-        </Transition>
-        <q-card flat class="champagne">
-          <div class="text-h1 featureText text-white">Shop Champagne</div>
-        </q-card>
+        </q-intersection>
+        <q-intersection
+          class="intersection"
+          transition="slide-left"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="champagne">
+            <div class="text-h1 featureText text-white">Shop Champagne</div>
+          </q-card>
+        </q-intersection>
       </div>
       <!-- <div class="shop-features row no-wrap">
 
       </div> -->
-      <q-card flat class="ShopVodka">
-        <div class="text-h1 featureText text-white">Shop Vodka</div>
-      </q-card>
+      <q-intersection
+        class="vodka-intersection"
+        transition="slide-up"
+        transition-duration="2000"
+        style=""
+      >
+        <q-card flat class="ShopVodka">
+          <div class="text-h1 featureText text-white">Shop Vodka</div>
+        </q-card>
+      </q-intersection>
 
       <div
         flat
         class="row no-wrap bg-transparent shop-features2 items-center justify-between"
       >
-        <q-card flat class="ShopWhiskey"
-          ><div class="text-h1 featureText text-white">Shop Whiskey</div>
-        </q-card>
-        <q-card flat class="ShopBrandy">
-          <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
+        <q-intersection
+          class="wine-intersection"
+          transition="slide-right"
+          transition-duration="2000"
+          style=""
         >
+          <q-card flat class="ShopWhiskey"
+            ><div class="text-h1 featureText text-white">Shop Whiskey</div>
+          </q-card>
+        </q-intersection>
+        <q-intersection
+          class="intersection"
+          transition="slide-left"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="ShopBrandy">
+            <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
+          >
+        </q-intersection>
       </div>
 
-      <q-card flat class="PartyCombo">
-        <div class="text-h1 featureText text-white">Party Combo</div>
-      </q-card>
+      <q-intersection
+        class="combo-intersection"
+        transition="slide-up"
+        transition-duration="2000"
+        style=""
+      >
+        <q-card flat class="PartyCombo">
+          <div class="text-h1 featureText text-white">Party Combo</div>
+        </q-card>
+      </q-intersection>
 
       <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
-        <q-card flat class="ShopTequila"
-          ><div class="text-h1 featureText text-white">Shop Tequila</div>
-        </q-card>
-        <q-card flat class="ShopCognac"
-          ><div class="text-h1 featureText text-white">Shop Cognac</div>
-        </q-card>
+        <q-intersection
+          class="wine-intersection"
+          transition="slide-left"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="ShopTequila"
+            ><div class="text-h1 featureText text-white">Shop Tequila</div>
+          </q-card>
+        </q-intersection>
+        <q-intersection
+          class="intersection"
+          transition="slide-right"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="ShopCognac"
+            ><div class="text-h1 featureText text-white">Shop Cognac</div>
+          </q-card>
+        </q-intersection>
       </div>
 
       <q-btn
         round
+        href="https://wa.me/message/3GGSYU425BXKD1"
         color="white"
         size="20px"
         icon="img:/whatsapp.png"
@@ -181,6 +255,60 @@ const tab = ref("previous");
 // .enter-active,
 // .leave-active
 //   transition: opacity 6s ease
+.card-intersection
+  width: 30%
+  height: 350px
+  body.screen--sm &
+    height: 200px
+  body.screen--xs &
+    height: 270px
+    width: 100%
+.wine-intersection
+  width: 49%
+  height: 500px
+  // margin-bottom: 25px
+  // margin-top: 25px
+  body.screen--sm &
+    height: 300px
+
+  body.screen--xs &
+    height: 300px
+    width: 100%
+    margin-bottom: 18px
+.intersection
+  width: 49%
+  height: 500px
+  // margin-bottom: 25px
+  // margin-top: 25px
+  body.screen--sm &
+    height: 300px
+  body.screen--xs &
+    height: 300px
+    width: 100%
+    // margin-bottom: 18px
+.vodka-intersection
+  width: 100%
+  height: 500px
+  margin-bottom: 25px
+  margin-top: 25px
+  body.screen--sm &
+    height: 300px
+  body.screen--xs &
+    height: 300px
+    width: 100%
+    margin-top: 18px
+    margin-bottom: 18px
+.combo-intersection
+  width: 100%
+  height: 500px
+  margin-bottom: 50px
+  // margin-top: 25px
+  body.screen--sm &
+    height: 300px
+  body.screen--xs &
+    width: 100%
+    height: 300px
+    margin-bottom: 48px
 .whatsapp
   position: fixed
   bottom: 8%
@@ -221,6 +349,7 @@ const tab = ref("previous");
     top: 70%
 .features
   height: fit-content
+  min-height: 1000px
   width: 100%
   body.screen--xs &
     margin-top: -3%
@@ -299,7 +428,7 @@ const tab = ref("previous");
   background-repeat: no-repeat
   background-position: center
   height: 350px
-  width: 30%
+  width: 100%
   object-fit: cover
   border-radius: 10px
 
@@ -308,7 +437,7 @@ const tab = ref("previous");
     background-repeat: no-repeat
     background-position: center
     height: 200px
-    width: 30%
+    width: 100%
     border-radius: 20px
   body.screen--xs &
     height: 270px
@@ -321,7 +450,7 @@ const tab = ref("previous");
   background-position: center
   // min-height: 340px
   height: 350px
-  width: 30%
+  width: 100%
   // min-width: 390px
   border-radius: 10px
   body.screen--sm &
@@ -329,7 +458,7 @@ const tab = ref("previous");
     background-repeat: no-repeat
     background-position: center
     height: 200px
-    width: 30%
+    width: 100%
     border-radius: 20px
   body.screen--xs &
     height: 270px
@@ -342,14 +471,14 @@ const tab = ref("previous");
   background-repeat: no-repeat
   background-position: center
   height: 350px
-  width: 30%
+  width: 100%
   border-radius: 10px
   body.screen--sm &
     background-size: contain
     background-repeat: no-repeat
     background-position: center
     height: 200px
-    width: 30%
+    width: 100%
     border-radius: 20px
   body.screen--xs &
     height: 270px
@@ -385,7 +514,8 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
+  // min-width: 49%
 
   body.screen--lg &
 
@@ -412,13 +542,12 @@ const tab = ref("previous");
   border-radius: 15px
   background-size: cover
   height: 500px
-  min-height: 500px
-  width: 49%
+  // min-height: 500px
+  width: 100%
   body.screen--sm &
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 100%
@@ -430,23 +559,27 @@ const tab = ref("previous");
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
-  margin-bottom: 25px
-  margin-top: 25px
+  // margin-bottom: 25px
+  // margin-top: 25px
   background-size: cover
   height: 500px
-  min-height: 500px
+  // min-height: 500px
   width: 89%
+  // max-width: 89%
+  margin-right: 5.5%
+  margin-left: 5.5%
   body.screen--xl &
 
   body.screen--lg &
 
   body.screen--md &
+    // margin-right: 5.5%
+    // margin-left: 5.5%
 
   body.screen--sm &
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 90%
@@ -461,7 +594,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
   body.screen--xl &
 
   body.screen--lg &
@@ -472,7 +605,7 @@ const tab = ref("previous");
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
+    // margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 100%
@@ -485,7 +618,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
   body.screen--xl &
 
   body.screen--lg &
@@ -494,7 +627,7 @@ const tab = ref("previous");
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
+    // margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 100%
@@ -510,7 +643,9 @@ const tab = ref("previous");
   margin-top: 25px
   background-size: cover
   height: 500px
-  min-height: 500px
+  margin-left: 5.5%
+  margin-right: 5.5%
+  // min-height: 500px
   width: 89%
   body.screen--lg &
 
@@ -520,7 +655,6 @@ const tab = ref("previous");
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 90%
@@ -538,7 +672,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
 
 
   body.screen--lg &
@@ -549,10 +683,9 @@ const tab = ref("previous");
 
     height: 300px
     min-height: 300px
-
   body.screen--xs &
 
-    margin-bottom: 18px
+    // margin-bottom: 18px
     // height: 90vw
     height: 300px
     min-height: 300px
@@ -566,7 +699,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
 
   body.screen--lg &
 
@@ -579,7 +712,7 @@ const tab = ref("previous");
 
   body.screen--xs &
 
-    margin-bottom: 18px
+    // margin-bottom: 18px
     // height: 90vw
     height: 300px
     min-height: 300px

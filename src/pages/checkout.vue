@@ -118,18 +118,18 @@
           <q-card class="summaryItems q-my-lg">
             <q-card class="row justify-between subtotal">
               <h4 class="subtotalKey NameClassLess" style="">Subtotal</h4>
-              <h4 class="subtotalEntry NameClass" style="">₦{{ cartValue }}</h4>
+              <h4 class="subtotalEntry NameClass" style="">₦{{ Store.cartTotal }}</h4>
             </q-card>
             <q-card class="row justify-between Delivery">
               <h4 class="DeliveryKey NameClassLess" style="">Delivery Fee</h4>
-              <h4 class="DeliveryEntry NameClass" style="" v-if="cartValue > 1">
+              <h4 class="DeliveryEntry NameClass" style="" v-if="Store.cartTotal > 1">
                 ₦1,047.00
               </h4>
             </q-card>
             <q-card class="row justify-between Total">
               <h4 class="TotalKey NameClass" style="">Total</h4>
-              <h4 class="TotalEntry NameClass" style="" v-if="cartValue > 1">
-                ₦{{ parseInt(cartValue + 1047) }}
+              <h4 class="TotalEntry NameClass" style="" v-if="Store.cartTotal > 1">
+                ₦{{ parseInt(Store.cartTotal + 1047) }}
               </h4>
             </q-card>
           </q-card>
@@ -147,7 +147,13 @@
               style=""
             >
             </q-input>
-            <q-btn text-color="black" class="AddToCartBtn" label="Apply" style="" />
+            <q-btn
+              text-color="black"
+              class="AddToCartBtn"
+              label="Apply"
+              style=""
+              @click="Store.getCoupon(discountCode)"
+            />
           </q-card>
           <q-btn
             text-color="white"
@@ -172,7 +178,7 @@ import { useQuasar } from "quasar";
 const Store = useCounterStore();
 const $q = useQuasar();
 const cartProducts = ref([]);
-const total = ref(0);
+const discountCode = ref("");
 const hasCart = $q.localStorage.has("cartItems");
 const tab = ref("Personal Delivery");
 const Address = ref("15, Abate way Victoria Island Lagos");
@@ -196,18 +202,19 @@ const fetchValue = () => {
     // arr.reduce(function (a, b) {
     //   return a + b;
     // });
-    return priceArray.reduce(function (a, b) {
+    const sum = priceArray.reduce(function (a, b) {
       return a + b;
     }, 0);
+    Store.cartTotal = sum;
 
     // console.log(sum);
     // total.value = priceArray;
     // return Store.cartProducts.value.length > 0 ? true : false;
   }
 };
-const cartValue = computed(() => {
-  return fetchValue();
-});
+// const cartValue = computed(() => {
+//   return fetchValue();
+// });
 watch(cartProducts.value, () => {
   fetchValue();
 });
@@ -221,6 +228,7 @@ watch(cartProducts.value, () => {
 
 onMounted(() => {
   fetchCart();
+  fetchValue();
 });
 </script>
 <style scoped lang="sass">
