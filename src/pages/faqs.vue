@@ -42,13 +42,15 @@
           </q-card>
           <q-separator class="q-mt-lg" style="width: 100%; height: 2px" />
         </q-card>
+
+
         <q-card
           class="column no-wrap justify-around items-center faq q-my-md"
           style="width: 100%; height: 50%"
         >
           <q-card class="row justify-between items-center no-wrap" style="width: 100%">
             <div style="" class="text-h1 text-black">
-              Does Teepsee offer same day delivery?
+              Does Teepsee offer delivery across all states in Nigeria?
             </div>
             <q-icon
               name="img:/faqextend.svg"
@@ -67,7 +69,9 @@
               class="text-h4 q-my-md-sm q-my-xl-sm q-my-lg-sm q-my-sm-none sub-heading"
               style=""
             >
-              Yes, Teepsee offers same day delivery for orders placed within Lagos.
+              Yes, Teepsee offers Liquor delivery across all states in Nigeria. This only
+              applies to bulk and party orders. Nevertheless, these orders have to be
+              placed 48hrs before delivery day.
             </div>
           </q-card>
           <q-separator class="q-mt-lg" style="width: 100%; height: 2px" />
@@ -78,7 +82,7 @@
         >
           <q-card class="row justify-between items-center no-wrap" style="width: 100%">
             <div style="" class="text-h1 text-black">
-              Does Teepsee offer same day delivery?
+              Do i need to Sign up to place an order on Teepsee?
             </div>
             <q-icon
               name="img:/faqextend.svg"
@@ -97,7 +101,7 @@
               class="text-h4 q-my-md-sm q-my-xl-sm q-my-lg-sm q-my-sm-none sub-heading"
               style=""
             >
-              Yes, Teepsee offers same day delivery for orders placed within Lagos.
+              Yes, sigining up is a pre-requisite to place an order on Teepsee.
             </div>
           </q-card>
           <q-separator class="q-mt-lg" style="width: 100%; height: 2px" />
@@ -108,7 +112,7 @@
         >
           <q-card class="row justify-between items-center no-wrap" style="width: 100%">
             <div style="" class="text-h1 text-black">
-              Does Teepsee offer same day delivery?
+              Does Teepsee offer wholesale delivery?
             </div>
             <q-icon
               name="img:/faqextend.svg"
@@ -127,7 +131,8 @@
               class="text-h4 q-my-md-sm q-my-xl-sm q-my-lg-sm q-my-sm-none sub-heading"
               style=""
             >
-              Yes, Teepsee offers same day delivery for orders placed within Lagos.
+              Yes we do, users are required to click on our live chat to place wholesale
+              orders.
             </div>
           </q-card>
           <q-separator class="q-mt-lg" style="width: 100%; height: 2px" />
@@ -137,9 +142,7 @@
           style="width: 100%; height: 50%"
         >
           <q-card class="row justify-between items-center no-wrap" style="width: 100%">
-            <div style="" class="text-h1 text-black">
-              Does Teepsee offer same day delivery?
-            </div>
+            <div style="" class="text-h1 text-black">Where is Teepsee based?</div>
             <q-icon
               name="img:/faqextend.svg"
               size="25px"
@@ -157,37 +160,7 @@
               class="text-h4 q-my-md-sm q-my-xl-sm q-my-lg-sm q-my-sm-none sub-heading"
               style=""
             >
-              Yes, Teepsee offers same day delivery for orders placed within Lagos.
-            </div>
-          </q-card>
-          <q-separator class="q-mt-lg" style="width: 100%; height: 2px" />
-        </q-card>
-        <q-card
-          class="column no-wrap justify-around items-center faq q-my-md"
-          style="width: 100%; height: 50%"
-        >
-          <q-card class="row justify-between items-center no-wrap" style="width: 100%">
-            <div style="" class="text-h1 text-black">
-              Does Teepsee offer same day delivery?
-            </div>
-            <q-icon
-              name="img:/faqextend.svg"
-              size="25px"
-              class=""
-              style=""
-              @click="showfaq = !showfaq"
-            />
-          </q-card>
-          <q-card
-            class="row justify-between items-center"
-            style="width: 100%"
-            v-if="showfaq"
-          >
-            <div
-              class="text-h4 q-my-md-sm q-my-xl-sm q-my-lg-sm q-my-sm-none sub-heading"
-              style=""
-            >
-              Yes, Teepsee offers same day delivery for orders placed within Lagos.
+              Lagos Nigeria.
             </div>
           </q-card>
           <q-separator class="q-mt-lg" style="width: 100%; height: 2px" />

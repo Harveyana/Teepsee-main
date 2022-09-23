@@ -1,81 +1,36 @@
 <template>
-  <q-card
-    class="container column flex flex-center overflow-hidden no-wrap"
-    style="border: 1px solid"
-  >
+  <q-card class="container column flex flex-center overflow-hidden no-wrap" style="">
     <q-icon
       name="img:/roundedClose.svg"
       size="18px"
       class="flex q-ml-md q-mt-md"
       style="position: absolute; top: 2%; right: 6%; z-index: 15"
-      @click="Store.showTrackBox = false"
+      @click="Store.showAgeConfirmBox = false"
     />
-    <q-card flat class="flex box-container column flex-center no-wrap" style="">
-      <q-card flat class="flex column flex-center" style="z-index: 5; width: 100%">
-        <div
+    <q-card
+      flat
+      class="flex box-container column flex-center no-wrap"
+      style="height: 45%"
+    >
+      <!-- <q-img
+        src="../assets/ageConfirm.svg"
+        spinner-color="black"
+        class=""
+        style="width: 100%; height: 100%"
+      /> -->
+      <q-card flat class="flex column featureImage" style="width: 100%; height: 100%">
+        <!-- <div
           class="text-h3 Header card-header q-mb-sm"
           style="font-size: 20px; line-height: 15px"
         >
           Track Order
         </div>
-        <div class="text-h4 NameClass text-center" style="">
-          Destination: {{ Store.orderTrack.address }}
-        </div>
-        <div class="text-h4 NameClass" style="">
-          Tracking No: {{ Store.orderTrack.orderId }}
-        </div>
+        <div class="text-h4 NameClass" style="">Destination, Ibadan, Nigeria</div>
+        <div class="text-h4 NameClass" style="">Tracking No: EHS2348798</div> -->
       </q-card>
 
-      <q-separator style="width: 100%" />
+      <!-- <q-separator style="width: 100%" /> -->
 
-      <q-card flat class="no-wrap" style="width: 100%">
-        <q-stepper
-          v-model="step"
-          header-class="step-header"
-          vertical
-          active-icon="img:/trackmark.svg"
-        >
-          <q-step
-            name="pending"
-            header-nav
-            title="Pending"
-            :caption="Store.orderTrack.time"
-            icon="img:/trackmark.svg"
-            :done="Store.orderTrack.status === 'pending' ? true : false"
-          >
-          </q-step>
-
-          <q-step
-            name="Processing"
-            header-nav
-            title="Processing"
-            :caption="Store.orderTrack.changedTime"
-            icon="img:/trackmark.svg"
-            :done="Store.orderTrack.status === 'Processing' ? true : false"
-          >
-          </q-step>
-
-          <q-step
-            name="Intransit"
-            header-nav
-            title="Intransit"
-            :caption="Store.orderTrack.changedTime"
-            icon="img:/trackmark.svg"
-            :done="Store.orderTrack.status === 'Intransit' ? true : false"
-          >
-          </q-step>
-
-          <q-step
-            name="Completed"
-            header-nav
-            title="Completed"
-            :caption="Store.orderTrack.changedTime"
-            icon="img:/trackmark.svg"
-            :done="Store.orderTrack.status === 'Completed' ? true : false"
-          >
-          </q-step>
-        </q-stepper>
-      </q-card>
       <!-- <q-btn
         text-color="white"
         class="checkoutBtn self-center bg-secondary"
@@ -84,17 +39,46 @@
         @click="showNumberBox = true"
       /> -->
     </q-card>
-    <q-img
+    <q-card
+      flat
+      class="no-wrap flex column justify-start items-center"
+      style="width: 100%; height: 55%"
+    >
+      <div
+        class="text-h3 Header card-header q-mb-sm"
+        style="font-size: 22px; line-height: 15px"
+      >
+        Welcome to Teepsee
+      </div>
+      <div class="text-h4 NameClass q-mb-sm" style="">Please drink responsibly</div>
+      <div class="text-h4 NameClass q-mb-sm" style="">
+        Confirm if you are eligible to visit this site
+      </div>
+      <q-btn
+        text-color="white"
+        class="checkoutBtn self-center bg-primary q-mb-sm"
+        label="I’m 18 years and above"
+        style="width: 80%; height: 38px"
+        @click="
+          $q.localStorage.set('AgeConfirmed', true), (Store.showAgeConfirmBox = false)
+        "
+      />
+      <q-btn
+        text-color="white"
+        class="checkoutBtn self-center bg-secondary"
+        label="I’m below 18 years"
+        style="width: 80%; height: 38px"
+        @click="
+          $q.localStorage.set('AgeConfirmed', false), (Store.showAgeConfirmBox = false)
+        "
+      />
+    </q-card>
+    <!-- <q-img
       src="../assets/teepsee-logo.svg"
       spinner-color="black"
       class=""
       style="width: 50%"
-    />
-    <!-- <q-dialog class="" v-model="showNumberBox">
-      <q-card class="row flex-center text-center" style="width: 150px; height: 50px"
-        ><div class="text-h4 NameClass" style="">086244691635</div></q-card
-      >
-    </q-dialog> -->
+    /> -->
   </q-card>
   <!-- Box -->
   <!-- Box -->
@@ -103,16 +87,26 @@
 <script setup>
 import { useCounterStore } from "stores/counter";
 import { ref } from "vue";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 const Store = useCounterStore();
 const ratingModel = ref(3);
 const showNumberBox = ref(false);
-const step = ref(Store.orderTrack.status);
+const step = ref(1);
 const formData = ref({
   email: "",
   password: "",
 });
 </script>
 <style scoped lang="sass">
+.featureImage
+  background: url("../assets/ageConfirm.svg")
+  background-repeat: no-repeat
+  background-position: bottom
+  border-radius: 19px
+  background-size: cover
+  height: 100%
 .engrave
   width: 19%
   position: absolute
@@ -121,14 +115,15 @@ const formData = ref({
   body.screen--xs &
     width: 25%
 .box-container
-  width: 95%
-  height: 80%
+  width: 100%
+  height: 100%
+  border-radius: 15px
 
 .container
   border-radius: 15px
   max-width: 32%
   min-width: 32%
-  height: 500px
+  height: 400px
   position: relative
   body.screen--md &
     margin-bottom: 5%
@@ -154,7 +149,8 @@ const formData = ref({
   border-radius: 8px
   width: 100%
   height: 45px
-  font-family: 'Manrope-semiBold'
+  line-height: 13px
+  font-family: 'Manrope-Regular'
   text-transform: capitalize
   background: #27141a
 .step-header
@@ -165,13 +161,13 @@ const formData = ref({
   font-size: 7px
 .NameClass
   line-height: 15px
-  margin-bottom: 5px
-  color: #666666
-  font-family: 'Manrope-Regular'
-  font-size: 13px
+  // margin-bottom: 5px
+  // color: #666666
+  font-family: 'Manrope-semiBold'
+  font-size: 11px
   body.screen--xs &
     line-height: 8px
-    color: #666666
+    // color: #666666
     font-family: 'Manrope-semiBold'
     font-size: 10px
 .card-header

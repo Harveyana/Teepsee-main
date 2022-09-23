@@ -32,7 +32,7 @@
         <q-intersection
           class="card-intersection"
           transition="slide-up"
-          transition-duration="2000"
+          transition-duration="800"
           style=""
         >
           <q-card flat class="my-card q-mx-auto"> </q-card>
@@ -40,7 +40,7 @@
         <q-intersection
           class="card-intersection"
           transition="slide-up"
-          transition-duration="2000"
+          transition-duration="1300"
           style=""
         >
           <q-card flat class="my-card2 q-mx-auto"> </q-card>
@@ -236,15 +236,32 @@
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
+    <q-dialog class="" v-model="Store.showAgeConfirmBox" persistent>
+      <AgeConfirm></AgeConfirm>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import MainHero from "../components/mainHero.vue";
 import Testimony from "../components/testimony.vue";
+import { useCounterStore } from "stores/counter";
+import AgeConfirm from "../components/AgeConfirm.vue";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
+const Store = useCounterStore();
 const tab = ref("previous");
+
+onMounted(() => {
+  const hasCart = $q.localStorage.has("AgeConfirmed");
+  if (hasCart) {
+    console.log("Age confirmed");
+  } else {
+    Store.showAgeConfirmBox = true;
+  }
+});
 </script>
 
 <style scoped lang="sass">
@@ -611,7 +628,7 @@ const tab = ref("previous");
     width: 100%
 
 .ShopBrandy
-  background: url("../assets/shopfeature5.svg")
+  background: url("../assets/shopbrandy.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px

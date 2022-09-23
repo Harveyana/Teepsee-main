@@ -2,10 +2,11 @@
   <q-page
     class="column flex flex-center q-px-xl-xl q-px-lg-xl q-px-md-xl q-px-sm-xl q-px-xs-none"
     style="background: #e5e5e5"
+    :key="Store.cartkey"
   >
     <h2 class="PageName self-start items-start" style="">Cart</h2>
     <div class="container row justify-between" style="">
-      <q-card class="cart q-pb-md self-start" style="">
+      <q-card class="cart q-pb-md self-start" style="" :key="Store.cartkey">
         <q-card class="gt-xs card-headers q-mt-lg row justify-around" v-if="cartlength">
           <q-card class="ImageAndName"
             ><h3 class="ImageAndNameLabel card-header" style="">
@@ -25,7 +26,12 @@
             ><h3 class="RemoveLabel card-header" style="">Remove</h3></q-card
           >
         </q-card>
-        <q-list class="scroll hide-scrollbar" style="" v-if="cartlength">
+        <q-list
+          class="scroll hide-scrollbar"
+          style=""
+          v-if="cartlength"
+          :key="Store.cartkey"
+        >
           <!--  Product -->
           <!--  Product -->
           <cartProductVue
@@ -87,10 +93,7 @@
             <!-- searchResult -->
             <!-- searchResult -->
             <!-- searchResult -->
-            <Chasers></Chasers>
-            <Chasers></Chasers>
-            <Chasers></Chasers>
-            <Chasers></Chasers>
+            <Chasers @my-event="refreshCart()"></Chasers>
             <!-- searcResult -->
             <!-- searcResult -->
             <!-- searcResult -->
@@ -134,6 +137,9 @@ const cartlength = computed(() => {
     return Store.cartProducts.value.length > 0 ? true : false;
   }
 });
+const refreshCart = () => {
+  fetchCart();
+};
 
 onMounted(() => {
   fetchCart();

@@ -1,184 +1,137 @@
 <template>
-  <q-separator
-    class=""
-    style="width: 92%; margin-bottom: 2%; position: relative; left: 4%"
-  />
-  <q-card
-    flat
-    class="row product q-px-xs-sm q-px-sm-lg q-px-md-lg q-px-lg-lg q-px-xl-lg justify-between"
-    style="width: 100%; cursor: pointer"
-  >
-    <!-- Product image and name -->
-    <q-card class="image-And-Name row no-wrap flex flex-center" style="">
-      <q-card class="gt-xs Name" style="width: 70%; position: relative; right: 5%">
-        <h4 class="Order NameClass" style="">2189034513</h4>
+  <div v-for="order in Store.adminorders.value" :key="order.orderId">
+    <q-separator
+      class=""
+      style="width: 92%; margin-bottom: 2%; position: relative; left: 4%"
+    />
+    <q-card
+      flat
+      class="row product q-px-xs-sm q-px-sm-lg q-px-md-lg q-px-lg-lg q-px-xl-lg justify-between"
+      style="width: 100%; cursor: pointer"
+    >
+      <!-- Product image and name -->
+      <q-card class="image-And-Name row no-wrap flex flex-center" style="">
+        <q-card class="gt-xs Name" style="width: 70%; position: relative; right: 5%">
+          <h4 class="Order NameClass" style="">{{ order.orderId }}</h4>
+        </q-card>
       </q-card>
-    </q-card>
-    <!-- Product Price -->
-    <q-card
-      class="row Quantity flex flex-center"
-      style="width: 15%; position: relative; right: 3%"
-    >
-      <h4 class="Quantity NameClass" style="">5</h4>
-    </q-card>
-    <!-- Product Quantity -->
-    <q-card
-      class="row OrderAmountLabel flex flex-center"
-      style="width: 8%; position: relative; right: 1.8%"
-    >
-      <h4 class="OrderAmount NameClass" style="">₦5,000</h4>
-    </q-card>
-    <!-- Product SubTotal -->
-    <q-card
-      class="gt-xs row CouponUsersLabel flex flex-center"
-      style="width: 15%; position: relative; right: 2%"
-    >
-      <h4 class="CouponUsers NameClass" style="color: green">Completed</h4>
-    </q-card>
-    <!-- <q-card class="row Edit flex flex-center" style="position: relative; right: 3%"> -->
-    <q-popup-proxy
-      cover
-      maxHeight="99vh"
-      transition-show="slide-down"
-      transition-hide="slide-up"
-      style="width: 30vw; height: 50vh"
-      class="bg-grey-3 scroll hide-scrollbar"
-    >
-      <q-card flat class="row justify-between q-px-lg q-my-md bg-grey-3">
-        <h4 class="productName NameClass" style="font-size: Large">Order Items</h4>
-        <q-btn class="checkoutBtn" label="Update Status" @click="confirm = true" />
+      <!-- Product Price -->
+      <q-card
+        class="row Quantity flex flex-center"
+        style="width: 15%; position: relative; right: 3%"
+      >
+        <h4 class="Quantity NameClass" style="">
+          {{ parseInt(order.items.length) }}
+        </h4>
       </q-card>
-
-      <q-list class="bg-grey-3 edit-container row wrap justify-around" style="width: 60%">
-        <q-card
-          class="imageName row no-wrap justify-between items-center q-mb-lg"
-          style=""
-        >
-          <q-card class="image" style="">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="black"
-              class="favourite"
-              style="width: 70%"
-            />
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 50%">
-            <h4 class="productName NameClass" style="">Henessey</h4>
-            <h4 class="productCat" style="">Cognac</h4>
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 20%">
-            <h4 class="productName NameClass" style="font-size: medium">x3</h4>
-          </q-card>
+      <!-- Product Quantity -->
+      <q-card
+        class="row OrderAmountLabel flex flex-center"
+        style="width: 8%; position: relative; right: 1.8%"
+      >
+        <h4 class="OrderAmount NameClass" style="">₦{{ order.amount }}</h4>
+      </q-card>
+      <!-- Product SubTotal -->
+      <q-card
+        class="gt-xs row CouponUsersLabel flex flex-center"
+        style="width: 15%; position: relative; right: 2%"
+      >
+        <h4 class="CouponUsers NameClass" style="color: green">{{ order.status }}</h4>
+      </q-card>
+      <!-- <q-card class="row Edit flex flex-center" style="position: relative; right: 3%"> -->
+      <q-popup-proxy
+        cover
+        maxHeight="99vh"
+        transition-show="slide-down"
+        transition-hide="slide-up"
+        style="width: 30vw; height: 50vh"
+        class="bg-grey-3 scroll hide-scrollbar"
+      >
+        <q-card flat class="row justify-between q-px-lg q-my-md bg-grey-3">
+          <h4 class="productName NameClass" style="font-size: Large">Order Items</h4>
+          <q-btn class="checkoutBtn" label="Update Status" @click="confirm = true" />
         </q-card>
 
-        <q-card
-          class="imageName row no-wrap justify-between items-center q-mb-lg"
-          style=""
+        <q-list
+          class="bg-grey-3 edit-container row wrap justify-around"
+          style="width: 60%"
         >
-          <q-card class="image" style="">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="black"
-              class="favourite"
-              style="width: 70%"
-            />
+          <q-card
+            class="imageName row no-wrap justify-between items-center q-mb-lg"
+            style=""
+            v-for="product in order.items"
+            :key="product.name"
+          >
+            <q-card class="image" style="">
+              <q-img
+                :src="product.image"
+                spinner-color="black"
+                class="favourite"
+                style="width: 70%"
+              />
+            </q-card>
+            <q-card class="gt-xs Name" style="width: 50%">
+              <h4 class="productName NameClass" style="">{{ product.name }}</h4>
+              <h4 class="productCat" style="">{{ product.price }}</h4>
+            </q-card>
+            <q-card class="gt-xs Name" style="width: 20%">
+              <h4 class="productName NameClass" style="font-size: medium">
+                x {{ product.quantity }}
+              </h4>
+            </q-card>
           </q-card>
-          <q-card class="gt-xs Name" style="width: 50%">
-            <h4 class="productName NameClass" style="">Henessey</h4>
-            <h4 class="productCat" style="">Cognac</h4>
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 20%">
-            <h4 class="productName NameClass" style="font-size: medium">x3</h4>
-          </q-card>
-        </q-card>
-        <q-card
-          class="imageName row no-wrap justify-between items-center q-mb-lg"
-          style=""
-        >
-          <q-card class="image" style="">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="black"
-              class="favourite"
-              style="width: 70%"
-            />
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 50%">
-            <h4 class="productName NameClass" style="">Henessey</h4>
-            <h4 class="productCat" style="">Cognac</h4>
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 20%">
-            <h4 class="productName NameClass" style="font-size: medium">x3</h4>
-          </q-card>
-        </q-card>
-        <q-card
-          class="imageName row no-wrap justify-between items-center q-mb-lg"
-          style=""
-        >
-          <q-card class="image" style="">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="black"
-              class="favourite"
-              style="width: 70%"
-            />
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 50%">
-            <h4 class="productName NameClass" style="">Henessey</h4>
-            <h4 class="productCat" style="">Cognac</h4>
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 20%">
-            <h4 class="productName NameClass" style="font-size: medium">x3</h4>
-          </q-card>
-        </q-card>
-        <q-card
-          class="imageName row no-wrap justify-between items-center q-mb-lg"
-          style=""
-        >
-          <q-card class="image" style="">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="black"
-              class="favourite"
-              style="width: 70%"
-            />
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 50%">
-            <h4 class="productName NameClass" style="">Henessey</h4>
-            <h4 class="productCat" style="">Cognac</h4>
-          </q-card>
-          <q-card class="gt-xs Name" style="width: 20%">
-            <h4 class="productName NameClass" style="font-size: medium">x3</h4>
-          </q-card>
-        </q-card>
-      </q-list>
-      <!-- q-dialogue -->
-      <!-- q-dialogue -->
-      <!-- q-dialogue -->
-      <q-dialog v-model="confirm" persistent>
-        <q-card>
-          <q-card-section class="row items-center">
-            <q-avatar icon="Edit" color="primary" text-color="white" />
-            <span class="q-ml-sm">Choose New Order Status .</span>
-          </q-card-section>
+        </q-list>
+        <h4 class="NameClass q-ml-md" style="font-size: small">{{ order.address }}</h4>
+        <h4 class="NameClass q-ml-md" style="font-size: small">{{ order.landmark }}</h4>
 
-          <q-card-actions align="right">
-            <q-btn flat label="Pending" color="red" v-close-popup />
-            <q-btn flat label="Processing" color="blue" v-close-popup />
-            <q-btn flat label="Completed" color="green" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-      <!-- q-dialogue -->
-      <!-- q-dialogue -->
-      <!-- q-dialogue -->
-    </q-popup-proxy>
-    <!-- </q-card> -->
-  </q-card>
+        <!-- q-dialogue -->
+        <!-- q-dialogue -->
+        <!-- q-dialogue -->
+        <q-dialog v-model="confirm" persistent>
+          <q-card>
+            <q-card-section class="row items-center">
+              <q-avatar icon="Edit" color="primary" text-color="white" />
+              <span class="q-ml-sm">Choose New Order Status .</span>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn
+                flat
+                label="Processing"
+                color="red"
+                v-close-popup
+                @click="Store.updateOrderStatus('Processing', order.orderId)"
+              />
+              <q-btn
+                flat
+                label="Intransit"
+                color="blue"
+                v-close-popup
+                @click="Store.updateOrderStatus('Intransit', order.orderId)"
+              />
+              <q-btn
+                flat
+                label="Completed"
+                color="green"
+                v-close-popup
+                @click="Store.updateOrderStatus('Completed', order.orderId)"
+              />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <!-- q-dialogue -->
+        <!-- q-dialogue -->
+        <!-- q-dialogue -->
+      </q-popup-proxy>
+      <!-- </q-card> -->
+    </q-card>
+  </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useCounterStore } from "stores/counter";
+const Store = useCounterStore();
 const confirm = ref(false);
 // const files = ref(null);
 </script>

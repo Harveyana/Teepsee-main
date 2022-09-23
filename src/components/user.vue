@@ -1,181 +1,230 @@
 <template>
-  <q-separator
-    class=""
-    style="width: 92%; margin-bottom: 2%; position: relative; left: 4%"
-  />
-  <q-card
-    flat
-    class="row product q-px-xs-sm q-px-sm-lg q-px-md-lg q-px-lg-lg q-px-xl-lg justify-between"
-    style="width: 100%"
-  >
-    <!-- Product image and name -->
+  <div>
+    <q-separator
+      class=""
+      style="width: 92%; margin-bottom: 2%; position: relative; left: 4%"
+    />
     <q-card
-      class="image-And-Name row no-wrap justify-xl-between justify-lg-between justify-md-between justify-sm-between justify-xs-start items-center"
-      style=""
+      flat
+      class="row product q-px-xs-sm q-px-sm-lg q-px-md-lg q-px-lg-lg q-px-xl-lg justify-between"
+      style="width: 100%"
     >
-      <q-card class="image" style="">
-        <q-img
-          src="../assets/userImage.svg"
-          spinner-color="black"
-          class="favourite q-ml-md"
-          style="width: 75%"
-        />
-      </q-card>
-      <q-card class="gt-xs Name" style="width: 50%">
-        <h4 class="productName NameClass" style="">Harvey Ana</h4>
-        <h4 class="productCat" style="">Teepseer</h4>
-      </q-card>
-    </q-card>
-    <!-- Product Price -->
-    <q-card
-      class="row ProductPrice flex flex-center"
-      style="width: 15%; position: relative; right: 3%"
-    >
-      <h4 class="productPrice NameClass" style="">anayoobi@gmail.com</h4>
-    </q-card>
-    <!-- Product Quantity -->
-    <q-card
-      class="gt-xs row productBrandLabel flex flex-center"
-      style="width: 8%; position: relative; right: 3.5%"
-    >
-      <h4 class="productBrand NameClass" style="">090123559071</h4>
-    </q-card>
-    <!-- Product SubTotal -->
-    <q-card
-      class="gt-xs row CategoryNameLabel flex flex-center"
-      style="width: 15%; position: relative; right: 3%"
-    >
-      <h4 class="CategoryName NameClass" style="">1, Ikoyi Falomo street...</h4>
-    </q-card>
-    <q-card class="gt-xs row Edit flex flex-center" style="position: relative; right: 4%">
-      <q-icon
-        class="Editbtn"
-        name="edit"
-        style="background-color: #e6b41d; border-radius: 50%; cursor: pointer"
-        size="25px"
+      <!-- Product image and name -->
+      <q-card
+        class="image-And-Name row no-wrap justify-xl-between justify-lg-between justify-md-between justify-sm-between justify-xs-start items-center"
+        style=""
       >
-        <q-popup-proxy
-          cover
-          maxHeight="99vh"
-          transition-show="slide-down"
-          transition-hide="slide-up"
-          style="position: relative; right: 10%; width: 80vw"
-          class="overflow-hidden"
+        <q-card class="image" style="">
+          <q-img
+            :src="userImage"
+            spinner-color="black"
+            class="favourite q-ml-md"
+            style="width: 75%; border-radius: 50%"
+          />
+        </q-card>
+        <q-card class="gt-xs Name" style="width: 50%">
+          <h4 class="productName NameClass" style="">{{ userName }}</h4>
+          <h4 class="productCat" style="">Teepseer</h4>
+        </q-card>
+      </q-card>
+      <!-- Product Price -->
+      <q-card
+        class="row ProductPrice flex flex-center"
+        style="width: 15%; position: relative; right: 3%"
+      >
+        <h4 class="productPrice NameClass" style="">{{ userEmail }}</h4>
+      </q-card>
+      <!-- Product Quantity -->
+      <q-card
+        class="gt-xs row productBrandLabel flex flex-center"
+        style="width: 8%; position: relative; right: 3.5%"
+      >
+        <h4 class="productBrand NameClass" style="">{{ userPhoneNumber }}</h4>
+      </q-card>
+      <!-- Product SubTotal -->
+      <q-card
+        class="gt-xs row CategoryNameLabel flex flex-center"
+        style="width: 15%; position: relative; right: 3%"
+      >
+        <h4 class="CategoryName NameClass" style="" v-if="userAddress">
+          {{ userAddress.street }}
+        </h4>
+      </q-card>
+      <q-card
+        class="gt-xs row Edit flex flex-center"
+        style="position: relative; right: 4%"
+      >
+        <q-icon
+          class="Editbtn"
+          name="edit"
+          style="background-color: #e6b41d; border-radius: 50%; cursor: pointer"
+          size="25px"
         >
-          <q-card
-            flat
-            class="edit-container row no-wrap justify-between q-mx-md overflow-hidden"
-            style="width: 100%"
+          <q-popup-proxy
+            cover
+            maxHeight="99vh"
+            transition-show="slide-down"
+            transition-hide="slide-up"
+            style="position: relative; right: 10%; width: 80vw"
+            class="overflow-hidden"
           >
-            <q-card class="inputs q-mx-ld" style="width: 50%">
-              <!-- inputs -->
-              <!-- Product Name  -->
-              <q-card class="input1" style="width: 80%">
-                <h4 class="NameClass">User Name</h4>
-                <q-input
-                  filled
-                  label="User Name"
-                  v-model="text"
-                  style="border-radius: 15px; width: 100%"
-                />
+            <q-card
+              flat
+              class="edit-container row no-wrap justify-between q-mx-md overflow-hidden"
+              style="width: 100%"
+            >
+              <q-card class="inputs q-mx-ld" style="width: 50%">
+                <!-- inputs -->
+                <!-- Product Name  -->
+                <q-card class="input1" style="width: 80%">
+                  <h4 class="NameClass">User Name</h4>
+                  <q-input
+                    filled
+                    :label="userName"
+                    v-model="text"
+                    style="border-radius: 15px; width: 100%"
+                  />
+                </q-card>
+                <!-- Product Price -->
+                <q-card class="input2" style="width: 80%">
+                  <h4 class="NameClass">User Email</h4>
+                  <q-input
+                    filled
+                    :label="userEmail"
+                    v-model="text"
+                    style="border-radius: 15px; width: 100%"
+                  />
+                </q-card>
+                <!-- Product Category -->
+                <q-card class="input3" style="width: 80%">
+                  <h4 class="NameClass">Phone Number</h4>
+                  <q-input
+                    filled
+                    :label="userphoneNumber"
+                    v-model="text"
+                    style="border-radius: 15px; width: 70%"
+                  />
+                </q-card>
+                <q-card class="input4" style="width: 80%">
+                  <h4 class="NameClass">User Address</h4>
+                  <q-input
+                    filled
+                    :label="userAddress ? userAddress.street : 'User Address'"
+                    v-model="text"
+                    style="border-radius: 15px; width: 100%"
+                  />
+                </q-card>
+                <!-- inputs -->
               </q-card>
-              <!-- Product Price -->
-              <q-card class="input2" style="width: 80%">
-                <h4 class="NameClass">User Email</h4>
-                <q-input
-                  filled
-                  label="User Email"
-                  v-model="text"
-                  style="border-radius: 15px; width: 100%"
-                />
+
+              <!-- q-uploader -->
+              <!-- q-uploader -->
+              <q-uploader
+                :factory="factoryFn"
+                class="bg-grey-3"
+                multiple
+                label="Upload Profile Image"
+                accept=".jpg, image/*"
+                style="max-width: 300px"
+              />
+              <!-- q-uploader -->
+              <!-- q-uploader -->
+
+              <q-card class="images row flex-center wrap q-px-lg" style="width: 50%">
+                <!-- user image -->
+                <!-- user image -->
+                <q-card class="image" style="width: 60%">
+                  <q-img
+                    :src="userImage"
+                    spinner-color="black"
+                    class="favourite"
+                    style="width: 100%; border-radius: 50%"
+                  />
+                </q-card>
               </q-card>
-              <!-- Product Category -->
-              <q-card class="input3" style="width: 80%">
-                <h4 class="NameClass">Phone Number</h4>
-                <q-input
-                  filled
-                  label="Phone Number"
-                  v-model="text"
-                  style="border-radius: 15px; width: 70%"
-                />
-              </q-card>
-              <q-card class="input4" style="width: 80%">
-                <h4 class="NameClass">User Address</h4>
-                <q-input
-                  filled
-                  label="User Address"
-                  v-model="text"
-                  style="border-radius: 15px; width: 100%"
-                />
-              </q-card>
-              <!-- inputs -->
+            </q-card>
+            <!-- submitBtn and UploadBtn -->
+            <!-- submitBtn and UploadBtn-->
+            <q-card flat class="submitBtn q-ml-lg q-my-md" style="width: 20%">
+              <q-btn
+                text-color="white"
+                class="checkoutBtn"
+                label="Submit"
+                @click="confirm = true"
+              />
             </q-card>
 
-            <!-- q-uploader -->
-            <!-- q-uploader -->
-            <q-uploader
-              :factory="factoryFn"
-              class="bg-grey-3"
-              multiple
-              label="Upload Profile Image"
-              accept=".jpg, image/*"
-              style="max-width: 300px"
-            />
-            <!-- q-uploader -->
-            <!-- q-uploader -->
+            <!-- dialog box -->
+            <!-- dialog box -->
+            <!-- dialog box -->
+            <q-dialog v-model="confirm" persistent>
+              <q-card>
+                <q-card-section class="row items-center">
+                  <q-avatar icon="Edit" color="primary" text-color="white" />
+                  <span class="q-ml-sm"
+                    >Are you sure you want to make changes to this Profile.</span
+                  >
+                </q-card-section>
 
-            <q-card class="images row flex-center wrap q-px-lg" style="width: 50%">
-              <!-- user image -->
-              <!-- user image -->
-              <q-card class="image" style="width: 60%">
-                <q-img
-                  src="../assets/userImage.svg"
-                  spinner-color="black"
-                  class="favourite"
-                  style="width: 100%"
-                />
+                <q-card-actions align="right">
+                  <q-btn flat label="Cancel" color="primary" v-close-popup />
+                  <q-btn flat label="Confirm" color="secondary" v-close-popup />
+                </q-card-actions>
               </q-card>
-            </q-card>
-          </q-card>
-          <!-- submitBtn and UploadBtn -->
-          <!-- submitBtn and UploadBtn-->
-          <q-card flat class="submitBtn q-ml-lg q-my-md" style="width: 20%">
-            <q-btn
-              text-color="white"
-              class="checkoutBtn"
-              label="Submit"
-              @click="confirm = true"
-            />
-          </q-card>
-
-          <!-- dialog box -->
-          <!-- dialog box -->
-          <!-- dialog box -->
-          <q-dialog v-model="confirm" persistent>
-            <q-card>
-              <q-card-section class="row items-center">
-                <q-avatar icon="Edit" color="primary" text-color="white" />
-                <span class="q-ml-sm"
-                  >Are you sure you want to make changes to this Profile.</span
-                >
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn flat label="Cancel" color="primary" v-close-popup />
-                <q-btn flat label="Confirm" color="secondary" v-close-popup />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-        </q-popup-proxy>
-      </q-icon>
+            </q-dialog>
+          </q-popup-proxy>
+        </q-icon>
+      </q-card>
     </q-card>
-  </q-card>
+  </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-const confirm = ref(false);
+<script>
+import { ref, computed } from "vue";
+import { useCounterStore } from "stores/counter";
+// const Store = useCounterStore();
+// const confirm = ref(false);
 // const files = ref(null);
+
+// const userAddress = () => {
+//   let address = user.addresses[0];
+//   return address.street;
+// };
+// const userAddress = this.user.addresses[0];
+
+// const userAddress = computed(() => {
+//   let address = user.addresses[0];
+//   return address.street;
+// });
+export default {
+  name: "user",
+
+  props: {
+    userName: String,
+    userEmail: String,
+    userPhoneNumber: String,
+    userId: String,
+    userImage: String,
+    userAddress: Object,
+  },
+  data() {
+    return {
+      Store: useCounterStore(),
+      confirm: ref(false),
+    };
+  },
+  // computed: {
+  //   // a computed getter
+  //   includesFavourites() {
+  //     if (this.favouriters) {
+  //       return this.favouriters.includes(this.Store.userId);
+  //     }
+  //   },
+  // },
+  // onMounted() {
+  //   console.log("this.props.favouriters");
+  // },
+};
 </script>
 <style scoped lang="sass">
 .checkoutBtn

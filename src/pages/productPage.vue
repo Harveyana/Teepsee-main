@@ -183,6 +183,7 @@
               class="AddToCartBtn2 q-ml-sm"
               label="Buy now"
               style=""
+              @click="initPurchase()"
           /></q-card>
           <q-inner-loading :showing="Store.ShowLoading">
             <q-spinner-gears size="130px" color="primary" />
@@ -224,6 +225,39 @@ const productDetails = reactive({});
 const Store = useCounterStore();
 const $q = useQuasar();
 const cart = ref(1);
+
+const initPurchase = () => {
+  let address = Store.user.addresses[0];
+  let mainAddress = address.street;
+  let phone = Store.user.phoneNumber;
+  const details = reactive({
+    name: Store.username,
+    item: productDetails,
+    address: mainAddress,
+    landmark: address.landmark,
+    phoneNumber: Store.user.phoneNumber,
+    optionalNote: "none",
+  });
+  if (address) {
+    console.log(address);
+    if (phone) {
+      console.log(phone);
+      Object.assign(Store.checkout, details);
+      Store.singleItem.push({
+        image: productDetails.images[0],
+        name: productDetails.name,
+        price: productDetails.price,
+        quantity: 1,
+      });
+      Store.cartTotal = productDetails.price;
+      Store.buyNow();
+    } else {
+      Store.notifyUser(Store.user.profilePic, "Please add a Phone number for user");
+    }
+  } else {
+    Store.notifyUser(Store.user.profilePic, "No address added for user");
+  }
+};
 const queryProduct = () => {
   const productQuery = query(
     collection(db, "products"),
@@ -236,12 +270,6 @@ const queryProduct = () => {
     console.log(details);
     // productDetails.value.push(details[0]);
     Object.assign(productDetails, details[0]);
-    // const items = $q.localStorage.getItem("cartItems");
-    // const item = items.find((item) => item.name === details[0].name);
-    // if (item) {
-    //   console.log(item.quantity);
-    //   cart.value = item.quantity;
-    // }
     console.log(productDetails);
     Store.addTorecently(
       productDetails.name,
@@ -255,7 +283,6 @@ const queryProduct = () => {
   });
 };
 const addToCart = (name, image, quantity, price) => {
-
   // retrieve it (Or create a blank array if there isn't any info saved yet),
   const items = $q.localStorage.getItem("cartItems") || [];
   // add to it, only if it's empty

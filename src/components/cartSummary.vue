@@ -1,5 +1,5 @@
 <template>
-  <q-card class="column summary-container" style="width: 100%" v-if="hasCart">
+  <q-card class="column summary-container" style="width: 100%">
     <q-card><h3 class="summaryLabel card-header" style="">Summary</h3></q-card>
     <q-separator class="" style="" />
     <q-card class="summaryItems q-my-lg">

@@ -122,7 +122,16 @@ import {
 import { useCounterStore } from "stores/counter";
 const Store = useCounterStore();
 // const files = ref(null);
-const categoryOptions = ["brandy", "wine", "cognac", "whiskey", "vodka", "tequila"];
+const categoryOptions = [
+  "brandy",
+  "wine",
+  "cognac",
+  "whiskey",
+  "vodka",
+  "tequila",
+  "champagne",
+  "gin",
+];
 const brandOptions = ["henessey", "vodka", "azul"];
 const images = [];
 const product = reactive({

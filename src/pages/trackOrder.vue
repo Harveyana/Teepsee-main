@@ -21,7 +21,7 @@
             borderless
             label="Enter tracking code"
             class="q-pl-md track-input"
-            v-model="text"
+            v-model="trackingId"
             dense
             style=""
           />
@@ -30,6 +30,7 @@
             class="submit-btn bg-primary"
             label="Track order"
             style=""
+            @click="Store.trackOrder(trackingId)"
           />
         </div>
       </q-card>
@@ -48,6 +49,7 @@ import TrackPageHero from "../components/trackPageHero.vue";
 import Track from "../components/track.vue";
 
 const Store = useCounterStore();
+const trackingId = ref("");
 </script>
 
 <style scoped lang="sass">

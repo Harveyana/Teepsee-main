@@ -15,8 +15,10 @@ import { createUserWithEmailAndPassword,
  import { collection, query, arrayUnion, arrayRemove, onSnapshot, where, doc, addDoc, getDocs, updateDoc } from "firebase/firestore";
 
 import { Notify, LocalStorage, } from 'quasar'
-
+import PaystackPop from '@paystack/inline-js';
+import emailjs from '@emailjs/browser';
 import { reactive } from 'vue';
+import { date } from 'quasar'
 import axios from "axios";
 
 
@@ -41,12 +43,15 @@ export const useCounterStore = defineStore('counter', {
     hide2: false,
     hide3: false,
     showReviewBox: ref(true),
-    showTrackBox: ref(true),
+    showTrackBox: ref(false),
+    showAgeConfirmBox: ref(false),
     ShowChangePass: false,
     ShowNotification: false,
     Showsetup: true,
     ShowLoading: false,
     products: ref([]),
+    adminorders: ref([]),
+    allUsers: ref([]),
     favourites: ref([]),
     recentlyViewed: ref([]),
     cartProducts: ref([]),
@@ -56,6 +61,10 @@ export const useCounterStore = defineStore('counter', {
     cat2: null,
     cat3: null,
     results: null,
+    singleItem: ref([]),
+    checkout: reactive({}),
+    orderTrack: reactive({}),
+    orderItems: LocalStorage.getItem("cartItems"),
     cartTotal: ref(0),
     componentKey: ref(0),
     loadSignUpBtn: false,
@@ -221,7 +230,7 @@ export const useCounterStore = defineStore('counter', {
       signInWithPopup(auth, provider)
        .then((userCredential) => {
 
-        let colRef= collection(db, 'users',);
+        let colRef= collection(db, 'users');
         addDoc(colRef, {
           name: userCredential.user.displayName,
           lastName:'',
@@ -369,6 +378,40 @@ export const useCounterStore = defineStore('counter', {
         });
 
       }
+
+    },
+    FetchAdminOrders () {
+      this.ShowLoading = true;
+      // if (category === 'general') {
+
+      let colRef = collection(db, "orders");
+      onSnapshot(colRef, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.adminorders.value = [...group];
+        console.log(group);
+        if (this.adminorders.value.length > 0) {
+          this.ShowLoading = false;
+        }
+      })
+
+    },
+    FetchAdminUsers () {
+      this.ShowLoading = true;
+      // if (category === 'general') {
+
+      let colRef = collection(db, "users");
+      onSnapshot(colRef, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.allUsers.value = [...group];
+        console.log(group);
+        if (this.allUsers.value.length > 0) {
+          this.ShowLoading = false;
+        }
+      })
 
     },
     brandQuery(brand){
@@ -541,13 +584,13 @@ export const useCounterStore = defineStore('counter', {
         // console.log(imageUrls);
       }
     },
-    addImage(file) {
+    addImage(file, id) {
       if (file) {
         this.ShowLoading = true;
         const metadata = {
           contentType: "image/jpeg",
         };
-        let docToUpdate = doc(db, "products", "KbHDF2HwbeY80EvU1gUt");
+        let docToUpdate = doc(db, "products", id);
         const storageRef = ref(Storage, "images/" + file.name);
         uploadBytesResumable(storageRef, file, metadata).then(() => {
           getDownloadURL(storageRef).then((downloadURL) => {
@@ -595,11 +638,11 @@ export const useCounterStore = defineStore('counter', {
     },
     addCoupon(payload) {
       if(payload.name && payload.code && payload.discount){
-        let colRef= collection(db, 'coupons',);
+        let colRef= collection(db, 'coupons');
         addDoc(colRef, {
           name:payload.name,
           code:payload.code,
-          discount: payload.discount,
+          discount: `${payload.discount}%`,
           users:[]
         }).then(() =>{
           this.notifyUser(this.defaultPic, 'Coupon Added');
@@ -623,38 +666,191 @@ export const useCounterStore = defineStore('counter', {
       });
 
     },
-    initDiscount(code){
+    initDiscount(code, id){
       const num = parseFloat(code) / 100
       console.log(num);
       let percentNumber = this.cartTotal * num
       console.log(percentNumber);
       this.cartTotal = this.cartTotal - percentNumber
-      this.notifyUser(this.user.profilePic, "Discount Added");
-      this.ShowLoading = false;
+
+        let docToUpdate = doc(db, "coupons", id);
+        updateDoc(docToUpdate, {
+        users: arrayUnion(this.user.email),
+        })
+        this.notifyUser(this.user.profilePic, "Discount Added");
+
+        this.ShowLoading = false;
+
+
+
     },
     getCoupon(discountCode){
       this.ShowLoading = true;
+      const coupons = [];
+      const ids = [];
       const querycoupon = query(collection(db, "coupons"), where("code", "==", discountCode));
-      onSnapshot(querycoupon, (data) => {
-        let coupons = data.docs.map((item) => {
-          return item.data();
+      getDocs(querycoupon).then((querySnapshot)=>{
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          ids.push(doc.id);
+          coupons.push(doc.data());
+          console.log(coupons, ids);
         });
-        // this.products.value = [...group];
-        console.log(coupons);
-        let coupon = coupons[0]
-        let users = coupon.users
+
+          let coupon = coupons[0]
+          const id = ids[0]
         if (coupon) {
+
           this.ShowLoading = false;
+          let users = coupon.users
           if(users.includes(this.user.email)){
             this.notifyUser(this.user.profilePic, "Already Used")
           }else{
-            this.initDiscount(coupon.discount);
+            this.initDiscount(coupon.discount, id);
           }
         }else{
           this.notifyUser(this.user.profilePic, "invalid Coupon");
           this.ShowLoading = false;
         }
       });
+
+    },
+    sendMail(id) {
+      let templateParams = {
+        to_name: this.username,
+        send_to: this.user.email,
+        order_id: `order Id: ${id}`,
+        order_total: `order Total: ${this.cartTotal}`,
+        reply_to: "admin@getteepsee.com",
+      };
+
+      emailjs.send('service_ql80yi9', 'template_j007nsc', templateParams,'fmWXR51OFH0YMqwEK')
+      .then(function(response) {
+       console.log('SUCCESS!', response.status, response.text);
+      })
+
+    },
+    async createOrder(id){
+      const timeStamp = Date.now()
+      const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
+        await addDoc(collection(db, "orders"), {
+        orderId: id,
+        amount: this.cartTotal,
+        items: this.orderItems,
+        status: 'Pending',
+        time: formattedString,
+        customer: this.checkout.name,
+        address: this.checkout.address,
+        landmark: this.checkout.landmark,
+        phoneNumber: this.checkout.phoneNumber,
+        optionalNote: this.checkout.optionalNote,
+      });
+      this.sendMail(id);
+      LocalStorage.remove('cartItems');
+      this.notifyUser(this.user.profilePic, "Order Successful");
+      console.log('finally done');
+    },
+    async createOrder2(id){
+      const timeStamp = Date.now()
+      const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
+        await addDoc(collection(db, "orders"), {
+        orderId: id,
+        amount: this.cartTotal,
+        items: this.singleItem,
+        status: 'Pending',
+        time: formattedString,
+        customer: this.checkout.name,
+        address: this.checkout.address,
+        landmark: this.checkout.landmark,
+        phoneNumber: this.checkout.phoneNumber,
+        optionalNote: this.checkout.optionalNote,
+      });
+      this.sendMail(id);
+      LocalStorage.remove('cartItems');
+      this.notifyUser(this.user.profilePic, "Order Successful");
+      console.log('finally done');
+    },
+    processPayment() {
+      const paystack = new PaystackPop();
+
+      paystack.newTransaction({
+
+        key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
+        email: this.user.email,
+        amount: this.cartTotal * 100,
+
+        onSuccess: (transaction) => {
+        // Payment complete! Reference: transaction.reference
+         console.log(transaction.reference)
+         this.createOrder(transaction.reference);
+
+        },
+        onCancel: () => {
+        // user closed popup
+        this.notifyUser(this.user.profilePic, "Order Cancelled");
+
+       }
+     });
+    },
+    buyNow() {
+      const paystack = new PaystackPop();
+
+      paystack.newTransaction({
+
+        key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
+        email: this.user.email,
+        amount: this.cartTotal * 100,
+
+        onSuccess: (transaction) => {
+        // Payment complete! Reference: transaction.reference
+         console.log(transaction.reference)
+         this.createOrder2(transaction.reference);
+        //  this.sendMail(transaction.reference);
+        },
+        onCancel: () => {
+        // user closed popup
+        this.notifyUser(this.user.profilePic, "Order Cancelled");
+
+       }
+     });
+    },
+    updateOrderStatus(newStatus, Id) {
+      this.ShowLoading = true;
+      const timeStamp = Date.now()
+      const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
+      const queryOrder = query(collection(db, "orders"), where("orderId", "==", `${Id}`));
+      let ids = [];
+      getDocs(queryOrder).then((querySnapshot)=>{
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          ids.push(doc.id);
+          console.log(ids[0])
+
+        });
+
+        let id = ids[0]
+          const docToUpdate = doc(db, "orders", id)
+          updateDoc(docToUpdate, {
+            status: newStatus,
+            changedTime: formattedString
+          }).then(()=>{
+            this.ShowLoading = false;
+          })
+      })
+    },
+    trackOrder(id) {
+      const queryOrder = query(collection(db, "orders"), where("orderId", "==", id));
+      getDocs(queryOrder).then((querySnapshot)=>{
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          Object.assign(this.orderTrack, doc.data());
+          console.log(this.orderTrack);
+        });
+      })
+
+      if (this.orderTrack) {
+        this.showTrackBox = true
+      }
     },
     increment() {
       this.counter++;

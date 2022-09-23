@@ -40,7 +40,7 @@
           clickable
           name="img:/decrementor.svg"
           style="cursor: pointer"
-          @click="counter--, reduceQuantity(productDetails.name, 1)"
+          @click="counter--, reduceQuantity(product.name, 1), $emit('my-event')"
         />
         <h3 class="CounterNumber" style="">{{ cart }}</h3>
         <q-icon
@@ -49,12 +49,8 @@
           style="cursor: pointer"
           @click="
             counter++,
-              addToCart(
-                productDetails.name,
-                productDetails.images[0],
-                1,
-                productDetails.price
-              )
+              addToCart(product.name, product.images[0], 1, product.price),
+              $emit('my-event')
           "
         />
       </q-card>
@@ -64,7 +60,17 @@
       class="row productSubTotalLabel flex flex-center"
       style="width: 17%; position: relative; right: 4%"
     >
-      <q-btn text-color="white" class="AddToCartBtn" label="Add" style="" />
+      <q-btn
+        text-color="white"
+        class="AddToCartBtn"
+        label="Add"
+        style=""
+        @click="
+          counter++,
+            addToCart(product.name, product.images[0], 1, product.price),
+            $emit('my-event')
+        "
+      />
     </q-card>
   </q-card>
 </template>
@@ -97,7 +103,6 @@ const addToCart = (name, image, quantity, price) => {
   }
   // then put it back.
   $q.localStorage.set("cartItems", items);
-
   console.log(items);
   // };
 };
@@ -113,6 +118,7 @@ const reduceQuantity = function (name, quantity) {
   // then put it back.
   $q.localStorage.set("cartItems", items);
   console.log(items);
+
   // };
 };
 onMounted(() => {

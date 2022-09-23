@@ -1,10 +1,9 @@
 <template>
-  <TransitionGroup
-    tag="contain"
-    duration="5"
-    appear
-    enter-active-class="animated bounceInLeft"
-    leave-active-class="animated bounceOutRight"
+  <q-intersection
+    class="hero-intersection"
+    transition="jump-down"
+    transition-duration="3000"
+    style="width: 100%"
   >
     <q-card
       class="column hero flex items-start q-px-lg"
@@ -68,7 +67,7 @@
               color="white"
               flat
               label="Cart"
-              icon="img:/buy.png"
+              icon="img:/Buy.svg"
               class="nav no-wrap"
               style="width: 100%"
             />
@@ -234,7 +233,7 @@
       <!-- mobile search results -->
       <!-- search results template -->
     </q-card>
-  </TransitionGroup>
+  </q-intersection>
 </template>
 
 <script>
@@ -293,7 +292,14 @@ export default {
 </script>
 
 <style scoped lang="sass">
-
+.hero-intersection
+  height: 600px
+  body.screen--xl &
+    height: 1000px
+  body.screen--lg &
+    height: 870px
+  body.screen--xs &
+    height: 370px
 .imagebox
   body.screen--md &
     height: 110px
