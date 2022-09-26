@@ -9,12 +9,14 @@
       </q-card>
       <q-card class="row justify-between Delivery">
         <h4 class="DeliveryKey NameClassLess" style="">Delivery Fee</h4>
-        <h4 class="DeliveryEntry NameClass" style="" v-if="cartValue > 1">₦1,047.00</h4>
+        <h4 class="DeliveryEntry NameClass" style="" v-if="cartValue > 1">
+          ₦{{ Store.shippingRate }}
+        </h4>
       </q-card>
       <q-card class="row justify-between Total">
         <h4 class="TotalKey NameClass" style="">Total</h4>
         <h4 class="TotalEntry NameClass" style="" v-if="cartValue > 1">
-          ₦{{ parseInt(cartValue + 1047) }}
+          ₦{{ parseInt(cartValue + Store.shippingRate) }}
         </h4>
       </q-card>
     </q-card>

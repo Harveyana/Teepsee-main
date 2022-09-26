@@ -29,7 +29,7 @@
         <h4 class="productName NameClass" style="font-family: 'Manrope-semiBold'">
           {{ productName }}
         </h4>
-        <h4 class="productPrice NameClass" style="color: #27141a">{{ productPrice }}</h4>
+        <h4 class="productPrice NameClass" style="color: #27141a">₦{{ productPrice }}</h4>
         <!-- counter -->
         <!-- counter -->
         <q-card
@@ -58,7 +58,7 @@
       class="gt-xs row ProductPrice flex flex-center"
       style="width: 15%; position: relative; left: 3%"
     >
-      <h4 class="productPrice NameClass" style="">{{ productPrice }}</h4>
+      <h4 class="productPrice NameClass" style="">₦{{ productPrice }}</h4>
     </q-card>
     <!-- Product Quantity -->
     <q-card
@@ -72,7 +72,7 @@
       class="gt-xs row productSubTotalLabel flex flex-center"
       style="width: 15%; position: relative; right: 2%"
     >
-      <h4 class="productSubTotal NameClass" style="">{{ SubTotal }}</h4>
+      <h4 class="productSubTotal NameClass" style="">₦{{ SubTotal }}</h4>
     </q-card>
     <q-card class="row Remove flex flex-center" style="position: relative; right: 3%">
       <q-icon

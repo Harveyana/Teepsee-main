@@ -32,7 +32,7 @@
           /></q-item> -->
 
             <q-item outline class="navbar"
-              ><q-btn flat to="/cart" label="Cart" icon="img:/buy2.png" class="nav" />
+              ><q-btn flat to="/cart" label="Cart" icon="img:/Buy2.svg" class="nav" />
             </q-item>
 
             <!-- <q-item outline class="q-mr-md"
@@ -59,7 +59,7 @@
               class="Cart-Top"
               style="position: relative; top: 0px; right: -15px"
             >
-              <q-btn dense flat round icon="img:/Buy2.png" />
+              <q-btn dense flat to="/cart" round icon="img:/Buy2.png" />
               <small
                 style="
                   color: #ffff;
@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import footerVue from "src/components/footer.vue";
 import AccountDrawer from "/src/components/accountDrawer.vue";
 import ReviewEntry from "/src/components/reviewEntry.vue";
@@ -121,6 +121,9 @@ const product = {
 // function toggleLeftDrawer() {
 //   leftDrawerOpen.value = !leftDrawerOpen.value;
 // }
+onMounted(() => {
+  Store.getProductForReviews();
+});
 </script>
 
 <style scoped lang="sass">

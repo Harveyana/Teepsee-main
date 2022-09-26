@@ -12,7 +12,7 @@ import { createUserWithEmailAndPassword,
   signOut
  } from "firebase/auth"
  import { ref,  uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
- import { collection, query, arrayUnion, arrayRemove, onSnapshot, where, doc, addDoc, getDocs, updateDoc } from "firebase/firestore";
+ import { collection, query, arrayUnion, arrayRemove, onSnapshot, where, doc, addDoc, getDocs, updateDoc, deleteDoc, increment } from "firebase/firestore";
 
 import { Notify, LocalStorage, } from 'quasar'
 import PaystackPop from '@paystack/inline-js';
@@ -42,7 +42,7 @@ export const useCounterStore = defineStore('counter', {
     hide1: false,
     hide2: false,
     hide3: false,
-    showReviewBox: ref(true),
+    showReviewBox: ref(false),
     showTrackBox: ref(false),
     showAgeConfirmBox: ref(false),
     ShowChangePass: false,
@@ -64,13 +64,14 @@ export const useCounterStore = defineStore('counter', {
     singleItem: ref([]),
     checkout: reactive({}),
     orderTrack: reactive({}),
-    orderItems: LocalStorage.getItem("cartItems"),
+    ProductForReviews: reactive({}),
+    shippingRate: ref(1450),
     cartTotal: ref(0),
-    componentKey: ref(0),
+    componentKey: ref(1),
     loadSignUpBtn: false,
   }),
   getters: {
-    doubleCount: (state) => state.counter * 2,
+    toTalPayment: (state) => state.cartTotal + state.shippingRate,
     fetchValue: () =>{
       // const fetchValue = () => {
         // if (cartProducts.value) {
@@ -390,7 +391,7 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.adminorders.value = [...group];
-        console.log(group);
+        // console.log(group);
         if (this.adminorders.value.length > 0) {
           this.ShowLoading = false;
         }
@@ -735,8 +736,8 @@ export const useCounterStore = defineStore('counter', {
       const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
         await addDoc(collection(db, "orders"), {
         orderId: id,
-        amount: this.cartTotal,
-        items: this.orderItems,
+        amount: this.toTalPayment,
+        items: LocalStorage.getItem("cartItems"),
         status: 'Pending',
         time: formattedString,
         customer: this.checkout.name,
@@ -755,7 +756,7 @@ export const useCounterStore = defineStore('counter', {
       const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
         await addDoc(collection(db, "orders"), {
         orderId: id,
-        amount: this.cartTotal,
+        amount: this.toTalPayment,
         items: this.singleItem,
         status: 'Pending',
         time: formattedString,
@@ -771,13 +772,14 @@ export const useCounterStore = defineStore('counter', {
       console.log('finally done');
     },
     processPayment() {
-      const paystack = new PaystackPop();
+      if (this.isLoggedIn) {
+        const paystack = new PaystackPop();
 
       paystack.newTransaction({
 
         key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
         email: this.user.email,
-        amount: this.cartTotal * 100,
+        amount: this.toTalPayment * 100,
 
         onSuccess: (transaction) => {
         // Payment complete! Reference: transaction.reference
@@ -791,15 +793,18 @@ export const useCounterStore = defineStore('counter', {
 
        }
      });
+    }
+
     },
     buyNow() {
-      const paystack = new PaystackPop();
+      if (this.isLoggedIn) {
+        const paystack = new PaystackPop();
 
       paystack.newTransaction({
 
         key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
         email: this.user.email,
-        amount: this.cartTotal * 100,
+        amount: this.toTalPayment * 100,
 
         onSuccess: (transaction) => {
         // Payment complete! Reference: transaction.reference
@@ -813,6 +818,8 @@ export const useCounterStore = defineStore('counter', {
 
        }
      });
+    }
+
     },
     updateOrderStatus(newStatus, Id) {
       this.ShowLoading = true;
@@ -822,9 +829,9 @@ export const useCounterStore = defineStore('counter', {
       let ids = [];
       getDocs(queryOrder).then((querySnapshot)=>{
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
+          // console.log(doc.id, " => ", doc.data());
           ids.push(doc.id);
-          console.log(ids[0])
+          // console.log(ids[0])
 
         });
 
@@ -851,6 +858,78 @@ export const useCounterStore = defineStore('counter', {
       if (this.orderTrack) {
         this.showTrackBox = true
       }
+    },
+     async sendToreview(items, username, orderId) {
+      console.log(items, username, orderId)
+      await addDoc(collection(db, "reviewLobby"), {
+        orderId: orderId,
+        items: items,
+        customer: username,
+      });
+      console.log('done sending to reviewlobby')
+    },
+    async getProductForReviews() {
+      let queryresults = []
+      const reviewQuery = query(collection(db, "reviewLobby"), where("customer", "==", this.username));
+      const querySnapshot = await getDocs(reviewQuery);
+      // const firstdoc = querySnapshot[0]
+      querySnapshot.forEach((doc) => {
+        queryresults.push(doc.data())
+      });
+      Object.assign(this.ProductForReviews, queryresults[0]);
+      if (this.ProductForReviews.items) {
+        this.showReviewBox = true
+      }
+
+    },
+    async uploadReviews(id, comment, ratingNum) {
+      const reviewRef = doc(db, "products", `${id}`);
+      const timeStamp = Date.now()
+      const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
+      await updateDoc(reviewRef, {
+        reviews: arrayUnion({
+           rating: ratingNum,
+           comment: comment,
+           date: formattedString,
+           name: this.username})
+      });
+      // total ratings
+      await updateDoc(reviewRef, {
+        rating: increment(1)
+      });
+      console.log('product doc updated')
+
+      // indidvidual ratings
+      if (ratingNum == 1) {
+        await updateDoc(reviewRef, {
+          ratings: arrayUnion({one: increment(1)})
+        });
+      } else if (ratingNum == 2) {
+        await updateDoc(reviewRef, {
+          ratings: arrayUnion({two: increment(1)})
+        });
+      } else {
+        if (ratingNum == 3) {
+          await updateDoc(reviewRef, {
+            ratings: arrayUnion({three: increment(1)})
+          });
+        } else if (ratingNum == 4) {
+          await updateDoc(reviewRef, {
+            ratings: arrayUnion({four: increment(1)})
+          });
+        } else {
+          await updateDoc(reviewRef, {
+            ratings: arrayUnion({five: increment(1)})
+          });
+        }
+      }
+
+      let reviewQuery = query(collection(db, "reviewLobby"), where("orderId", "==", this.ProductForReviews.orderId));
+      const querySnapshot = await getDocs(reviewQuery);
+      querySnapshot.forEach(async(document) => {
+        await deleteDoc(doc(db, "reviewLobby", document.id));
+        console.log(document.id)
+      });
     },
     increment() {
       this.counter++;

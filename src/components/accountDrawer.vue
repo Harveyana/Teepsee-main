@@ -153,42 +153,70 @@
       <q-list padding class="overflow-hidden">
         <q-item clickable padding class="self-start" style="margin-top: 20px">
           <q-item-section>
-            <div class="text-h6 acc-link">General</div>
+            <router-link to="/categories/general" style="text-decoration: none">
+              <div class="text-h6 acc-link">General</div>
+            </router-link>
           </q-item-section>
         </q-item>
         <q-item clickable padding class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div to="/" class="text-h6 acc-link">Brandy</div>
+            <router-link to="/categories/brandy" style="text-decoration: none">
+              <div to="/" class="text-h6 acc-link">Brandy</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Wine</div>
+            <router-link to="/categories/wine" style="text-decoration: none">
+              <div class="text-h6 acc-link">Wine</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Cognac</div>
+            <router-link to="/categories/cognac" style="text-decoration: none">
+              <div class="text-h6 acc-link">Cognac</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Whiskey</div>
+            <router-link to="/categories/whiskey" style="text-decoration: none">
+              <div class="text-h6 acc-link">Whiskey</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Vodka</div>
+            <router-link to="/categories/vodka" style="text-decoration: none">
+              <div class="text-h6 acc-link">Vodka</div>
+            </router-link>
           </q-item-section>
         </q-item>
 
         <q-item clickable class="self-start" style="margin-bottom: 8px">
           <q-item-section>
-            <div class="text-h6 acc-link">Tequila</div>
+            <router-link to="/categories/tequila" style="text-decoration: none">
+              <div class="text-h6 acc-link">Tequila</div>
+            </router-link>
+          </q-item-section>
+        </q-item>
+        <q-item clickable class="self-start" style="margin-bottom: 8px">
+          <q-item-section>
+            <router-link to="/categories/gin" style="text-decoration: none">
+              <div class="text-h6 acc-link">Gin</div>
+            </router-link>
+          </q-item-section>
+        </q-item>
+        <q-item clickable class="self-start" style="margin-bottom: 8px">
+          <q-item-section>
+            <router-link to="/categories/champagne" style="text-decoration: none">
+              <div class="text-h6 acc-link">Champagne</div>
+            </router-link>
           </q-item-section>
         </q-item>
       </q-list>

@@ -1,12 +1,12 @@
 <template>
   <q-page class="flex flex-center overflow-hidden" style="background: #e5e5e5">
     <div
-      class="container row no-wrap items-center justify-center q-gutter-sm-lg q-gutter-md-lg q-gutter-lg-lg q-gutter-xl-lg"
+      class="container row no-wrap items-center justify-center q-gutter-xs-none q-gutter-sm-lg q-gutter-md-lg q-gutter-lg-lg q-gutter-xl-lg"
       style=""
     >
       <q-card
         flat
-        class="bg-transparent product-images column no-wrap items-center justify-center q-gutter-sm-md q-gutter-md-md q-gutter-lg-md q-gutter-xl-md q-pr-sm-md q-pr-md-md q-pr-lg-md q-pr-xl-md q-pb-sm-md q-pb-md-md q-pb-lg-md q-pb-xl-md"
+        class="gt-xs bg-transparent product-images column no-wrap items-center justify-center q-gutter-xs-none q-gutter-sm-md q-gutter-md-md q-gutter-lg-md q-gutter-xl-md q-pr-sm-md q-pr-md-md q-pr-lg-md q-pr-xl-md q-pb-sm-md q-pb-md-md q-pb-lg-md q-pb-xl-md"
         style=""
       >
         <!-- main image -->
@@ -40,7 +40,7 @@
         <!-- sub-images -->
         <!-- sub-images -->
         <q-card
-          class="gt-xs bg-transparent row no-wrap justify-center items-center q-gutter-md q-pr-md q-pb-md"
+          class="bg-transparent row no-wrap justify-center items-center q-gutter-md q-pr-md q-pb-md"
           style="height: 25%; width: 95%"
         >
           <q-card
@@ -90,6 +90,53 @@
         <!-- sub-images -->
         <!-- sub-images -->
       </q-card>
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- <q-card
+        flat
+        class="lt-sm bg-transparent product-images column no-wrap items-center justify-center"
+        style=""
+      > -->
+      <!-- main image -->
+      <!-- main image -->
+      <q-card
+        flat
+        class="lt-sm mobile-image-container row justify-center items-center"
+        style=""
+      >
+        <q-carousel
+          animated
+          v-model="slide"
+          arrows
+          navigation
+          infinite
+          class="image-carousel flex justify-center"
+          style=""
+        >
+          <q-carousel-slide
+            v-for="(image, index) in productDetails.images"
+            :key="index"
+            :name="(index = +1)"
+            class="product-image"
+            :img-src="image"
+            style="min-width: 200px"
+          />
+        </q-carousel>
+        <q-inner-loading :showing="Store.ShowLoading">
+          <q-spinner-gears size="130px" color="primary" />
+        </q-inner-loading>
+      </q-card>
+      <!-- </q-card> -->
+
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+      <!-- mobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb -->
+
       <q-card flat class="product-details q-pa-md bg-transparent" style="">
         <q-card
           class="column no-wrap q-pa-md"
@@ -125,7 +172,8 @@
                           productDetails.name,
                           productDetails.images[0],
                           1,
-                          productDetails.price
+                          productDetails.price,
+                          productDetails.id
                         )
                     "
                   />
@@ -137,10 +185,20 @@
 
             <!-- product ratings  -->
             <!-- product ratings  -->
-            <q-card class="product-ratings q-pt-md column no-wrap items-center" style="">
-              <q-rating v-model="ratingModel" readonly class="ratingStar" style="" />
-              <h2 class="product-rating" style="">200 ratings</h2>
-            </q-card>
+            <router-link
+              :to="{ path: `/reviews/${productDetails.id}` }"
+              style="text-decoration: none"
+            >
+              <q-card
+                class="product-ratings q-pt-md column no-wrap items-center"
+                style=""
+              >
+                <q-rating v-model="ratingModel" readonly class="ratingStar" style="" />
+                <h2 class="product-rating" style="">
+                  {{ productDetails.rating }} ratings
+                </h2>
+              </q-card>
+            </router-link>
             <!-- product ratings -->
             <!-- product ratings -->
           </q-card>
@@ -174,7 +232,8 @@
                   productDetails.name,
                   productDetails.images[0],
                   1,
-                  productDetails.price
+                  productDetails.price,
+                  productDetails.id
                 )
               " />
             <!-- Buy now button -->
@@ -227,35 +286,38 @@ const $q = useQuasar();
 const cart = ref(1);
 
 const initPurchase = () => {
-  let address = Store.user.addresses[0];
-  let mainAddress = address.street;
-  let phone = Store.user.phoneNumber;
-  const details = reactive({
-    name: Store.username,
-    item: productDetails,
-    address: mainAddress,
-    landmark: address.landmark,
-    phoneNumber: Store.user.phoneNumber,
-    optionalNote: "none",
-  });
-  if (address) {
-    console.log(address);
-    if (phone) {
-      console.log(phone);
-      Object.assign(Store.checkout, details);
-      Store.singleItem.push({
-        image: productDetails.images[0],
-        name: productDetails.name,
-        price: productDetails.price,
-        quantity: 1,
-      });
-      Store.cartTotal = productDetails.price;
-      Store.buyNow();
+  if (Store.isLoggedIn) {
+    let address = Store.user.addresses[0];
+    let mainAddress = address.street;
+    let phone = Store.user.phoneNumber;
+    const details = reactive({
+      name: Store.username,
+      item: productDetails,
+      address: mainAddress,
+      landmark: address.landmark,
+      phoneNumber: Store.user.phoneNumber,
+      optionalNote: "none",
+    });
+    if (address) {
+      console.log(address);
+      if (phone) {
+        console.log(phone);
+        Object.assign(Store.checkout, details);
+        Store.singleItem.push({
+          image: productDetails.images[0],
+          name: productDetails.name,
+          price: productDetails.price,
+          quantity: 1,
+          productId: productDetails.id,
+        });
+        Store.cartTotal = productDetails.price;
+        Store.buyNow();
+      } else {
+        Store.notifyUser(Store.user.profilePic, "Please add a Phone number for user");
+      }
     } else {
-      Store.notifyUser(Store.user.profilePic, "Please add a Phone number for user");
+      Store.notifyUser(Store.user.profilePic, "No address added for user");
     }
-  } else {
-    Store.notifyUser(Store.user.profilePic, "No address added for user");
   }
 };
 const queryProduct = () => {
@@ -282,7 +344,7 @@ const queryProduct = () => {
     );
   });
 };
-const addToCart = (name, image, quantity, price) => {
+const addToCart = (name, image, quantity, price, id) => {
   // retrieve it (Or create a blank array if there isn't any info saved yet),
   const items = $q.localStorage.getItem("cartItems") || [];
   // add to it, only if it's empty
@@ -297,11 +359,12 @@ const addToCart = (name, image, quantity, price) => {
       image,
       quantity,
       price,
+      id,
     });
   }
   // then put it back.
   $q.localStorage.set("cartItems", items);
-
+  Store.notifyUser(Store.defaultPic, "Added to cart");
   console.log(items);
   // };
 };
@@ -310,8 +373,10 @@ const reduceQuantity = function (name, quantity) {
   const items = $q.localStorage.getItem("cartItems");
   const item = items.find((item) => item.name === name);
   if (item) {
-    item.quantity -= quantity;
-    cart.value = item.quantity;
+    if (cart.value >= 2) {
+      item.quantity -= quantity;
+      cart.value = item.quantity;
+    }
   }
 
   // then put it back.
@@ -387,6 +452,9 @@ onMounted(() => {
     min-width: 100%
     border-radius: 18px
     height: 320px
+    margin-top: 10px
+    margin-bottom: 10px
+    max-height: 320px
 
 
 .image-container
@@ -415,6 +483,11 @@ onMounted(() => {
     width: 100%
     // position: relative
     // top: 8%
+.mobile-image-container
+  border-radius: 18px
+  width: 95%
+
+
 .product-details
   width: 45%
   height: 100%

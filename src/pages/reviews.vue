@@ -40,15 +40,54 @@
 </template>
 
 <script setup>
+import { useRouter, useRoute } from "vue-router";
+import { db } from "src/boot/firebase";
+import {
+  collection,
+  query,
+  arrayUnion,
+  onSnapshot,
+  where,
+  doc,
+  addDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+
+import { ref, reactive, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
+import { useCounterStore } from "stores/counter";
 import ratingsVue from "src/components/ratings.vue";
-import { ref } from "vue";
 import Comments from "../components/comments.vue";
+const Store = useCounterStore();
+const productDetails = reactive({});
+const router = useRouter();
+const route = useRoute();
 
 const ratingModel = ref(3);
+
+const queryProduct = () => {
+  const productQuery = query(
+    collection(db, "products"),
+    where("id", "==", route.params.id)
+  );
+  getDocs(productQuery).then((response) => {
+    const details = response.docs.map((item) => {
+      return item.data();
+    });
+    console.log(details);
+    // productDetails.value.push(details[0]);
+    Object.assign(productDetails, details[0]);
+    console.log(productDetails);
+  });
+};
 // const standard = ref({
 //   min: 0,
 //   max: 2,
 // });
+onMounted(() => {
+  queryProduct();
+});
 </script>
 <style scoped lang="sass">
 .card-header

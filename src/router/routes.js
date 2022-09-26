@@ -64,7 +64,7 @@ const routes = [
     path: '/reviews',
     component: () => import('layouts/shopLayout.vue'),
     children: [
-      { path: '/reviews', component: () => import('pages/reviews.vue') },
+      { path: '/reviews/:id', component: () => import('pages/reviews.vue') },
     ]
   },
   {

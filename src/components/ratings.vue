@@ -4,7 +4,8 @@
     <!-- ratings 1 -->
     <q-card class="row range no-wrap items-center">
       <h3 class="ratingnumber no-wrap" style="">5</h3>
-      <q-icon name="img:/star.svg" class="star-icon" /><q-range
+      <q-icon name="img:/star.svg" class="star-icon" />
+      <q-range
         v-model="standard"
         color="secondary"
         :min="0"
@@ -84,7 +85,7 @@ import { ref } from "vue";
 // const ratingModel = ref(3);
 const standard = ref({
   min: 0,
-  max: 2,
+  max: 4,
 });
 </script>
 <style scoped lang="sass">

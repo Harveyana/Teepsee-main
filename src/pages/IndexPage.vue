@@ -25,13 +25,14 @@
         class="lt-sm row justify-start no-wrap bg-transparent"
         style="width: 100%"
       >
-        <div class="text-h1 text2 self-start">Shop Now</div>
+        <div class="text-h1 text2 self-start">How to get Teepsee</div>
       </q-card>
 
       <div class="feature-list row no-wrap justify-around" style="">
         <q-intersection
           class="card-intersection"
           transition="slide-up"
+          once
           transition-duration="800"
           style=""
         >
@@ -40,6 +41,7 @@
         <q-intersection
           class="card-intersection"
           transition="slide-up"
+          once
           transition-duration="1300"
           style=""
         >
@@ -48,6 +50,7 @@
         <q-intersection
           class="card-intersection"
           transition="slide-up"
+          once
           transition-duration="2000"
           style=""
         >
@@ -61,7 +64,8 @@
       >
         <q-intersection
           class="wine-intersection"
-          transition="slide-right"
+          transition="slide-up"
+          once
           transition-duration="2000"
           style=""
         >
@@ -71,7 +75,8 @@
         </q-intersection>
         <q-intersection
           class="intersection"
-          transition="slide-left"
+          transition="slide-up"
+          once
           transition-duration="2000"
           style=""
         >
@@ -86,6 +91,7 @@
       <q-intersection
         class="vodka-intersection"
         transition="slide-up"
+        once
         transition-duration="2000"
         style=""
       >
@@ -100,7 +106,8 @@
       >
         <q-intersection
           class="wine-intersection"
-          transition="slide-right"
+          transition="slide-up"
+          once
           transition-duration="2000"
           style=""
         >
@@ -110,7 +117,8 @@
         </q-intersection>
         <q-intersection
           class="intersection"
-          transition="slide-left"
+          once
+          transition="slide-up"
           transition-duration="2000"
           style=""
         >
@@ -123,6 +131,7 @@
       <q-intersection
         class="combo-intersection"
         transition="slide-up"
+        once
         transition-duration="2000"
         style=""
       >
@@ -134,7 +143,8 @@
       <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
         <q-intersection
           class="wine-intersection"
-          transition="slide-left"
+          once
+          transition="slide-up"
           transition-duration="2000"
           style=""
         >
@@ -144,7 +154,8 @@
         </q-intersection>
         <q-intersection
           class="intersection"
-          transition="slide-right"
+          once
+          transition="slide-up"
           transition-duration="2000"
           style=""
         >
@@ -167,75 +178,78 @@
 
       </div> -->
     </div>
+
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+
     <q-card
       flat
       class="testimonial flex row justify-center items-center bg-white q-px-xs-none q-px-sm-xl q-px-md-xl q-px-lg-xl q-px-xl-xl"
       style="width: 100%"
     >
-      <q-card
-        class="row justify-xs-center justify-sm-end justify-md-end justify-lg-end justify-xl-end"
-        style="width: 100%"
-      >
-        <q-card
-          flat
-          class="head row items-center justify-xs-center justify-sm-between justify-md-between justify-lg-between justify-xl-between"
-          style="width: 62%"
-        >
-          <div style="" class="text-h1 text-black">Testimonials</div>
-          <q-card class="row items-center justify-center" style="">
-            <q-tabs
-              v-model="tab"
-              dense
-              class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
-              align="justify"
-              narrow-indicator
-            >
-              <q-tab
-                class=""
-                name="previous"
-                icon="img:/left.svg"
-                style="background: #f5f5f5"
-              />
-              <q-tab class="bg-primary" name="next" icon="img:/right.svg" />
-            </q-tabs>
-          </q-card>
-        </q-card>
+      <q-card flat class="head row items-center justify-center" style="width: 100%">
+        <div style="" class="text-h1 text-black">Word on the Street</div>
       </q-card>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="previous">
-          <div
-            flat
-            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
-            style=""
-          >
-            <!-- testimony -->
-            <!-- testimony -->
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-          </div>
-        </q-tab-panel>
-
-        <q-tab-panel name="next">
-          <div
-            flat
-            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
-            style="width: 100%"
-          >
-            <!-- testimony -->
-            <!-- testimony -->
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
+      <div flat class="testimony-container flex row q-mb-lg" style="">
+        <swiper
+          :effect="'coverflow'"
+          :pagination="true"
+          :grabCursor="true"
+          :centeredSlides="true"
+          slidesPerView="auto"
+          :coverflowEffect="{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 3,
+            slideShadows: false,
+          }"
+          loop="true"
+          :autoplay="{
+            delay: 3000,
+            disableOnInteraction: true,
+          }"
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style=""
+          class="swiper"
+        >
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+        </swiper>
+      </div>
     </q-card>
+
     <q-dialog class="" v-model="Store.showAgeConfirmBox" persistent>
       <AgeConfirm></AgeConfirm>
     </q-dialog>
@@ -249,7 +263,15 @@ import Testimony from "../components/testimony.vue";
 import { useCounterStore } from "stores/counter";
 import AgeConfirm from "../components/AgeConfirm.vue";
 import { useQuasar } from "quasar";
+import { Swiper, SwiperSlide } from "swiper/vue";
+// import { Navigation, Pagination, Scrollbar, EffectCoverflow, Autoplay } from "swiper";
+import SwiperCore, { EffectCoverflow, Pagination, Autoplay } from "swiper/core";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/bundle";
+
+SwiperCore.use([EffectCoverflow, Pagination, Autoplay]);
 const $q = useQuasar();
 const Store = useCounterStore();
 const tab = ref("previous");
@@ -272,6 +294,11 @@ onMounted(() => {
 // .enter-active,
 // .leave-active
 //   transition: opacity 6s ease
+.swiper
+  width: 70%
+  body.screen--xs &
+    width: 100%
+
 .card-intersection
   width: 30%
   height: 350px
@@ -338,12 +365,11 @@ onMounted(() => {
   font-family: 'Catellosdemo'
   font-size: 50px
   body.screen--xs &
-    font-size: 30px
+    font-size: 25px
 .testimony-container
   width: 100%
 
   body.screen--xs &
-    flex-direction: column
 
 
 .logo

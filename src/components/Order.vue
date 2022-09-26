@@ -83,6 +83,7 @@
         </q-list>
         <h4 class="NameClass q-ml-md" style="font-size: small">{{ order.address }}</h4>
         <h4 class="NameClass q-ml-md" style="font-size: small">{{ order.landmark }}</h4>
+        <h4 class="NameClass q-ml-md" style="font-size: small">{{ order.customer }}</h4>
 
         <!-- q-dialogue -->
         <!-- q-dialogue -->
@@ -114,7 +115,7 @@
                 label="Completed"
                 color="green"
                 v-close-popup
-                @click="Store.updateOrderStatus('Completed', order.orderId)"
+                @click="Store.updateOrderStatus('Completed', order.orderId), Store.sendToreview(order.items, order.customer,order.orderId)"
               />
             </q-card-actions>
           </q-card>
