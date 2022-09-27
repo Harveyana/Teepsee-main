@@ -41,7 +41,7 @@
                 to="/cart"
                 flat
                 label="Cart"
-                icon="img:/buy2.png"
+                icon="img:/Buy2.svg"
                 class="nav no-wrap"
                 style="width: 100%"
               />

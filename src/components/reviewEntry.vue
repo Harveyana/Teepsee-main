@@ -19,7 +19,7 @@
           class="text-h3 Header card-header"
           style="font-size: 200%; line-height: 1px"
         >
-          Hello Anayo
+          {{ Store.username }}
         </div>
         <div class="text-h4 NameClass q-mt-sm">Please rate your drink</div>
       </q-card>
@@ -30,47 +30,15 @@
         style="width: 100%; height: 230px"
       >
         <q-list class="column no-wrap" style="max-width: 100%">
-          <q-card flat class="Input2 column flex-center" style="min-width: 100%">
-            <q-img
-              src="../assets/product1.png"
-              spinner-color="white"
-              class="favourite"
-              style="width: 25%; border-radius: 50%"
-            />
-            <q-rating
-              v-model="ratingModel"
-              class="q-my-md"
-              size="2.4em"
-              :max="5"
-              color="secondary"
-              style=""
-            />
-            <div class="row justify-around items-center no-wrap" style="width: 100%">
-              <q-input
-                borderless
-                type="text"
-                class=""
-                placeholder="Drop a comment"
-                v-model="formData.password"
-                style="
-                  width: 75%;
-                  height: 45px;
-                  padding-left: 25px;
-                  border: 1px solid #e0e0e0;
-                  border-radius: 15px;
-                "
-              />
-              <!-- <q-icon name="send" size="30px" /> -->
-              <q-btn flat icon="send" class="sendBtn" style="width: 20%" />
-            </div>
-          </q-card>
           <q-card
             flat
-            class="Input2 column flex-center overflow-hidden-y"
-            style="width: 100%"
+            class="Input2 column flex-center"
+            style="min-width: 100%"
+            v-for="product in Store.ProductForReviews.items"
+            :key="product.Id"
           >
             <q-img
-              src="../assets/product1.png"
+              :src="product.image"
               spinner-color="white"
               class="favourite"
               style="width: 25%; border-radius: 50%"
@@ -89,7 +57,7 @@
                 type="text"
                 class=""
                 placeholder="Drop a comment"
-                v-model="formData.password"
+                v-model="comment"
                 style="
                   width: 75%;
                   height: 45px;
@@ -99,7 +67,16 @@
                 "
               />
               <!-- <q-icon name="send" size="30px" /> -->
-              <q-btn flat icon="send" class="sendBtn" style="width: 20%" />
+              <q-btn
+                flat
+                icon="send"
+                class="sendBtn"
+                style="width: 20%"
+                @click="
+                  Store.uploadReviews(product.id, comment, ratingModel),
+                    popRemove(product.name)
+                "
+              />
             </div>
           </q-card>
         </q-list>
@@ -118,7 +95,13 @@
             border-radius: 15px;
           "
         /> -->
-        <q-btn text-color="white" class="checkoutBtn self-center" label="Done" style="" />
+        <q-btn
+          text-color="white"
+          class="checkoutBtn self-center"
+          label="Done"
+          style=""
+          @click="Store.showReviewBox = false"
+        />
       </q-card>
     </q-card>
   </q-card>
@@ -131,10 +114,30 @@ import { useCounterStore } from "stores/counter";
 import { ref } from "vue";
 const Store = useCounterStore();
 const ratingModel = ref(3);
-const formData = ref({
-  email: "",
-  password: "",
-});
+const comment = ref("");
+const popRemove = (productname) => {
+  let revProducts = Store.ProductForReviews.items;
+  let index = revProducts.indexOf(productname);
+  revProducts.splice(index, 1);
+  if (revProducts.length == 0) {
+    Store.showReviewBox = false;
+  }
+};
+// const uploadRatingNum = () => {
+//   if (ratingModel == 1) {
+//     Store.uploadReviews(product.id, comment, ratingModel);
+//   } else if (ratingModel == 2) {
+//     Store.uploadReviews(product.id, comment, ratingModel);
+//   } else {
+//     if (ratingModel == 3) {
+//       Store.uploadReviews(product.id, comment, ratingModel);
+//     } else if (ratingModel == 4) {
+//       Store.uploadReviews(product.id, comment, ratingModel);
+//     } else {
+//       Store.uploadReviews(product.id, comment, ratingModel);
+//     }
+//   }
+// };
 </script>
 <style scoped lang="sass">
 .engrave

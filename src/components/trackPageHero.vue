@@ -61,7 +61,7 @@
             color="white"
             flat
             label="Cart"
-            icon="img:/buy.png"
+            icon="img:/Buy.svg"
             class="nav no-wrap"
             style="width: 100%"
           />

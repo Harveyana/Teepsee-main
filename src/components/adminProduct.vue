@@ -89,13 +89,12 @@
                   style="border-radius: 15px; width: 60%"
                 />
               </q-card>
-
             </q-card>
 
             <!-- q-uploader -->
             <!-- q-uploader -->
             <q-uploader
-              @added="savefile()"
+              @added="savefile"
               class="bg-grey-3"
               label="Upload your Images"
               accept=".jpg, image/*"
@@ -130,12 +129,19 @@
               class="checkoutBtn"
               label="Delete Product"
               @click="confirm2 = true"
+              style="background: #e6b41d; font-size: small"
             />
             <q-btn
               text-color="white"
               class="checkoutBtn"
               label="Add Image"
-              @click="Store.addImage(images[0])"
+              @click="Store.addImage(images[0], productId)"
+            />
+            <q-btn
+              text-color="white"
+              class="checkoutBtn"
+              label="Add to Chasers"
+              style="background: #e6b41d; font-size: small"
             />
           </q-card>
 
@@ -226,6 +232,7 @@ export default {
       confirm: ref(false),
       confirm2: ref(false),
       images: [],
+      // image: this.images[0],
       fieldOptions: ["name", "price", "category", "brand", "tag"],
       field: reactive({
         name: null,
@@ -235,8 +242,16 @@ export default {
   },
   methods: {
     savefile(files) {
+      console.log(files);
+
       this.images.push(files[0]);
       console.log(this.images);
+      //   // const [first] = files;
+      //   this.images.push(files);
+      //   console.log(this.images);
+      // } else {
+      //   console.log("no image");
+      // }
     },
     UpdateProduct(id) {
       let name = this.field.name;
@@ -249,6 +264,13 @@ export default {
         Store.ShowLoading = false;
         Store.notifyUser(Store.user.profilePic, "Product Updated");
       });
+    },
+  },
+  computed: {
+    // a computed getter
+    image() {
+      // `this` points to the component instance
+      return this.images[0];
     },
   },
 };

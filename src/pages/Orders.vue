@@ -36,15 +36,6 @@
           <!--  Product -->
           <!--  Product -->
           <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
-          <Order />
 
           <!-- Product -->
         </q-list>
@@ -58,6 +49,12 @@
 <script setup>
 import CouponAdder from "src/components/couponAdder.vue";
 import Order from "src/components/Order.vue";
+import { useCounterStore } from "stores/counter";
+import { onMounted } from "vue";
+const Store = useCounterStore();
+onMounted(() => {
+  Store.FetchAdminOrders();
+});
 </script>
 <style scoped lang="sass">
 .search

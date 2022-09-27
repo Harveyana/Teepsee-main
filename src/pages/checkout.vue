@@ -55,15 +55,27 @@
                   <h3 class="fieldName">
                     Enter Address<span style="color: red">*</span>
                   </h3>
-                  <q-input borderless class="q-px-md field" v-model="text" />
+                  <q-input
+                    borderless
+                    class="q-px-md field"
+                    v-model="newAddress.address"
+                  />
                 </q-card>
                 <q-card flat class="addressInput2 columns q-mb-lg">
                   <h3 class="fieldName">Landmark</h3>
-                  <q-input borderless class="q-px-md field" v-model="text" />
+                  <q-input
+                    borderless
+                    class="q-px-md field"
+                    v-model="newAddress.landmark"
+                  />
                 </q-card>
                 <q-card flat class="addressInput3 columns q-mb-xl">
                   <h3 class="fieldName">Phone Number<span style="color: red">*</span></h3>
-                  <q-input borderless class="q-px-md field" v-model="text" />
+                  <q-input
+                    borderless
+                    class="q-px-md field"
+                    v-model="newAddress.phoneNumber"
+                  />
                 </q-card>
               </q-card>
             </q-tab-panel>
@@ -77,21 +89,25 @@
                   <h3 class="fieldName">
                     Receiver’s Name<span style="color: red">*</span>
                   </h3>
-                  <q-input borderless class="q-px-md field" v-model="text" />
+                  <q-input borderless class="q-px-md field" v-model="receivers.name" />
                 </q-card>
 
                 <q-card flat class="addressInput2 columns q-mb-lg">
                   <h3 class="fieldName">
                     Receiver’s Address<span style="color: red">*</span>
                   </h3>
-                  <q-input borderless class="q-px-md field" v-model="text" />
+                  <q-input borderless class="q-px-md field" v-model="receivers.address" />
                 </q-card>
 
                 <q-card flat class="addressInput3 columns q-mb-xl">
                   <h3 class="fieldName">
                     Receivers Phone Number<span style="color: red">*</span>
                   </h3>
-                  <q-input borderless class="q-px-md field" v-model="text" />
+                  <q-input
+                    borderless
+                    class="q-px-md field"
+                    v-model="receivers.phoneNumber"
+                  />
                 </q-card>
                 <q-card flat class="addressInput3 columns q-mb-xl">
                   <h3 class="fieldName">Enter Note (Optional)</h3>
@@ -99,7 +115,7 @@
                     borderless
                     type="textarea"
                     class="q-px-md field"
-                    v-model="text"
+                    v-model="receivers.optionalNote"
                     style="height: 120px"
                   />
                 </q-card>
@@ -118,18 +134,18 @@
           <q-card class="summaryItems q-my-lg">
             <q-card class="row justify-between subtotal">
               <h4 class="subtotalKey NameClassLess" style="">Subtotal</h4>
-              <h4 class="subtotalEntry NameClass" style="">₦{{ cartValue }}</h4>
+              <h4 class="subtotalEntry NameClass" style="">₦{{ Store.cartTotal }}</h4>
             </q-card>
             <q-card class="row justify-between Delivery">
               <h4 class="DeliveryKey NameClassLess" style="">Delivery Fee</h4>
-              <h4 class="DeliveryEntry NameClass" style="" v-if="cartValue > 1">
-                ₦1,047.00
+              <h4 class="DeliveryEntry NameClass" style="" v-if="Store.cartTotal > 1">
+                ₦{{ Store.shippingRate }}
               </h4>
             </q-card>
             <q-card class="row justify-between Total">
               <h4 class="TotalKey NameClass" style="">Total</h4>
-              <h4 class="TotalEntry NameClass" style="" v-if="cartValue > 1">
-                ₦{{ parseInt(cartValue + 1047) }}
+              <h4 class="TotalEntry NameClass" style="" v-if="Store.cartTotal > 1">
+                ₦{{ parseInt(Store.toTalPayment) }}
               </h4>
             </q-card>
           </q-card>
@@ -147,13 +163,20 @@
               style=""
             >
             </q-input>
-            <q-btn text-color="black" class="AddToCartBtn" label="Apply" style="" />
+            <q-btn
+              text-color="black"
+              class="AddToCartBtn"
+              label="Apply"
+              style=""
+              @click="Store.getCoupon(discountCode)"
+            />
           </q-card>
           <q-btn
             text-color="white"
             class="checkoutBtn self-center"
             label="Make Payment"
             style=""
+            @click="initpayment()"
           />
         </q-card>
       </q-card>
@@ -163,19 +186,83 @@
 </template>
 
 <script setup>
+// import PaystackPop from "@paystack/inline-js";
+
 import Chasers from "../components/Chasers.vue";
 import RecentlyViewed from "src/components/RecentlyViewed.vue";
 import { useCounterStore } from "stores/counter";
 // import { useRouter, useRoute } from "vue-router";
-import { computed, onMounted, watch, ref } from "vue";
+import { computed, onMounted, watch, ref, reactive } from "vue";
 import { useQuasar } from "quasar";
 const Store = useCounterStore();
 const $q = useQuasar();
 const cartProducts = ref([]);
-const total = ref(0);
+const discountCode = ref("");
 const hasCart = $q.localStorage.has("cartItems");
 const tab = ref("Personal Delivery");
 const Address = ref("15, Abate way Victoria Island Lagos");
+const newAddress = reactive({
+  name: Store.username,
+  address: "",
+  landmark: "",
+  phoneNumber: "",
+  optionalNote: "none",
+});
+
+const receivers = reactive({
+  name: "",
+  address: "",
+  landmark: "none",
+  phoneNumber: "",
+  optionalNote: "",
+});
+const userAddress = reactive({
+  name: Store.username,
+  address: Address,
+  landmark: "none",
+  phoneNumber: Store.user.phoneNumber || "none",
+  optionalNote: "",
+});
+
+const uploadOrder = () => {
+  console("this hit");
+  Store.createOrder();
+};
+
+// const processPayment = () => {
+//   const paystack = new PaystackPop();
+
+//   paystack.newTransaction({
+//     key: "pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a",
+//     email: Store.user.email,
+//     amount: Store.cartTotal * 100,
+
+//     onSuccess: (transaction) => {
+//       // Payment complete! Reference: transaction.
+//       console.log("paid now");
+//       Store.createOrder(transaction.reference);
+
+//     },
+//     onCancel: () => {
+//       // user closed popup
+//       Store.notifyUser(this.user.profilePic, "Order Cancelled");
+//     },
+//   });
+// };
+const initpayment = () => {
+  if (tab.value == "Personal Delivery") {
+    if (newAddress.address && newAddress.landmark && newAddress.phoneNumber) {
+      Object.assign(Store.checkout, newAddress);
+      Store.processPayment();
+    } else {
+      Object.assign(Store.checkout, userAddress);
+      Store.processPayment();
+    }
+  } else {
+    Object.assign(Store.checkout, receivers);
+    Store.processPayment();
+  }
+};
 
 const fetchCart = () => {
   const items = $q.localStorage.getItem("cartItems") || [];
@@ -196,21 +283,24 @@ const fetchValue = () => {
     // arr.reduce(function (a, b) {
     //   return a + b;
     // });
-    return priceArray.reduce(function (a, b) {
+    const sum = priceArray.reduce(function (a, b) {
       return a + b;
     }, 0);
+    Store.cartTotal = sum;
 
     // console.log(sum);
     // total.value = priceArray;
     // return Store.cartProducts.value.length > 0 ? true : false;
   }
 };
-const cartValue = computed(() => {
-  return fetchValue();
-});
+
+// const cartValue = computed(() => {
+//   return fetchValue();
+// });
 watch(cartProducts.value, () => {
   fetchValue();
 });
+
 // watch(
 //   () => cartProducts.value,
 //   (newValue, oldValue) => {
@@ -221,6 +311,7 @@ watch(cartProducts.value, () => {
 
 onMounted(() => {
   fetchCart();
+  fetchValue();
 });
 </script>
 <style scoped lang="sass">

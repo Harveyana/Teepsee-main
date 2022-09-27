@@ -73,6 +73,7 @@
             :productTag="product.tag"
             :productBrand="product.brand"
             :productImages="product.images"
+            :productId="product.id"
             :key="product.id"
           >
           </AdminProduct>
@@ -103,19 +104,6 @@ import AdminProduct from "src/components/adminProduct.vue";
 const Store = useCounterStore();
 
 onMounted(() => {
-  // Store.fetchAdmins();
-  // const checkAdmin = () => {
-  //   if (Store.user.status) {
-  //     if (Store.user.status !== "admin") {
-  //       $this.router.push("/");
-  //     } else {
-  //       console.log("checked Admin");
-  //       Store.Fetchproducts("general");
-  //     }
-  //   } else {
-  //     $this.router.push("/");
-  //   }
-  // };
   Store.Fetchproducts("general");
 });
 </script>

@@ -40,19 +40,16 @@
         <q-list class="scroll hide-scrollbar" style="">
           <!--  User -->
           <!--  User -->
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-          <User />
-
+          <User
+            v-for="user in Store.allUsers.value"
+            :key="user.id"
+            :userName="user.name"
+            :userImage="user.profilePic"
+            :userEmail="user.email"
+            :userId="user.id"
+            :userPhoneNumber="user.phoneNumber"
+            :userAddress="user.addresses[0]"
+          ></User>
           <!-- User -->
         </q-list>
 
@@ -64,6 +61,12 @@
 
 <script setup>
 import User from "src/components/user.vue";
+import { useCounterStore } from "stores/counter";
+import { onMounted } from "vue";
+const Store = useCounterStore();
+onMounted(() => {
+  Store.FetchAdminUsers();
+});
 </script>
 <style scoped lang="sass">
 .search

@@ -1,34 +1,23 @@
 <template>
   <q-card
-    flat
-    class="testimony column items-start justify-center q-pa-xl q-mb-lg"
+    class="testimony column items-start justify-center q-px-xs-lg q-py-xs-xl q-pa-sm-xl q-pa-md-xl q-pa-lg-xl q-pa-xl-xl q-mb-xl no-wrap"
     style=""
   >
-    <div
-      style="
-        font-family: 'Manrope-Regular';
-        font-size: 23px;
-        color: #666666;
-        line-height: 30px;
-      "
-      class="text-h4"
-    >
+    <div style="" class="text-h4 textial">
       I’m so proud of Starfield they really gave my son what i have been expecting. They
       have all the quailties and so much more..
     </div>
-    <q-card flat class="row justify-between items-center no-wrap q-mt-md bg-transparent">
+    <q-card
+      flat
+      class="row justify-center items-center no-wrap q-mt-md bg-transparent no-wrap"
+    >
       <q-img
         src="../assets/userImage.svg"
         spinner-color="white"
         class="userImage"
         style="width: 60px; margin-right: 20px"
       />
-      <div
-        style="font-family: 'Manrope-Regular'; font-size: 20px; color: #666666"
-        class="text-h4"
-      >
-        Mrs willaims Okafor
-      </div>
+      <div class="text-h4 textial-name">Mrs willaims Okafor</div>
     </q-card>
   </q-card>
 </template>
@@ -62,11 +51,13 @@
 //
 <style scoped lang="sass">
 .testimony
-  width: 49%
+  width: 100%
+  // height: 100%
   background: #f5f5f5
   border-radius: 15px
   body.screen--xs &
-    width: 100%
+    width: 80vw
+    height: 60%
 
 //   body.screen--sm &
 //     width: 24%
@@ -93,6 +84,28 @@
 // .container-card
 //   height: 150px
 //   width: 50%
+.textial
+  font-size: 20px
+  font-family: 'Manrope-Regular'
+  color: #666666
+  line-height: 30px
+  body.screen--sm &
+    font-size: 17px
+  body.screen--xs &
+    font-size: 12px
+    line-height: 20px
+
+.textial-name
+  font-size: 13px
+  font-family: 'Manrope-Regular'
+  color: #666666
+  line-height: 15px
+  body.screen--sm &
+    font-size: 11px
+    line-height: 10px
+  body.screen--xs &
+    font-size: 10px
+
 
 .product-image
   // width: 100%

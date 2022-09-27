@@ -26,7 +26,7 @@
     </q-card>
     <!-- Product Price -->
     <q-card class="row ProductPrice flex flex-center" style="width: 15%">
-      <h4 class="productPrice NameClass" style="">{{ product.price }}</h4>
+      <h4 class="productPrice NameClass" style="">₦{{ product.price }}</h4>
     </q-card>
     <!-- Product Quantity -->
     <q-card
@@ -40,7 +40,12 @@
           clickable
           name="img:/decrementor.svg"
           style="cursor: pointer"
-          @click="counter--, reduceQuantity(productDetails.name, 1)"
+          @click="
+            counter--,
+              reduceQuantity(product.name, 1),
+              Store.componentKey++,
+              $emit('my-event')
+          "
         />
         <h3 class="CounterNumber" style="">{{ cart }}</h3>
         <q-icon
@@ -49,12 +54,9 @@
           style="cursor: pointer"
           @click="
             counter++,
-              addToCart(
-                productDetails.name,
-                productDetails.images[0],
-                1,
-                productDetails.price
-              )
+              addToCart(product.name, product.images[0], 1, product.price, product.id),
+              Store.componentKey++,
+              $emit('my-event')
           "
         />
       </q-card>
@@ -64,7 +66,18 @@
       class="row productSubTotalLabel flex flex-center"
       style="width: 17%; position: relative; right: 4%"
     >
-      <q-btn text-color="white" class="AddToCartBtn" label="Add" style="" />
+      <q-btn
+        text-color="white"
+        class="AddToCartBtn"
+        label="Add"
+        style=""
+        @click="
+          counter++,
+            addToCart(product.name, product.images[0], 1, product.price, product.id),
+            Store.componentKey++,
+            $emit('my-event')
+        "
+      />
     </q-card>
   </q-card>
 </template>
@@ -78,7 +91,7 @@ const $q = useQuasar();
 const cart = ref(1);
 const counter = ref(1);
 
-const addToCart = (name, image, quantity, price) => {
+const addToCart = (name, image, quantity, price, id) => {
   // retrieve it (Or create a blank array if there isn't any info saved yet),
   const items = $q.localStorage.getItem("cartItems") || [];
   // add to it, only if it's empty
@@ -93,11 +106,11 @@ const addToCart = (name, image, quantity, price) => {
       image,
       quantity,
       price,
+      id,
     });
   }
   // then put it back.
   $q.localStorage.set("cartItems", items);
-
   console.log(items);
   // };
 };
@@ -106,13 +119,15 @@ const reduceQuantity = function (name, quantity) {
   const items = $q.localStorage.getItem("cartItems");
   const item = items.find((item) => item.name === name);
   if (item) {
-    item.quantity -= quantity;
-    cart.value = item.quantity;
+    if (cart.value >= 2) {
+      item.quantity -= quantity;
+      cart.value = item.quantity;
+    }
   }
-
   // then put it back.
   $q.localStorage.set("cartItems", items);
   console.log(items);
+
   // };
 };
 onMounted(() => {

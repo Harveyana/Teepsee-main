@@ -1,88 +1,173 @@
 <template>
   <q-page class="items-center overflow-hidden hide-scrollbar" style="background: #e5e5e5">
     <!-- hero -->
-    <transition
-      appear
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-    >
-      <MainHero></MainHero>
-      <!-- hero -->
-    </transition>
+
+    <MainHero></MainHero>
+    <!-- hero -->
 
     <div class="features column justify-center items-center no-wrap">
-      <q-card
-        flat
-        class="gt-xs row justify-center no-wrap bg-transparent"
+      <q-intersection
+        class=""
+        transition="jump-down"
+        transition-duration="2000"
         style="width: 100%"
       >
-        <div class="text-h1 text1 q-py-md">How to get Teepsee</div>
-      </q-card>
+        <q-card
+          flat
+          class="gt-xs row justify-center no-wrap bg-transparent"
+          style="width: 100%"
+        >
+          <div class="text-h1 text1 q-py-md">How to get Teepsee</div>
+        </q-card>
+      </q-intersection>
       <q-card
         flat
         class="lt-sm row justify-start no-wrap bg-transparent"
         style="width: 100%"
       >
-        <div class="text-h1 text2 self-start">Shop Now</div>
+        <div class="text-h1 text2 self-start">How to get Teepsee</div>
       </q-card>
 
       <div class="feature-list row no-wrap justify-around" style="">
-        <q-card flat class="my-card"> </q-card>
-        <q-card flat class="my-card2"> </q-card>
-        <q-card flat class="my-card3"> </q-card>
+        <q-intersection
+          class="card-intersection"
+          transition="slide-up"
+          once
+          transition-duration="800"
+          style=""
+        >
+          <q-card flat class="my-card q-mx-auto"> </q-card>
+        </q-intersection>
+        <q-intersection
+          class="card-intersection"
+          transition="slide-up"
+          once
+          transition-duration="1300"
+          style=""
+        >
+          <q-card flat class="my-card2 q-mx-auto"> </q-card>
+        </q-intersection>
+        <q-intersection
+          class="card-intersection"
+          transition="slide-up"
+          once
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="my-card3 q-mx-auto"> </q-card>
+        </q-intersection>
       </div>
       <div class="text-h1 text3 self-start">Shop Now</div>
       <div
         flat
         class="row no-wrap bg-transparent shop-features items-center justify-between"
       >
-        <Transition
-          :duration="5000"
-          enter-active-class="animated bounceInLeft"
-          leave-active-class="animated bounceOutRight"
+        <q-intersection
+          class="wine-intersection"
+          transition="slide-up"
+          once
+          transition-duration="2000"
+          style=""
         >
           <q-card flat class="wine">
             <div class="text-h1 featureText text-white">Shop Wine</div>
           </q-card>
-        </Transition>
-        <q-card flat class="champagne">
-          <div class="text-h1 featureText text-white">Shop Champagne</div>
-        </q-card>
+        </q-intersection>
+        <q-intersection
+          class="intersection"
+          transition="slide-up"
+          once
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="champagne">
+            <div class="text-h1 featureText text-white">Shop Champagne</div>
+          </q-card>
+        </q-intersection>
       </div>
       <!-- <div class="shop-features row no-wrap">
 
       </div> -->
-      <q-card flat class="ShopVodka">
-        <div class="text-h1 featureText text-white">Shop Vodka</div>
-      </q-card>
+      <q-intersection
+        class="vodka-intersection"
+        transition="slide-up"
+        once
+        transition-duration="2000"
+        style=""
+      >
+        <q-card flat class="ShopVodka">
+          <div class="text-h1 featureText text-white">Shop Vodka</div>
+        </q-card>
+      </q-intersection>
 
       <div
         flat
         class="row no-wrap bg-transparent shop-features2 items-center justify-between"
       >
-        <q-card flat class="ShopWhiskey"
-          ><div class="text-h1 featureText text-white">Shop Whiskey</div>
-        </q-card>
-        <q-card flat class="ShopBrandy">
-          <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
+        <q-intersection
+          class="wine-intersection"
+          transition="slide-up"
+          once
+          transition-duration="2000"
+          style=""
         >
+          <q-card flat class="ShopWhiskey"
+            ><div class="text-h1 featureText text-white">Shop Whiskey</div>
+          </q-card>
+        </q-intersection>
+        <q-intersection
+          class="intersection"
+          once
+          transition="slide-up"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="ShopBrandy">
+            <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
+          >
+        </q-intersection>
       </div>
 
-      <q-card flat class="PartyCombo">
-        <div class="text-h1 featureText text-white">Party Combo</div>
-      </q-card>
+      <q-intersection
+        class="combo-intersection"
+        transition="slide-up"
+        once
+        transition-duration="2000"
+        style=""
+      >
+        <q-card flat class="PartyCombo">
+          <div class="text-h1 featureText text-white">Party Combo</div>
+        </q-card>
+      </q-intersection>
 
       <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
-        <q-card flat class="ShopTequila"
-          ><div class="text-h1 featureText text-white">Shop Tequila</div>
-        </q-card>
-        <q-card flat class="ShopCognac"
-          ><div class="text-h1 featureText text-white">Shop Cognac</div>
-        </q-card>
+        <q-intersection
+          class="wine-intersection"
+          once
+          transition="slide-up"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="ShopTequila"
+            ><div class="text-h1 featureText text-white">Shop Tequila</div>
+          </q-card>
+        </q-intersection>
+        <q-intersection
+          class="intersection"
+          once
+          transition="slide-up"
+          transition-duration="2000"
+          style=""
+        >
+          <q-card flat class="ShopCognac"
+            ><div class="text-h1 featureText text-white">Shop Cognac</div>
+          </q-card>
+        </q-intersection>
       </div>
 
       <q-btn
         round
+        href="https://wa.me/message/3GGSYU425BXKD1"
         color="white"
         size="20px"
         icon="img:/whatsapp.png"
@@ -93,84 +178,112 @@
 
       </div> -->
     </div>
+
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+    <!-- Swiperrrrrrrrrrrrr -->
+
     <q-card
       flat
       class="testimonial flex row justify-center items-center bg-white q-px-xs-none q-px-sm-xl q-px-md-xl q-px-lg-xl q-px-xl-xl"
       style="width: 100%"
     >
-      <q-card
-        class="row justify-xs-center justify-sm-end justify-md-end justify-lg-end justify-xl-end"
-        style="width: 100%"
-      >
-        <q-card
-          flat
-          class="head row items-center justify-xs-center justify-sm-between justify-md-between justify-lg-between justify-xl-between"
-          style="width: 62%"
-        >
-          <div style="" class="text-h1 text-black">Testimonials</div>
-          <q-card class="row items-center justify-center" style="">
-            <q-tabs
-              v-model="tab"
-              dense
-              class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
-              align="justify"
-              narrow-indicator
-            >
-              <q-tab
-                class=""
-                name="previous"
-                icon="img:/left.svg"
-                style="background: #f5f5f5"
-              />
-              <q-tab class="bg-primary" name="next" icon="img:/right.svg" />
-            </q-tabs>
-          </q-card>
-        </q-card>
+      <q-card flat class="head row items-center justify-center" style="width: 100%">
+        <div style="" class="text-h1 text-black">Word on the Street</div>
       </q-card>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="previous">
-          <div
-            flat
-            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
-            style=""
-          >
-            <!-- testimony -->
-            <!-- testimony -->
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-          </div>
-        </q-tab-panel>
-
-        <q-tab-panel name="next">
-          <div
-            flat
-            class="testimony-container flex column-xs row-sm row-md row-lg row-xl justify-between items-stretch"
-            style="width: 100%"
-          >
-            <!-- testimony -->
-            <!-- testimony -->
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-            <Testimony></Testimony>
-          </div>
-        </q-tab-panel>
-      </q-tab-panels>
+      <div flat class="testimony-container flex row q-mb-lg" style="">
+        <swiper
+          :effect="'coverflow'"
+          :pagination="true"
+          :grabCursor="true"
+          :centeredSlides="true"
+          slidesPerView="auto"
+          :coverflowEffect="{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 3,
+            slideShadows: false,
+          }"
+          loop="true"
+          :autoplay="{
+            delay: 3000,
+            disableOnInteraction: true,
+          }"
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+          style=""
+          class="swiper"
+        >
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+          <swiper-slide
+            class="flex row justify-center"
+            style="width: 30%; border-radius: 15px"
+            ><Testimony></Testimony
+          ></swiper-slide>
+        </swiper>
+      </div>
     </q-card>
+
+    <q-dialog class="" v-model="Store.showAgeConfirmBox" persistent>
+      <AgeConfirm></AgeConfirm>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import MainHero from "../components/mainHero.vue";
 import Testimony from "../components/testimony.vue";
+import { useCounterStore } from "stores/counter";
+import AgeConfirm from "../components/AgeConfirm.vue";
+import { useQuasar } from "quasar";
+import { Swiper, SwiperSlide } from "swiper/vue";
+// import { Navigation, Pagination, Scrollbar, EffectCoverflow, Autoplay } from "swiper";
+import SwiperCore, { EffectCoverflow, Pagination, Autoplay } from "swiper/core";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/bundle";
+
+SwiperCore.use([EffectCoverflow, Pagination, Autoplay]);
+const $q = useQuasar();
+const Store = useCounterStore();
 const tab = ref("previous");
+
+onMounted(() => {
+  const hasCart = $q.localStorage.has("AgeConfirmed");
+  if (hasCart) {
+    console.log("Age confirmed");
+  } else {
+    Store.showAgeConfirmBox = true;
+  }
+});
 </script>
 
 <style scoped lang="sass">
@@ -181,6 +294,65 @@ const tab = ref("previous");
 // .enter-active,
 // .leave-active
 //   transition: opacity 6s ease
+.swiper
+  width: 70%
+  body.screen--xs &
+    width: 100%
+
+.card-intersection
+  width: 30%
+  height: 350px
+  body.screen--sm &
+    height: 200px
+  body.screen--xs &
+    height: 270px
+    width: 100%
+.wine-intersection
+  width: 49%
+  height: 500px
+  // margin-bottom: 25px
+  // margin-top: 25px
+  body.screen--sm &
+    height: 300px
+
+  body.screen--xs &
+    height: 300px
+    width: 100%
+    margin-bottom: 18px
+.intersection
+  width: 49%
+  height: 500px
+  // margin-bottom: 25px
+  // margin-top: 25px
+  body.screen--sm &
+    height: 300px
+  body.screen--xs &
+    height: 300px
+    width: 100%
+    // margin-bottom: 18px
+.vodka-intersection
+  width: 100%
+  height: 500px
+  margin-bottom: 25px
+  margin-top: 25px
+  body.screen--sm &
+    height: 300px
+  body.screen--xs &
+    height: 300px
+    width: 100%
+    margin-top: 18px
+    margin-bottom: 18px
+.combo-intersection
+  width: 100%
+  height: 500px
+  margin-bottom: 50px
+  // margin-top: 25px
+  body.screen--sm &
+    height: 300px
+  body.screen--xs &
+    width: 100%
+    height: 300px
+    margin-bottom: 48px
 .whatsapp
   position: fixed
   bottom: 8%
@@ -193,12 +365,11 @@ const tab = ref("previous");
   font-family: 'Catellosdemo'
   font-size: 50px
   body.screen--xs &
-    font-size: 30px
+    font-size: 25px
 .testimony-container
   width: 100%
 
   body.screen--xs &
-    flex-direction: column
 
 
 .logo
@@ -221,6 +392,7 @@ const tab = ref("previous");
     top: 70%
 .features
   height: fit-content
+  min-height: 1000px
   width: 100%
   body.screen--xs &
     margin-top: -3%
@@ -299,7 +471,7 @@ const tab = ref("previous");
   background-repeat: no-repeat
   background-position: center
   height: 350px
-  width: 30%
+  width: 100%
   object-fit: cover
   border-radius: 10px
 
@@ -308,7 +480,7 @@ const tab = ref("previous");
     background-repeat: no-repeat
     background-position: center
     height: 200px
-    width: 30%
+    width: 100%
     border-radius: 20px
   body.screen--xs &
     height: 270px
@@ -321,7 +493,7 @@ const tab = ref("previous");
   background-position: center
   // min-height: 340px
   height: 350px
-  width: 30%
+  width: 100%
   // min-width: 390px
   border-radius: 10px
   body.screen--sm &
@@ -329,7 +501,7 @@ const tab = ref("previous");
     background-repeat: no-repeat
     background-position: center
     height: 200px
-    width: 30%
+    width: 100%
     border-radius: 20px
   body.screen--xs &
     height: 270px
@@ -342,14 +514,14 @@ const tab = ref("previous");
   background-repeat: no-repeat
   background-position: center
   height: 350px
-  width: 30%
+  width: 100%
   border-radius: 10px
   body.screen--sm &
     background-size: contain
     background-repeat: no-repeat
     background-position: center
     height: 200px
-    width: 30%
+    width: 100%
     border-radius: 20px
   body.screen--xs &
     height: 270px
@@ -385,7 +557,8 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
+  // min-width: 49%
 
   body.screen--lg &
 
@@ -412,13 +585,12 @@ const tab = ref("previous");
   border-radius: 15px
   background-size: cover
   height: 500px
-  min-height: 500px
-  width: 49%
+  // min-height: 500px
+  width: 100%
   body.screen--sm &
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 100%
@@ -430,23 +602,27 @@ const tab = ref("previous");
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
-  margin-bottom: 25px
-  margin-top: 25px
+  // margin-bottom: 25px
+  // margin-top: 25px
   background-size: cover
   height: 500px
-  min-height: 500px
+  // min-height: 500px
   width: 89%
+  // max-width: 89%
+  margin-right: 5.5%
+  margin-left: 5.5%
   body.screen--xl &
 
   body.screen--lg &
 
   body.screen--md &
+    // margin-right: 5.5%
+    // margin-left: 5.5%
 
   body.screen--sm &
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 90%
@@ -461,7 +637,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
   body.screen--xl &
 
   body.screen--lg &
@@ -472,20 +648,20 @@ const tab = ref("previous");
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
+    // margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 100%
 
 .ShopBrandy
-  background: url("../assets/shopfeature5.svg")
+  background: url("../assets/shopbrandy.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
   body.screen--xl &
 
   body.screen--lg &
@@ -494,7 +670,7 @@ const tab = ref("previous");
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
+    // margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 100%
@@ -510,7 +686,9 @@ const tab = ref("previous");
   margin-top: 25px
   background-size: cover
   height: 500px
-  min-height: 500px
+  margin-left: 5.5%
+  margin-right: 5.5%
+  // min-height: 500px
   width: 89%
   body.screen--lg &
 
@@ -520,7 +698,6 @@ const tab = ref("previous");
     height: 300px
     min-height: 300px
   body.screen--xs &
-    margin-bottom: 18px
     height: 300px
     min-height: 300px
     width: 90%
@@ -538,7 +715,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
 
 
   body.screen--lg &
@@ -549,10 +726,9 @@ const tab = ref("previous");
 
     height: 300px
     min-height: 300px
-
   body.screen--xs &
 
-    margin-bottom: 18px
+    // margin-bottom: 18px
     // height: 90vw
     height: 300px
     min-height: 300px
@@ -566,7 +742,7 @@ const tab = ref("previous");
   background-size: cover
   height: 500px
   min-height: 500px
-  width: 49%
+  width: 100%
 
   body.screen--lg &
 
@@ -579,7 +755,7 @@ const tab = ref("previous");
 
   body.screen--xs &
 
-    margin-bottom: 18px
+    // margin-bottom: 18px
     // height: 90vw
     height: 300px
     min-height: 300px

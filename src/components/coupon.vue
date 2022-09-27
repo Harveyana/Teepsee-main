@@ -19,7 +19,7 @@
       class="row Discount flex flex-center"
       style="width: 15%; position: relative; left: 4.5%"
     >
-      <h4 class="Discount NameClass" style="">%{{ couponDiscount }}</h4>
+      <h4 class="Discount NameClass" style="">{{ couponDiscount }}</h4>
     </q-card>
     <!-- Product Quantity -->
     <q-card
@@ -51,48 +51,23 @@
         class="bg-grey-3 edit-container column no-wrap justify-between q-px-xl overflow-hidden"
         style="width: 100%"
       >
-        <q-card class="row justify-between" style="width: 100%">
-          <q-card class="username"
+        <q-card
+          class="row justify-between"
+          style="width: 100%"
+          v-for="user in couponUsers"
+          :key="user"
+        >
+          <!-- <q-card class="username"
             ><h4 class="productName NameClass bg-grey-3" style="font-size: Medium">
               Obi Anayo
             </h4></q-card
-          >
+          > -->
           <q-card class="useremail"
             ><h4
-              class="productName NameClass bg-grey-3 q-mr-md"
+              class="productName NameClass bg-grey-3 q-ml-md"
               style="font-size: Medium; color: #e6b41d"
             >
-              ObiiAnayo@gmail.com
-            </h4></q-card
-          >
-        </q-card>
-        <q-card class="row justify-between" style="width: 100%">
-          <q-card class="username"
-            ><h4 class="productName NameClass bg-transparent" style="font-size: Medium">
-              Obi Anayo
-            </h4></q-card
-          >
-          <q-card class="useremail"
-            ><h4
-              class="productName NameClass bg-grey-3 q-mr-md"
-              style="font-size: Medium; color: #e6b41d"
-            >
-              ObiiAnayo@gmail.com
-            </h4></q-card
-          >
-        </q-card>
-        <q-card class="row justify-between" style="width: 100%; border: 1px solid">
-          <q-card class="username"
-            ><h4 class="productName NameClass bg-grey-3" style="font-size: Medium">
-              Obi Anayo
-            </h4></q-card
-          >
-          <q-card class="useremail"
-            ><h4
-              class="productName NameClass bg-grey-3 q-mr-md"
-              style="font-size: Medium; color: #e6b41d"
-            >
-              ObiiAnayo@gmail.com
+              {{ user }}
             </h4></q-card
           >
         </q-card>
