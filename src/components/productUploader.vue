@@ -192,6 +192,7 @@ const uploadProduct = (file) => {
             brand: product.brand,
             tag: product.tag,
             rating: 0,
+            ratings: { one: 0, two: 0, three: 0, four: 0, five: 0 },
             reviews: [],
             favouriters: [],
           });

@@ -10,11 +10,13 @@
             <h3 class="ratingsAndReviews-Label card-header no-wrap" style="">
               Verified Ratings and Reviews
             </h3>
-            <h3 class="estimate" style="">4.6/5</h3>
+            <h3 class="estimate" style="">{{ topRating }}/5</h3>
           </q-card>
           <q-card class="ratings-box" style="width: 100%; position: relative; bottom: 5%">
-            <q-rating v-model="ratingModel" readonly class="ratingStar" style="" />
-            <h3 class="ratings-total no-wrap" style="">1328 verified ratings</h3>
+            <q-rating v-model="topRating" readonly class="ratingStar" style="" />
+            <h3 class="ratings-total no-wrap" style="">
+              {{ productDetails.rating }} verified ratings
+            </h3>
           </q-card>
           <!-- ratings-group -->
           <ratingsVue />
@@ -81,6 +83,24 @@ const queryProduct = () => {
     console.log(productDetails);
   });
 };
+const topRating = computed(() => {
+  if (productDetails.ratings) {
+    let rating = productDetails.ratings;
+    let values = Object.values(rating);
+    // console.log(values); // 👉️ [10, 20, 5, 15]
+    let max = Math.max(...values);
+    const biggerValue = Object.keys(rating).find((key) => rating[key] === max);
+    return biggerValue == "one"
+      ? 1
+      : biggerValue == "two"
+      ? 2
+      : biggerValue == "three"
+      ? 3
+      : biggerValue == "four"
+      ? 4
+      : 5;
+  }
+});
 // const standard = ref({
 //   min: 0,
 //   max: 2,

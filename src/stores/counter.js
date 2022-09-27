@@ -902,24 +902,29 @@ export const useCounterStore = defineStore('counter', {
       // indidvidual ratings
       if (ratingNum == 1) {
         await updateDoc(reviewRef, {
-          ratings: arrayUnion({one: increment(1)})
+          // ratings: arrayUnion({one: increment(1)})
+          "ratings.one": increment(1)
         });
       } else if (ratingNum == 2) {
         await updateDoc(reviewRef, {
-          ratings: arrayUnion({two: increment(1)})
+          // ratings: arrayUnion({two: increment(1)})
+          "ratings.two": increment(1)
         });
       } else {
         if (ratingNum == 3) {
           await updateDoc(reviewRef, {
-            ratings: arrayUnion({three: increment(1)})
+            // ratings: arrayUnion({three: increment(1)})
+            "ratings.three": increment(1)
           });
         } else if (ratingNum == 4) {
           await updateDoc(reviewRef, {
-            ratings: arrayUnion({four: increment(1)})
+            // ratings: arrayUnion({four: increment(1)})
+            "ratings.four": increment(1)
           });
         } else {
           await updateDoc(reviewRef, {
-            ratings: arrayUnion({five: increment(1)})
+            // ratings: arrayUnion({five: increment(1)})
+            "ratings.five": increment(1)
           });
         }
       }
