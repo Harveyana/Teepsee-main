@@ -55,6 +55,7 @@
       >
         <q-popup-proxy
           cover
+          ref="qDateProxy"
           maxHeight="99vh"
           transition-show="slide-down"
           transition-hide="slide-up"
@@ -72,12 +73,13 @@
               <q-card class="input1" style="width: 80%">
                 <h4 class="NameClass" style="font-size: 150%">{{ productName }}</h4>
                 <h4 class="NameClass">Field Name</h4>
-                <q-select
+                <!-- <q-select
                   v-model="field.name"
                   :options="fieldOptions"
                   label="Enter field value"
                   style="border-radius: 15px; width: 100%"
-                />
+                /> -->
+                <q-option-group v-model="group" :options="options" color="primary" />
               </q-card>
               <!-- Product Price -->
               <q-card class="input2" style="width: 80%">
@@ -85,7 +87,7 @@
                 <q-input
                   filled
                   label="Enter field value"
-                  v-model="field.value"
+                  v-model="field"
                   style="border-radius: 15px; width: 60%"
                 />
               </q-card>
@@ -135,7 +137,7 @@
               text-color="white"
               class="checkoutBtn"
               label="Add Image"
-              @click="Store.addImage(images[0], productId)"
+              @click="Store.addImage(images[0], productId), $refs.qDateProxy.hide()"
             />
             <q-btn
               text-color="white"
@@ -164,7 +166,7 @@
                   label="Confirm"
                   color="secondary"
                   v-close-popup
-                  @click="Store.UpdateProduct(productId)"
+                  @click="UpdateProduct(productId), (confirm = false)"
                 />
               </q-card-actions>
             </q-card>
@@ -183,7 +185,7 @@
                   label="Confirm"
                   color="secondary"
                   v-close-popup
-                  @click="Store.deleteProduct(productId)"
+                  @click="Store.deleteProduct(productId), $refs.qDateProxy.hide()"
                 />
               </q-card-actions>
             </q-card>
@@ -195,20 +197,20 @@
 </template>
 
 <script>
-// import { db, Storage } from "src/boot/firebase";
-// import { uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-// import {
-//   collection,
-//   query,
-//   arrayUnion,
-//   onSnapshot,
-//   where,
-//   doc,
-//   addDoc,
-//   getDocs,
-//   deleteDoc,
-//   updateDoc,
-// } from "firebase/firestore";
+import { db, Storage } from "src/boot/firebase";
+import { uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  collection,
+  query,
+  arrayUnion,
+  onSnapshot,
+  where,
+  doc,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useCounterStore } from "stores/counter";
 import { reactive, ref } from "vue";
 
@@ -227,6 +229,30 @@ export default {
   },
   data() {
     return {
+      group: ref("name"),
+
+      options: [
+        {
+          label: "name",
+          value: "name",
+        },
+        {
+          label: "price",
+          value: "price",
+        },
+        {
+          label: "category",
+          value: "category",
+        },
+        {
+          label: "brand",
+          value: "brand",
+        },
+        {
+          label: "tag",
+          value: "tag",
+        },
+      ],
       favourite: false,
       Store: useCounterStore(),
       confirm: ref(false),
@@ -234,36 +260,59 @@ export default {
       images: [],
       // image: this.images[0],
       fieldOptions: ["name", "price", "category", "brand", "tag"],
-      field: reactive({
-        name: null,
-        value: "",
-      }),
+      field: ref(""),
     };
   },
   methods: {
     savefile(files) {
-      console.log(files);
-
-      this.images.push(files[0]);
-      console.log(this.images);
-      //   // const [first] = files;
-      //   this.images.push(files);
-      //   console.log(this.images);
-      // } else {
-      //   console.log("no image");
-      // }
+      this.images.unshift(files[0]);
     },
+
     UpdateProduct(id) {
-      let name = this.field.name;
-      let value = thisfield.value;
-      Store.ShowLoading = true;
-      let docToUpdate = doc(db, "products", id);
-      updateDoc(docToUpdate, {
-        name: value,
-      }).then(() => {
-        Store.ShowLoading = false;
-        Store.notifyUser(Store.user.profilePic, "Product Updated");
-      });
+      this.$refs.qDateProxy.hide();
+      const value = this.field;
+      this.Store.ShowLoading = true;
+      const docToUpdate = doc(db, "products", id);
+
+      console.log(this.group);
+      if (this.group == "name") {
+        updateDoc(docToUpdate, {
+          name: value,
+        }).then(() => {
+          this.Store.ShowLoading = false;
+          this.Store.notifyUser(this.Store.user.profilePic, "Product Updated");
+        });
+      } else if (this.group == "price") {
+        updateDoc(docToUpdate, {
+          price: value,
+        }).then(() => {
+          this.Store.ShowLoading = false;
+          this.Store.notifyUser(this.Store.user.profilePic, "Product Updated");
+        });
+      } else {
+        if (this.group == "category") {
+          updateDoc(docToUpdate, {
+            category: value.toLowerCase(),
+          }).then(() => {
+            this.Store.ShowLoading = false;
+            this.Store.notifyUser(this.Store.user.profilePic, "Product Updated");
+          });
+        } else if (this.group == "brand") {
+          updateDoc(docToUpdate, {
+            brand: value.toLowerCase(),
+          }).then(() => {
+            this.Store.ShowLoading = false;
+            this.Store.notifyUser(this.Store.user.profilePic, "Product Updated");
+          });
+        } else if (this.group == "tag") {
+          updateDoc(docToUpdate, {
+            tag: value,
+          }).then(() => {
+            this.Store.ShowLoading = false;
+            this.Store.notifyUser(this.Store.user.profilePic, "Product Updated");
+          });
+        }
+      }
     },
   },
   computed: {

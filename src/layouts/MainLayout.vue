@@ -61,7 +61,6 @@ export default {
   },
   mounted() {
     this.Store.Fetchproducts("general");
-    console.log(`the component is now mounted.`);
   },
 };
 </script>

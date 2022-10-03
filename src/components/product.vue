@@ -71,12 +71,14 @@
         style="width: 100%; border-radius: 15px"
       >
         <div class="column no-wrap">
-          <div class="text-h2 product-name" style="">{{ productName }}</div>
+          <div class="text-h1 product-name" style="">{{ productName }}</div>
           <div class="text-h2 product-cat" style="">{{ productCategory }}</div>
         </div>
         <q-space />
-        <div>
-          <div class="text-h2 product-price" style="">₦{{ productPrice }}</div>
+        <div v-if="productPrice">
+          <div class="text-h2 product-price" style="">
+            ₦{{ Number(productPrice).toLocaleString("en-US") }}
+          </div>
         </div>
       </q-card>
     </router-link>
@@ -97,7 +99,7 @@ export default {
 
   props: {
     productName: String,
-    productPrice: String,
+    productPrice: Number,
     productCategory: String,
     productImage: String,
     productTag: String,
@@ -112,9 +114,7 @@ export default {
       $q: useQuasar(),
     };
   },
-  methods: {
-
-  },
+  methods: {},
   computed: {
     // a computed getter
     includesFavourites() {
@@ -217,6 +217,7 @@ export default {
     font-size: 10px
   body.screen--xs &
     font-size: 10px
+    line-height: 15px
 .product-cat
   font-size: 13px
   line-height: normal

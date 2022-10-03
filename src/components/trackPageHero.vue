@@ -14,15 +14,18 @@
       style="width: 100%"
     >
       <!-- logo -->
-      <q-card flat class="bg-transparent" style="width: 15%">
-        <q-img
-          to="/"
-          class="logo"
-          src="~assets/Logo.svg"
-          spinner-color="black"
-          style="width: 100%"
-        />
+
+      <q-card flat class="bg-transparent" to="/" style="width: 15%">
+        <router-link to="/" style="text-decoration: none">
+          <q-img
+            class="logo"
+            src="~assets/Logo.svg"
+            spinner-color="black"
+            style="width: 100%"
+          />
+        </router-link>
       </q-card>
+
       <!-- logo -->
       <!-- searchbar -->
       <!-- <q-card flat class="bg-transparent" style="width: 30%">

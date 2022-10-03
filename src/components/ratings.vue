@@ -71,7 +71,7 @@
         thumb-size="1px"
         class="rangebar"
       />
-      <h3 class="rating" style="position: relative; left: 7%">(74)</h3>
+      <h3 class="rating" style="position: relative; left: 7%">({{ ratingOne }})</h3>
     </q-card>
     <!-- ratings -->
     <!-- ratings -->
@@ -79,14 +79,32 @@
   </q-card>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
+// const ratingModel = ref(3)
 
-// const ratingModel = ref(3);
-const standard = ref({
-  min: 0,
-  max: 4,
-});
+import { useCounterStore } from "stores/counter";
+import { reactive, ref } from "vue";
+
+export default {
+  name: "ratings",
+
+  props: {
+    ratingOne: Number,
+    ratingTwo: Number,
+    ratingThree: Number,
+    ratingFour: Number,
+    ratingFive: Number,
+  },
+  data() {
+    return {
+      standard: ref({
+        min: 0,
+        max: 4,
+      }),
+      Store: useCounterStore(),
+    };
+  },
+};
 </script>
 <style scoped lang="sass">
 .range-group

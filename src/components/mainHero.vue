@@ -21,13 +21,15 @@
       >
         <!-- logo -->
         <q-card flat class="bg-transparent" style="width: 15%">
-          <q-img
-            to="/"
-            class="logo"
-            src="~assets/Logo.svg"
-            spinner-color="black"
-            style="width: 100%"
-          />
+          <router-link to="/" style="text-decoration: none">
+            <q-img
+              to="/"
+              class="logo"
+              src="~assets/Logo.svg"
+              spinner-color="black"
+              style="width: 100%"
+            />
+          </router-link>
         </q-card>
         <!-- logo -->
         <!-- searchbar -->

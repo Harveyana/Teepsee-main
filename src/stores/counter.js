@@ -117,7 +117,6 @@ export const useCounterStore = defineStore('counter', {
         });
         LocalStorage.set("recentItems", recents);
 
-        console.log(recents);
       } else {
         recents.splice(0, 1);
         recents.push({
@@ -130,7 +129,6 @@ export const useCounterStore = defineStore('counter', {
           favourites,
         });
         LocalStorage.set("recentItems", recents);
-        console.log(recents);
       }
     },
     queryUser(userId) {
@@ -138,7 +136,6 @@ export const useCounterStore = defineStore('counter', {
       onSnapshot(userQuery, (querySnapshot)=>{
         querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
           Object.assign(this.user, doc.data());
           // Object.assign(this.userId, doc.id);
           this.userId = doc.id;
@@ -166,7 +163,6 @@ export const useCounterStore = defineStore('counter', {
       createUserWithEmailAndPassword(auth, payload.email, payload.password)
       .then((userCredential)=>{
         // sendEmailVerification(auth.currentUser)
-        console.log(userCredential)
         let colRef= collection(db, 'users',);
         addDoc(colRef, {
           name:'',
@@ -207,7 +203,6 @@ export const useCounterStore = defineStore('counter', {
       this.loadSignUpBtn = true;
       signInWithEmailAndPassword(auth, payload.email, payload.password)
       .then((response)=>{
-        console.log(response.user)
         // this.router.push({ name: 'user', params: { username: 'eduardo' } })
         LocalStorage.set('username', response.user.displayName);
         this.router.push('/account');
@@ -254,7 +249,6 @@ export const useCounterStore = defineStore('counter', {
           this.router.push('/account');
           this.upDateProfilePrompt = true;
           this.loadSignUpBtn = false;
-          console.log(userCredential.user);
           LocalStorage.set('username', userCredential.user.displayName);
           this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`);
 
@@ -279,7 +273,6 @@ export const useCounterStore = defineStore('counter', {
       signInWithPopup(auth, provider)
        .then((userCredential) => {
          this.router.push('/account');
-         console.log(userCredential.user);
 
          this.notifyUser(userCredential.user.photoURL, `Welcome back ${userCredential.user.displayName}`)
          LocalStorage.set('username', userCredential.user.displayName);
@@ -301,7 +294,6 @@ export const useCounterStore = defineStore('counter', {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           // this.isLoggedIn = true;
-          console.log(user);
           this.queryUser(user.uid);
 
           LocalStorage.set('isLoggedIn', true);
@@ -315,11 +307,8 @@ export const useCounterStore = defineStore('counter', {
         LocalStorage.remove('isLoggedIn');
         LocalStorage.remove('username');
         this.router.push('/login');
-        console.log('User logged out');
       }).catch((error) => {
         // An error happened.
-        console.log('error logging out')
-
       });
     },
     uploadImage(file) {
@@ -332,7 +321,6 @@ export const useCounterStore = defineStore('counter', {
         const storageRef = ref(Storage, 'images/' + file.name);
         const uploadTask = uploadBytesResumable(storageRef, file, metadata).then(()=>{
           getDownloadURL(storageRef).then((downloadURL) => {
-              console.log('File available at', downloadURL);
                const docToupdate = doc(db, "users", this.userId);
                updateProfile(auth.currentUser, {
                 photoURL: downloadURL
@@ -357,7 +345,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.products.value = [...group];
-        console.log(group);
         if (this.products.value.length > 0) {
           this.ShowLoading = false;
         }
@@ -372,7 +359,6 @@ export const useCounterStore = defineStore('counter', {
             return item.data();
           });
           this.products.value = [...group];
-          console.log(group);
           if (this.products.value.length > 0) {
             this.ShowLoading = false;
           }
@@ -391,7 +377,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.adminorders.value = [...group];
-        // console.log(group);
         if (this.adminorders.value.length > 0) {
           this.ShowLoading = false;
         }
@@ -408,7 +393,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.allUsers.value = [...group];
-        console.log(group);
         if (this.allUsers.value.length > 0) {
           this.ShowLoading = false;
         }
@@ -429,7 +413,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.products.value = [...group];
-        console.log(group);
         if (this.products.value.length > 0) {
           this.ShowLoading = false;
         }
@@ -446,7 +429,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.products.value = [...group];
-        console.log(group);
         if (this.products.value.length > 0) {
           this.ShowLoading = false;
         }else{
@@ -464,7 +446,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.favourites.value = [...group];
-        console.log(group);
         if (this.favourites.value.length > 0) {
           this.ShowLoading = false;
         }
@@ -554,7 +535,6 @@ export const useCounterStore = defineStore('counter', {
 
       if (payload) {
 
-        console.log(payload.length);
         for (i=0; i<payload.length; i++) {
           alert(payload[i])
         }
@@ -660,7 +640,6 @@ export const useCounterStore = defineStore('counter', {
           return item.data();
         });
         this.coupons.value = [...group];
-        console.log(group);
         // if (this.products.value.length > 0) {
 
         // }
@@ -669,9 +648,7 @@ export const useCounterStore = defineStore('counter', {
     },
     initDiscount(code, id){
       const num = parseFloat(code) / 100
-      console.log(num);
       let percentNumber = this.cartTotal * num
-      console.log(percentNumber);
       this.cartTotal = this.cartTotal - percentNumber
 
         let docToUpdate = doc(db, "coupons", id);
@@ -692,10 +669,8 @@ export const useCounterStore = defineStore('counter', {
       const querycoupon = query(collection(db, "coupons"), where("code", "==", discountCode));
       getDocs(querycoupon).then((querySnapshot)=>{
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
           ids.push(doc.id);
           coupons.push(doc.data());
-          console.log(coupons, ids);
         });
 
           let coupon = coupons[0]
@@ -748,29 +723,29 @@ export const useCounterStore = defineStore('counter', {
       });
       this.sendMail(id);
       LocalStorage.remove('cartItems');
+      LocalStorage.remove('singleItems');
       this.notifyUser(this.user.profilePic, "Order Successful");
-      console.log('finally done');
     },
-    async createOrder2(id){
-      const timeStamp = Date.now()
-      const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
-        await addDoc(collection(db, "orders"), {
-        orderId: id,
-        amount: this.toTalPayment,
-        items: this.singleItem,
-        status: 'Pending',
-        time: formattedString,
-        customer: this.checkout.name,
-        address: this.checkout.address,
-        landmark: this.checkout.landmark,
-        phoneNumber: this.checkout.phoneNumber,
-        optionalNote: this.checkout.optionalNote,
-      });
-      this.sendMail(id);
-      LocalStorage.remove('cartItems');
-      this.notifyUser(this.user.profilePic, "Order Successful");
-      console.log('finally done');
-    },
+    // async createOrder2(id){
+    //   const timeStamp = Date.now()
+    //   const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
+    //     await addDoc(collection(db, "orders"), {
+    //     orderId: id,
+    //     amount: this.toTalPayment,
+    //     items: this.singleItem,
+    //     status: 'Pending',
+    //     time: formattedString,
+    //     customer: this.checkout.name,
+    //     address: this.checkout.address,
+    //     landmark: this.checkout.landmark,
+    //     phoneNumber: this.checkout.phoneNumber,
+    //     optionalNote: this.checkout.optionalNote,
+    //   });
+    //   this.sendMail(id);
+    //   LocalStorage.remove('cartItems');
+    //   this.notifyUser(this.user.profilePic, "Order Successful");
+    //   console.log('finally done');
+    // },
     processPayment() {
       if (this.isLoggedIn) {
         const paystack = new PaystackPop();
@@ -783,7 +758,6 @@ export const useCounterStore = defineStore('counter', {
 
         onSuccess: (transaction) => {
         // Payment complete! Reference: transaction.reference
-         console.log(transaction.reference)
          this.createOrder(transaction.reference);
 
         },
@@ -793,34 +767,36 @@ export const useCounterStore = defineStore('counter', {
 
        }
      });
+    }else{
+      this.router.push('/login');
     }
 
     },
-    buyNow() {
-      if (this.isLoggedIn) {
-        const paystack = new PaystackPop();
+    // buyNow() {
+    //   if (this.isLoggedIn) {
+    //     const paystack = new PaystackPop();
 
-      paystack.newTransaction({
+    //   paystack.newTransaction({
 
-        key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
-        email: this.user.email,
-        amount: this.toTalPayment * 100,
+    //     key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
+    //     email: this.user.email,
+    //     amount: this.toTalPayment * 100,
 
-        onSuccess: (transaction) => {
-        // Payment complete! Reference: transaction.reference
-         console.log(transaction.reference)
-         this.createOrder2(transaction.reference);
-        //  this.sendMail(transaction.reference);
-        },
-        onCancel: () => {
-        // user closed popup
-        this.notifyUser(this.user.profilePic, "Order Cancelled");
+    //     onSuccess: (transaction) => {
+    //     // Payment complete! Reference: transaction.reference
+    //      console.log(transaction.reference)
+    //      this.createOrder2(transaction.reference);
+    //     //  this.sendMail(transaction.reference);
+    //     },
+    //     onCancel: () => {
+    //     // user closed popup
+    //     this.notifyUser(this.user.profilePic, "Order Cancelled");
 
-       }
-     });
-    }
+    //    }
+    //  });
+    // }
 
-    },
+    // },
     updateOrderStatus(newStatus, Id) {
       this.ShowLoading = true;
       const timeStamp = Date.now()
@@ -829,9 +805,7 @@ export const useCounterStore = defineStore('counter', {
       let ids = [];
       getDocs(queryOrder).then((querySnapshot)=>{
         querySnapshot.forEach((doc) => {
-          // console.log(doc.id, " => ", doc.data());
           ids.push(doc.id);
-          // console.log(ids[0])
 
         });
 
@@ -849,9 +823,7 @@ export const useCounterStore = defineStore('counter', {
       const queryOrder = query(collection(db, "orders"), where("orderId", "==", id));
       getDocs(queryOrder).then((querySnapshot)=>{
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
           Object.assign(this.orderTrack, doc.data());
-          console.log(this.orderTrack);
         });
       })
 
@@ -860,13 +832,11 @@ export const useCounterStore = defineStore('counter', {
       }
     },
      async sendToreview(items, username, orderId) {
-      console.log(items, username, orderId)
       await addDoc(collection(db, "reviewLobby"), {
         orderId: orderId,
         items: items,
         customer: username,
       });
-      console.log('done sending to reviewlobby')
     },
     async getProductForReviews() {
       let queryresults = []
@@ -897,7 +867,6 @@ export const useCounterStore = defineStore('counter', {
       await updateDoc(reviewRef, {
         rating: increment(1)
       });
-      console.log('product doc updated')
 
       // indidvidual ratings
       if (ratingNum == 1) {
@@ -933,8 +902,7 @@ export const useCounterStore = defineStore('counter', {
       const querySnapshot = await getDocs(reviewQuery);
       querySnapshot.forEach(async(document) => {
         await deleteDoc(doc(db, "reviewLobby", document.id));
-        console.log(document.id)
-      });
+        });
     },
     increment() {
       this.counter++;

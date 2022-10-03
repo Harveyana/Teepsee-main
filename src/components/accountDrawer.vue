@@ -151,14 +151,26 @@
       <q-separator inset style="margin-top: 17px" />
 
       <q-list padding class="overflow-hidden">
-        <q-item clickable padding class="self-start" style="margin-top: 20px">
+        <q-item
+          clickable
+          padding
+          class="self-start"
+          style="margin-top: 20px"
+          @click="this.$router.push('/categories/general')"
+        >
           <q-item-section>
             <router-link to="/categories/general" style="text-decoration: none">
               <div class="text-h6 acc-link">General</div>
             </router-link>
           </q-item-section>
         </q-item>
-        <q-item clickable padding class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          padding
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/brandy')"
+        >
           <q-item-section>
             <router-link to="/categories/brandy" style="text-decoration: none">
               <div to="/" class="text-h6 acc-link">Brandy</div>
@@ -166,7 +178,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/wine')"
+        >
           <q-item-section>
             <router-link to="/categories/wine" style="text-decoration: none">
               <div class="text-h6 acc-link">Wine</div>
@@ -174,7 +191,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/cognac')"
+        >
           <q-item-section>
             <router-link to="/categories/cognac" style="text-decoration: none">
               <div class="text-h6 acc-link">Cognac</div>
@@ -182,7 +204,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/whiskey')"
+        >
           <q-item-section>
             <router-link to="/categories/whiskey" style="text-decoration: none">
               <div class="text-h6 acc-link">Whiskey</div>
@@ -190,7 +217,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/vodka')"
+        >
           <q-item-section>
             <router-link to="/categories/vodka" style="text-decoration: none">
               <div class="text-h6 acc-link">Vodka</div>
@@ -198,24 +230,51 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/tequila')"
+        >
           <q-item-section>
             <router-link to="/categories/tequila" style="text-decoration: none">
               <div class="text-h6 acc-link">Tequila</div>
             </router-link>
           </q-item-section>
         </q-item>
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/gin')"
+        >
           <q-item-section>
             <router-link to="/categories/gin" style="text-decoration: none">
               <div class="text-h6 acc-link">Gin</div>
             </router-link>
           </q-item-section>
         </q-item>
-        <q-item clickable class="self-start" style="margin-bottom: 8px">
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/champagne')"
+        >
           <q-item-section>
             <router-link to="/categories/champagne" style="text-decoration: none">
               <div class="text-h6 acc-link">Champagne</div>
+            </router-link>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          class="self-start"
+          style="margin-bottom: 8px"
+          @click="this.$router.push('/categories/herb')"
+        >
+          <q-item-section>
+            <router-link to="/categories/herb" style="text-decoration: none">
+              <div class="text-h6 acc-link">Herb</div>
             </router-link>
           </q-item-section>
         </q-item>

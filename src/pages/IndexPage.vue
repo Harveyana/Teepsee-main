@@ -62,27 +62,46 @@
         flat
         class="row no-wrap bg-transparent shop-features items-center justify-between"
       >
+        <!-- <router-link to="/categories/general" style="text-decoration: none"> -->
         <q-intersection
+          to="/categories/wine"
           class="wine-intersection"
           transition="slide-up"
           once
           transition-duration="2000"
-          style=""
+          style="cursor: pointer"
+          @click="this.$router.push('/categories/wine')"
         >
-          <q-card flat class="wine">
-            <div class="text-h1 featureText text-white">Shop Wine</div>
-          </q-card>
+          <q-item
+            to="/categories/wine"
+            flat
+            class="wine"
+            @click="this.$router.push('/categories/wine')"
+            style="z-index: 999"
+          >
+            <router-link to="/categories/wine" style="text-decoration: none">
+              <div class="text-h1 featureText text-white">Shop Wine</div>
+            </router-link>
+          </q-item>
         </q-intersection>
+        <!-- </router-link> -->
         <q-intersection
           class="intersection"
           transition="slide-up"
           once
           transition-duration="2000"
-          style=""
+          style="cursor: pointer"
+          @click="this.$router.push('/categories/champagne')"
         >
-          <q-card flat class="champagne">
-            <div class="text-h1 featureText text-white">Shop Champagne</div>
-          </q-card>
+          <q-item
+            flat
+            class="champagne"
+            @click="this.$router.push('/categories/champagne')"
+            style="z-index: 999"
+            ><router-link to="/categories/champagne" style="text-decoration: none">
+              <div class="text-h1 featureText text-white">Shop Champagne</div>
+            </router-link>
+          </q-item>
         </q-intersection>
       </div>
       <!-- <div class="shop-features row no-wrap">
@@ -93,11 +112,19 @@
         transition="slide-up"
         once
         transition-duration="2000"
-        style=""
+        style="cursor: pointer"
+        @click="this.$router.push('/categories/vodka')"
       >
-        <q-card flat class="ShopVodka">
-          <div class="text-h1 featureText text-white">Shop Vodka</div>
-        </q-card>
+        <q-item
+          flat
+          class="ShopVodka"
+          @click="this.$router.push('/categories/vodka')"
+          style="z-index: 999"
+        >
+          <router-link to="/categories/vodka" style="text-decoration: none">
+            <div class="text-h1 featureText text-white">Shop Vodka</div>
+          </router-link>
+        </q-item>
       </q-intersection>
 
       <div
@@ -109,22 +136,37 @@
           transition="slide-up"
           once
           transition-duration="2000"
-          style=""
+          style="cursor: pointer"
+          @click="this.$router.push('/categories/whiskey')"
         >
-          <q-card flat class="ShopWhiskey"
-            ><div class="text-h1 featureText text-white">Shop Whiskey</div>
-          </q-card>
+          <q-item
+            flat
+            class="ShopWhiskey"
+            @click="this.$router.push('/categories/whiskey')"
+            style="z-index: 999"
+            ><router-link to="/categories/whiskey" style="text-decoration: none">
+              <div class="text-h1 featureText text-white">Shop Whiskey</div>
+            </router-link>
+          </q-item>
         </q-intersection>
         <q-intersection
           class="intersection"
           once
           transition="slide-up"
           transition-duration="2000"
-          style=""
+          style="cursor: pointer"
+          @click="this.$router.push('/categories/brandy')"
         >
-          <q-card flat class="ShopBrandy">
-            <div class="text-h1 featureText text-white">Shop Brandy</div></q-card
+          <q-item
+            flat
+            class="ShopBrandy"
+            @click="this.$router.push('/categories/brandy')"
+            style="z-index: 999"
           >
+            <router-link to="/categories/brandy" style="text-decoration: none">
+              <div class="text-h1 featureText text-white">Shop Brandy</div>
+            </router-link>
+          </q-item>
         </q-intersection>
       </div>
 
@@ -133,11 +175,19 @@
         transition="slide-up"
         once
         transition-duration="2000"
-        style=""
+        style="cursor: pointer"
+        @click="this.$router.push('/categories/general')"
       >
-        <q-card flat class="PartyCombo">
-          <div class="text-h1 featureText text-white">Party Combo</div>
-        </q-card>
+        <q-item
+          flat
+          class="PartyCombo"
+          @click="this.$router.push('/categories/general')"
+          style="z-index: 999"
+        >
+          <router-link to="/categories/general" style="text-decoration: none">
+            <div class="text-h1 featureText text-white">Party Combo</div>
+          </router-link>
+        </q-item>
       </q-intersection>
 
       <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
@@ -146,22 +196,37 @@
           once
           transition="slide-up"
           transition-duration="2000"
-          style=""
+          style="cursor: pointer"
+          @click="this.$router.push('/categories/tequila')"
         >
-          <q-card flat class="ShopTequila"
-            ><div class="text-h1 featureText text-white">Shop Tequila</div>
-          </q-card>
+          <q-item
+            flat
+            class="ShopTequila"
+            @click="this.$router.push('/categories/tequila')"
+            style="z-index: 999"
+          >
+            <router-link to="/categories/tequila" style="text-decoration: none">
+              <div class="text-h1 featureText text-white">Shop Tequila</div>
+            </router-link>
+          </q-item>
         </q-intersection>
         <q-intersection
           class="intersection"
           once
           transition="slide-up"
           transition-duration="2000"
-          style=""
+          style="cursor: pointer"
+          @click="this.$router.push('/categories/cognac')"
         >
-          <q-card flat class="ShopCognac"
-            ><div class="text-h1 featureText text-white">Shop Cognac</div>
-          </q-card>
+          <q-item
+            flat
+            class="ShopCognac"
+            @click="this.$router.push('/categories/cognac')"
+            style="z-index: 999"
+            ><router-link to="/categories/cognac" style="text-decoration: none">
+              <div class="text-h1 featureText text-white">Shop Cognac</div>
+            </router-link>
+          </q-item>
         </q-intersection>
       </div>
 
@@ -390,6 +455,13 @@ onMounted(() => {
     position: relative
     left: 5%
     top: 70%
+.featureText:hover
+  transition: all ease 0.7s
+  font-size: 55px
+  body.screen--xs &
+    font-size: 30px
+  body.screen--sm &
+    font-size: 30px
 .features
   height: fit-content
   min-height: 1000px

@@ -61,6 +61,13 @@ const routes = [
     ]
   },
   {
+    path: '/buynow',
+    component: () => import('layouts/shopLayout.vue'),
+    children: [
+      { path: '/buynow', component: () => import('pages/buyNow.vue') },
+    ]
+  },
+  {
     path: '/reviews',
     component: () => import('layouts/shopLayout.vue'),
     children: [

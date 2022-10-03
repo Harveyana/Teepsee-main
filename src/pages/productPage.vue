@@ -51,7 +51,7 @@
               :src="productDetails.images[0]"
               spinner-color="white"
               class="product-image"
-              style="width: 50%; height: 90%; object-fit: cover"
+              style="width: 60%; height: 90%; object-fit: cover"
             />
             <q-inner-loading :showing="Store.ShowLoading">
               <q-spinner-gears size="50px" color="primary" />
@@ -65,7 +65,7 @@
               :src="productDetails.images[1]"
               spinner-color="white"
               class="product-image"
-              style="width: 50%; height: 90%; object-fit: cover"
+              style="width: 60%; height: 90%; object-fit: cover"
             />
             <q-inner-loading :showing="Store.ShowLoading">
               <q-spinner-gears size="50px" color="primary" />
@@ -80,7 +80,7 @@
               :src="productDetails.images[2]"
               spinner-color="white"
               class="product-image"
-              style="width: 50%; height: 90%; object-fit: cover"
+              style="width: 60%; height: 90%; object-fit: cover"
             />
             <q-inner-loading :showing="Store.ShowLoading">
               <q-spinner-gears size="50px" color="primary" />
@@ -148,7 +148,7 @@
             <q-card class="product-priceAndName column no-wrap" style="">
               <q-card class="NameAndprice">
                 <h2 class="product-name" style="">{{ productDetails.name }}</h2>
-                <h2 class="product-price" style="">₦{{ productDetails.price }}</h2>
+                <h2 class="product-price" style="">₦{{ price }}</h2>
               </q-card>
               <q-card class="counter row justify-center no-wrap" style="">
                 <h5 class="Quantity-Label" style="">Quantity</h5>
@@ -190,6 +190,7 @@
               style="text-decoration: none"
             >
               <q-card
+                flat
                 class="product-ratings q-pt-md column no-wrap items-center"
                 style=""
               >
@@ -242,7 +243,15 @@
               class="AddToCartBtn2 q-ml-sm"
               label="Buy now"
               style=""
-              @click="initPurchase()"
+              @click="
+                buyNow(
+                  productDetails.name,
+                  productDetails.images[0],
+                  1,
+                  productDetails.price,
+                  productDetails.id
+                )
+              "
           /></q-card>
           <q-inner-loading :showing="Store.ShowLoading">
             <q-spinner-gears size="130px" color="primary" />
@@ -286,7 +295,7 @@ const $q = useQuasar();
 const cart = ref(1);
 
 const initPurchase = () => {
-  if (Store.isLoggedIn) {
+  if (Store.isLoggedIn && Store.user.addresses) {
     let address = Store.user.addresses[0];
     let mainAddress = address.street;
     let phone = Store.user.phoneNumber;
@@ -318,8 +327,15 @@ const initPurchase = () => {
     } else {
       Store.notifyUser(Store.user.profilePic, "No address added for user");
     }
+  } else {
+    Store.notifyUser(Store.user.profilePic, "No address added for user");
   }
 };
+const price = computed(() => {
+  if (productDetails) {
+    return Number(productDetails.price).toLocaleString("en-US");
+  }
+});
 const queryProduct = () => {
   const productQuery = query(
     collection(db, "products"),
@@ -366,6 +382,24 @@ const addToCart = (name, image, quantity, price, id) => {
   $q.localStorage.set("cartItems", items);
   Store.notifyUser(Store.defaultPic, "Added to cart");
   console.log(items);
+  // };
+};
+const buyNow = (name, image, quantity, price, id) => {
+  // retrieve it (Or create a blank array if there isn't any info saved yet),
+  const items = $q.localStorage.getItem("singleItems") || [];
+  // add to it, only if it's empty
+  items.push({
+    name,
+    image,
+    quantity,
+    price,
+    id,
+  });
+  // then put it back.
+  $q.localStorage.set("singleItems", items);
+  Store.notifyUser(Store.defaultPic, "Checking Out...");
+  console.log(items);
+  router.push("/buynow");
   // };
 };
 
@@ -521,19 +555,19 @@ onMounted(() => {
   font-size: 270%
   max-width: 200px
   body.screen--md &
-    line-height: 1px
+    line-height: 25px
     color: #27141a
     font-family: 'Catellosdemo'
     font-size: 210%
-    max-width: 200px
+    max-width: 250px
   body.screen--sm &
-    line-height: 1px
+    line-height: 20px
     color: #27141a
     font-family: 'Catellosdemo'
     font-size: 190%
-    max-width: 200px
+    max-width: 250px
   body.screen--xs &
-    line-height: 1px
+    line-height: 22px
     color: #27141a
     font-family: 'Catellosdemo'
     font-size: 170%

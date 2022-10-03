@@ -265,7 +265,7 @@ const initpayment = () => {
   }
 };
 const fetchCart = () => {
-  const items = $q.localStorage.getItem("cartItems") || [];
+  const items = $q.localStorage.getItem("singleItems") || [];
   // add to it, only if it's empty
   if (items) {
     console.log(items);

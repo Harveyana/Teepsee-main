@@ -21,6 +21,7 @@
         <h4 class="NameClass">Product Price</h4>
         <q-input
           filled
+          type="number"
           label="Product Price"
           v-model="product.price"
           style="border-radius: 15px; width: 60%"
@@ -49,7 +50,7 @@
       </q-card>
       <q-card class="input4 row no-wrap" style="width: 100%">
         <q-card style="width: 50%">
-          <h4 class="NameClass">Product Brand</h4>
+          <h4 class="NameClass">Product Brand(Optional)</h4>
           <q-select
             v-model="product.brand"
             :options="brandOptions"
@@ -131,6 +132,7 @@ const categoryOptions = [
   "tequila",
   "champagne",
   "gin",
+  "herb",
 ];
 const brandOptions = ["henessey", "vodka", "azul"];
 const images = [];
@@ -168,8 +170,7 @@ const uploadProduct = (file) => {
       product.name.length === 0 ||
       product.price.length === 0 ||
       product.category === null ||
-      product.description.length === 0 ||
-      product.brand === null
+      product.description.length === 0
     ) {
       Store.notifyUser(Store.user.profilePic, "Complete Product Details");
     } else {

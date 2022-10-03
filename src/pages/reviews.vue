@@ -19,7 +19,13 @@
             </h3>
           </q-card>
           <!-- ratings-group -->
-          <ratingsVue />
+          <ratingsVue
+            :ratingOne="ratings.one"
+            :ratingTwo="ratings.two"
+            :ratingThree="ratings.three"
+            :ratingFour="ratings.four"
+            :ratingFive="ratings.five"
+          ></ratingsVue>
           <!-- ratings-group -->
         </q-card>
       </q-card>
@@ -83,6 +89,13 @@ const queryProduct = () => {
     console.log(productDetails);
   });
 };
+const ratings = () => {
+  if (productDetails.ratings) {
+    let rating = productDetails.ratings;
+    values = Object.values(rating);
+    return values;
+  }
+};
 const topRating = computed(() => {
   if (productDetails.ratings) {
     let rating = productDetails.ratings;
@@ -101,6 +114,7 @@ const topRating = computed(() => {
       : 5;
   }
 });
+
 // const standard = ref({
 //   min: 0,
 //   max: 2,
