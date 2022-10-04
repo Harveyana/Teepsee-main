@@ -33,6 +33,12 @@
         </q-card>
         <q-card class="Input1 column" style="">
           <h4 class="NameClass" style="position: relative; top: 5px; color: #1f1e26">
+            Name
+          </h4>
+          <q-input filled type="text" v-model="FormData.name" style="" />
+        </q-card>
+        <q-card class="Input1 column" style="">
+          <h4 class="NameClass" style="position: relative; top: 5px; color: #1f1e26">
             Email
           </h4>
           <q-input filled type="text" v-model="FormData.email" style="" />
@@ -94,6 +100,7 @@ import { ref } from "vue";
 const Store = useCounterStore();
 
 const FormData = ref({
+  name: "",
   email: "",
   password: "",
 });

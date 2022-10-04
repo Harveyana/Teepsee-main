@@ -385,8 +385,10 @@ const addToCart = (name, image, quantity, price, id) => {
   // };
 };
 const buyNow = (name, image, quantity, price, id) => {
+  $q.localStorage.remove("singleItems");
   // retrieve it (Or create a blank array if there isn't any info saved yet),
-  const items = $q.localStorage.getItem("singleItems") || [];
+  const items = [];
+  // const items = $q.localStorage.getItem("singleItems") || [];
   // add to it, only if it's empty
   items.push({
     name,

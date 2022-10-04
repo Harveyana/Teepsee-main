@@ -86,6 +86,7 @@
         </q-intersection>
         <!-- </router-link> -->
         <q-intersection
+          to="/categories/champagne"
           class="intersection"
           transition="slide-up"
           once
@@ -94,6 +95,7 @@
           @click="this.$router.push('/categories/champagne')"
         >
           <q-item
+            to="/categories/champagne"
             flat
             class="champagne"
             @click="this.$router.push('/categories/champagne')"
@@ -108,6 +110,7 @@
 
       </div> -->
       <q-intersection
+        to="/categories/vodka"
         class="vodka-intersection"
         transition="slide-up"
         once
@@ -116,6 +119,7 @@
         @click="this.$router.push('/categories/vodka')"
       >
         <q-item
+          to="/categories/vodka"
           flat
           class="ShopVodka"
           @click="this.$router.push('/categories/vodka')"
@@ -132,6 +136,7 @@
         class="row no-wrap bg-transparent shop-features2 items-center justify-between"
       >
         <q-intersection
+          to="/categories/whiskey"
           class="wine-intersection"
           transition="slide-up"
           once
@@ -140,6 +145,7 @@
           @click="this.$router.push('/categories/whiskey')"
         >
           <q-item
+            to="/categories/whiskey"
             flat
             class="ShopWhiskey"
             @click="this.$router.push('/categories/whiskey')"
@@ -150,6 +156,7 @@
           </q-item>
         </q-intersection>
         <q-intersection
+          to="/categories/brandy"
           class="intersection"
           once
           transition="slide-up"
@@ -158,6 +165,7 @@
           @click="this.$router.push('/categories/brandy')"
         >
           <q-item
+            to="/categories/brandy"
             flat
             class="ShopBrandy"
             @click="this.$router.push('/categories/brandy')"
@@ -171,6 +179,7 @@
       </div>
 
       <q-intersection
+        to="/categories/general"
         class="combo-intersection"
         transition="slide-up"
         once
@@ -179,6 +188,7 @@
         @click="this.$router.push('/categories/general')"
       >
         <q-item
+          to="/categories/general"
           flat
           class="PartyCombo"
           @click="this.$router.push('/categories/general')"
@@ -192,6 +202,7 @@
 
       <div class="row no-wrap bg-transparent shop-features2 items-center justify-between">
         <q-intersection
+          to="/categories/tequila"
           class="wine-intersection"
           once
           transition="slide-up"
@@ -200,6 +211,7 @@
           @click="this.$router.push('/categories/tequila')"
         >
           <q-item
+            to="/categories/tequila"
             flat
             class="ShopTequila"
             @click="this.$router.push('/categories/tequila')"
@@ -211,6 +223,7 @@
           </q-item>
         </q-intersection>
         <q-intersection
+          to="/categories/cognac"
           class="intersection"
           once
           transition="slide-up"
@@ -219,6 +232,7 @@
           @click="this.$router.push('/categories/cognac')"
         >
           <q-item
+            to="/categories/cognac"
             flat
             class="ShopCognac"
             @click="this.$router.push('/categories/cognac')"

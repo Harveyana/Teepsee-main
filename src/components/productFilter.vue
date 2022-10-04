@@ -74,27 +74,63 @@
         </q-card>
       </q-item>
       <q-item class="column q-mt-md">
-        <div class="text-h2 brandsHeader" style="">Brands</div>
-        <q-item-section class="q-mt-sm">
+        <div class="text-h2 brandsHeader" style="">Categories</div>
+        <q-card flat class="flex row justify-center q-mt-sm">
           <q-checkbox
-            v-model="brand.Hennessey"
-            label="Hennessey"
-            true-value="henessey"
+            v-model="category.brandy"
+            label="Brandy"
+            true-value="brandy"
             false-value="nil"
           />
           <q-checkbox
-            v-model="brand.Vodka"
+            v-model="category.wine"
+            label="Wine"
+            true-value="wine"
+            false-value="nil"
+          />
+          <q-checkbox
+            v-model="category.cognac"
+            label="Cognac"
+            true-value="cognac"
+            false-value="nil"
+          />
+          <q-checkbox
+            v-model="category.whiskey"
+            label="Whiskey"
+            true-value="whiskey"
+            false-value="nil"
+          />
+          <q-checkbox
+            v-model="category.vodka"
             label="Vodka"
             true-value="vodka"
             false-value="nil"
           />
           <q-checkbox
-            v-model="brand.Azul"
-            label="Azul"
-            true-value="azul"
+            v-model="category.tequila"
+            label="Tequila"
+            true-value="tequila"
             false-value="nil"
           />
-        </q-item-section>
+          <q-checkbox
+            v-model="category.gin"
+            label="Gin"
+            true-value="gin"
+            false-value="nil"
+          />
+          <q-checkbox
+            v-model="category.champagne"
+            label="Champagne"
+            true-value="champagne"
+            false-value="nil"
+          />
+          <q-checkbox
+            v-model="category.herb"
+            label="herb"
+            true-value="herb"
+            false-value="nil"
+          />
+        </q-card>
       </q-item>
     </q-card>
   </q-card>
@@ -106,10 +142,16 @@ import PriceFilters from "./priceFilters.vue";
 const Store = useCounterStore();
 const searchResults = ref("");
 
-const brand = reactive({
-  Hennessey: "nil",
-  Vodka: "nil",
-  Azul: "nil",
+const category = reactive({
+  brandy: "nil",
+  wine: "nil",
+  cognac: "nil",
+  whiskey: "nil",
+  vodka: "nil",
+  tequila: "nil",
+  gin: "nil",
+  champagne: "nil",
+  herb: "nil",
 });
 const custom = reactive({
   min: "",
@@ -117,10 +159,23 @@ const custom = reactive({
 });
 
 watch(
-  () => brand,
+  () => category,
   (newValue, oldValue) => {
-    console.log(newValue);
-    Store.brandQuery(newValue);
+    if (
+      category.brandy === "nil" &&
+      category.wine === "nil" &&
+      category.cognac === "nil" &&
+      category.whiskey === "nil" &&
+      category.vodka === "nil" &&
+      category.tequila === "nil" &&
+      category.gin === "nil" &&
+      category.champagne === "nil" &&
+      category.herb === "nil"
+    ) {
+      Store.Fetchproducts("general");
+    } else {
+      Store.categoryQuery(newValue);
+    }
   },
   { deep: true }
 );

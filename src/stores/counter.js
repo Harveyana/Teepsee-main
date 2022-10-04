@@ -165,7 +165,7 @@ export const useCounterStore = defineStore('counter', {
         // sendEmailVerification(auth.currentUser)
         let colRef= collection(db, 'users',);
         addDoc(colRef, {
-          name:'',
+          name: payload.name,
           lastName:'',
           id: userCredential.user.uid,
           email: userCredential.user.email,
@@ -181,8 +181,8 @@ export const useCounterStore = defineStore('counter', {
             getUpdates: true
           }
         }).then(() =>{
-          this.router.push('/account');
-          this.upDateProfilePrompt = true;
+          this.router.push('/categories/general');
+          // this.upDateProfilePrompt = true;
           this.loadSignUpBtn = false;
           this.notifyUser(this.defaultPic, 'Welcome to Teepsee');
         })
@@ -399,27 +399,48 @@ export const useCounterStore = defineStore('counter', {
       })
 
     },
-    brandQuery(brand){
-      if (brand.Hennessey === 'nil' && brand.Vodka === 'nil' && brand.Azul === 'nil' ) {
-        this.Fetchproducts('general');
-      }else{
+    categoryQuery(category){
+
         this.ShowLoading = true;
         const productQuery = query(
         collection(db, "products"),
-        where('brand', 'in', [`${brand.Hennessey}`, `${brand.Vodka}`, `${brand.Azul}`]));
+        where('category', 'in', [`${category.brandy}`, `${category.wine}`,
+        `${category.cognac}` , `${category.whiskey}` ,
+         `${category.vodka}` , `${category.tequila}` ,
+          `${category.gin}` , `${category.champagne}` , `${category.herb}`]));
 
         onSnapshot(productQuery, (data) => {
         let group = data.docs.map((item) => {
           return item.data();
         });
         this.products.value = [...group];
-        if (this.products.value.length > 0) {
+        // if (this.products.value.length > 0) {
           this.ShowLoading = false;
-        }
+        // }
       });
-      }
 
     },
+    // brandQuery(brand){
+    //   if (brand.Hennessey === 'nil' && brand.Vodka === 'nil' && brand.Azul === 'nil' ) {
+    //     this.Fetchproducts('general');
+    //   }else{
+    //     this.ShowLoading = true;
+    //     const productQuery = query(
+    //     collection(db, "products"),
+    //     where('brand', 'in', [`${brand.Hennessey}`, `${brand.Vodka}`, `${brand.Azul}`]));
+
+    //     onSnapshot(productQuery, (data) => {
+    //     let group = data.docs.map((item) => {
+    //       return item.data();
+    //     });
+    //     this.products.value = [...group];
+    //     if (this.products.value.length > 0) {
+    //       this.ShowLoading = false;
+    //     }
+    //   });
+    //   }
+
+    // },
     priceQuery(min, max){
       this.ShowLoading = true;
       const queryPrice = query(collection(db, "products"), where("price", ">=", `${min}`), where("price", "<=", `${max}`));
@@ -764,6 +785,7 @@ export const useCounterStore = defineStore('counter', {
         onCancel: () => {
         // user closed popup
         this.notifyUser(this.user.profilePic, "Order Cancelled");
+        LocalStorage.remove('singleItems');
 
        }
      });
