@@ -20,7 +20,111 @@
           <q-banner class="scroll filterContainerMobile" style="width: 100%">
             <q-card flat style="width: 100%">
               <!-- <PriceFilters></PriceFilters> -->
-              <q-card class="column">
+              <q-card class="column q-mt-md">
+                <div class="text-h2 brandsHeader" style="">Categories</div>
+                <q-card flat class="flex row justify-center q-mt-sm">
+                  <q-checkbox
+                    v-model="category.brandy"
+                    label="Brandy"
+                    true-value="brandy"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.wine"
+                    label="Wine"
+                    true-value="wine"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.cognac"
+                    label="Cognac"
+                    true-value="cognac"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.whiskey"
+                    label="Whiskey"
+                    true-value="whiskey"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.vodka"
+                    label="Vodka"
+                    true-value="vodka"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.tequila"
+                    label="Tequila"
+                    true-value="tequila"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.gin"
+                    label="Gin"
+                    true-value="gin"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.champagne"
+                    label="Champagne"
+                    true-value="champagne"
+                    false-value="nil"
+                  />
+                  <q-checkbox
+                    v-model="category.herb"
+                    label="herb"
+                    true-value="herb"
+                    false-value="nil"
+                  />
+                </q-card>
+              </q-card>
+
+              <!-- input custom checklist -->
+              <q-card class="column q-mt-md" style="width: 100%">
+                <div class="text-h2 CustomPriceFilter" style="">Custom Price range</div>
+                <q-card
+                  flat
+                  class="row items-center q-px-md q-mt-md"
+                  style="max-width: 100%"
+                >
+                  <div class="col row no-wrap" style="margin-right: 2%; width: 35%">
+                    <q-input
+                      borderless
+                      dense
+                      type="number"
+                      prefix="₦"
+                      v-model="custom.min"
+                      label=""
+                      class="filterInput"
+                      style=""
+                    />
+                  </div>
+                  <div class="col row no-wrap" style="margin-right: 2%; width: 35%">
+                    <q-input
+                      borderless
+                      dense
+                      prefix="₦"
+                      type="number"
+                      class="filterInput"
+                      v-model="custom.max"
+                      label=""
+                      style=""
+                    />
+                  </div>
+                  <q-card class="col" style="width: 20%">
+                    <q-btn
+                      class="filterButton"
+                      label="Go"
+                      style=""
+                      @click="
+                        Store.priceQuery(custom.min, custom.max), (showhide = false)
+                      "
+                    />
+                  </q-card>
+                </q-card>
+              </q-card>
+              <q-card class="column q-mt-md">
                 <div class="text-h2 priceFilterHeader" style="">Price</div>
                 <q-item-section class="q-mt-sm">
                   <q-radio
@@ -78,109 +182,6 @@
                     @click="Store.priceQuery(500000, 20000000), (showhide = false)"
                   />
                 </q-item-section>
-              </q-card>
-              <!-- input custom checklist -->
-              <q-card class="column" style="width: 100%">
-                <div class="text-h2 CustomPriceFilter" style="">Custom Price range</div>
-                <q-card
-                  flat
-                  class="row items-center q-px-md q-mt-md"
-                  style="max-width: 100%"
-                >
-                  <div class="col row no-wrap" style="margin-right: 2%; width: 35%">
-                    <q-input
-                      borderless
-                      dense
-                      type="number"
-                      prefix="₦"
-                      v-model="custom.min"
-                      label=""
-                      class="filterInput"
-                      style=""
-                    />
-                  </div>
-                  <div class="col row no-wrap" style="margin-right: 2%; width: 35%">
-                    <q-input
-                      borderless
-                      dense
-                      prefix="₦"
-                      type="number"
-                      class="filterInput"
-                      v-model="custom.max"
-                      label=""
-                      style=""
-                    />
-                  </div>
-                  <q-card class="col" style="width: 20%">
-                    <q-btn
-                      class="filterButton"
-                      label="Go"
-                      style=""
-                      @click="
-                        Store.priceQuery(custom.min, custom.max), (showhide = false)
-                      "
-                    />
-                  </q-card>
-                </q-card>
-              </q-card>
-              <q-card class="column q-mt-md">
-                <div class="text-h2 brandsHeader" style="">Brands</div>
-                <q-card flat class="flex row justify-center q-mt-sm">
-                  <q-checkbox
-                    v-model="category.brandy"
-                    label="Brandy"
-                    true-value="brandy"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.wine"
-                    label="Wine"
-                    true-value="wine"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.cognac"
-                    label="Cognac"
-                    true-value="cognac"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.whiskey"
-                    label="Whiskey"
-                    true-value="whiskey"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.vodka"
-                    label="Vodka"
-                    true-value="vodka"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.tequila"
-                    label="Tequila"
-                    true-value="tequila"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.gin"
-                    label="Gin"
-                    true-value="gin"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.champagne"
-                    label="Champagne"
-                    true-value="champagne"
-                    false-value="nil"
-                  />
-                  <q-checkbox
-                    v-model="category.herb"
-                    label="herb"
-                    true-value="herb"
-                    false-value="nil"
-                  />
-                </q-card>
               </q-card>
             </q-card>
           </q-banner>

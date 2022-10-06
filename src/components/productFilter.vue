@@ -17,62 +17,7 @@
         </q-input>
       </q-card>
       <!-- checklist -->
-      <q-card class="flex row self-start q-px-md q-mt-md">
-        <PriceFilters></PriceFilters>
-        <!-- <q-card class="column">
-          <div class="text-h2 priceFilterHeader" style="">Price</div>
-          <q-item-section class="q-mt-sm">
-            <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
-            <q-checkbox color="yellow" v-model="ri" label="₦10,000--₦50,000" />
-            <q-checkbox color="yellow" v-model="rig" label="₦50,000--₦100,000" />
-            <q-checkbox color="yellow" v-model="righ" label="₦100,000--₦300,000" />
-            <q-checkbox color="yellow" v-model="right" label="₦300,000--₦500,000" />
-            <q-checkbox color="yellow" v-model="righti" label="₦500,000 and above" />
-          </q-item-section>
-        </q-card> -->
-      </q-card>
-      <!-- input custom checklist -->
-      <q-item class="column">
-        <div class="text-h2 CustomPriceFilter" style="">Custom Price range</div>
-        <q-card
-          flat
-          class="row justify-between items-center q-px-md q-mt-md"
-          style="width: 100%"
-        >
-          <div class="col" style="margin-right: 2%; width: 35%">
-            <q-input
-              borderless
-              dense
-              v-model="custom.min"
-              label=""
-              type="number"
-              prefix="₦"
-              class="filterInput"
-              style=""
-            />
-          </div>
-          <div class="col" style="margin-right: 2%; width: 35%">
-            <q-input
-              borderless
-              dense
-              class="filterInput"
-              v-model="custom.max"
-              type="number"
-              prefix="₦"
-              label=""
-              style=""
-            />
-          </div>
-          <q-card class="col" style="width: 20%">
-            <q-btn
-              class="filterButton"
-              label="Go"
-              style=""
-              @click="Store.priceQuery(custom.min, custom.max)"
-            />
-          </q-card>
-        </q-card>
-      </q-item>
+
       <q-item class="column q-mt-md">
         <div class="text-h2 brandsHeader" style="">Categories</div>
         <q-card flat class="flex row justify-center q-mt-sm">
@@ -132,6 +77,62 @@
           />
         </q-card>
       </q-item>
+      <!-- input custom checklist -->
+      <q-item class="column">
+        <div class="text-h2 CustomPriceFilter" style="">Custom Price range</div>
+        <q-card
+          flat
+          class="row justify-between items-center q-px-md q-mt-md"
+          style="width: 100%"
+        >
+          <div class="col" style="margin-right: 2%; width: 35%">
+            <q-input
+              borderless
+              dense
+              v-model="custom.min"
+              label=""
+              type="number"
+              prefix="₦"
+              class="filterInput"
+              style=""
+            />
+          </div>
+          <div class="col" style="margin-right: 2%; width: 35%">
+            <q-input
+              borderless
+              dense
+              class="filterInput"
+              v-model="custom.max"
+              type="number"
+              prefix="₦"
+              label=""
+              style=""
+            />
+          </div>
+          <q-card class="col" style="width: 20%">
+            <q-btn
+              class="filterButton"
+              label="Go"
+              style=""
+              @click="Store.priceQuery(custom.min, custom.max)"
+            />
+          </q-card>
+        </q-card>
+      </q-item>
+      <q-card class="flex row self-start q-px-md q-mt-md">
+        <PriceFilters></PriceFilters>
+        <!-- <q-card class="column">
+          <div class="text-h2 priceFilterHeader" style="">Price</div>
+          <q-item-section class="q-mt-sm">
+            <q-checkbox color="yellow" v-model="r" label="Under ₦10,000" />
+            <q-checkbox color="yellow" v-model="ri" label="₦10,000--₦50,000" />
+            <q-checkbox color="yellow" v-model="rig" label="₦50,000--₦100,000" />
+            <q-checkbox color="yellow" v-model="righ" label="₦100,000--₦300,000" />
+            <q-checkbox color="yellow" v-model="right" label="₦300,000--₦500,000" />
+            <q-checkbox color="yellow" v-model="righti" label="₦500,000 and above" />
+          </q-item-section>
+        </q-card> -->
+      </q-card>
     </q-card>
   </q-card>
 </template>

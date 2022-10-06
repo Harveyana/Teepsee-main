@@ -821,7 +821,7 @@ onMounted(() => {
     width: 100%
 
 .ShopCognac
-  background: url("../assets/shopfeature8.svg")
+  background: url("../assets/shopCognac.svg")
   background-repeat: no-repeat
   background-position: center
   border-radius: 15px
