@@ -41,7 +41,7 @@
           </q-toolbar>
         </div>
 
-        <!-- Mobile toolbar Mobile toolbar -->
+        <!-- Mobile toolbar// Mobile toolbar -->
         <div class="con">
           <q-toolbar class="lt-md">
             <q-btn

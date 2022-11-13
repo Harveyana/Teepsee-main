@@ -366,13 +366,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="sass">
-// .enter-from,
-// .leave-to
-//   opacity:0
 
-// .enter-active,
-// .leave-active
-//   transition: opacity 6s ease
 .swiper
   width: 70%
   body.screen--xs &
@@ -401,8 +395,7 @@ onMounted(() => {
 .intersection
   width: 49%
   height: 500px
-  // margin-bottom: 25px
-  // margin-top: 25px
+
   body.screen--sm &
     height: 300px
   body.screen--xs &
@@ -448,10 +441,6 @@ onMounted(() => {
 .testimony-container
   width: 100%
 
-  body.screen--xs &
-
-
-.logo
 
 .featureText
   font-family: "Catellosdemo"
@@ -646,9 +635,9 @@ onMounted(() => {
   width: 100%
   // min-width: 49%
 
-  body.screen--lg &
+  // body.screen--lg &
 
-  body.screen--md &
+  // body.screen--md &
 
   body.screen--sm &
 
@@ -697,9 +686,9 @@ onMounted(() => {
   // max-width: 89%
   margin-right: 5.5%
   margin-left: 5.5%
-  body.screen--xl &
+  // body.screen--xl &
 
-  body.screen--lg &
+  // body.screen--lg &
 
   body.screen--md &
     // margin-right: 5.5%
@@ -724,11 +713,11 @@ onMounted(() => {
   height: 500px
   min-height: 500px
   width: 100%
-  body.screen--xl &
+  // body.screen--xl &
 
-  body.screen--lg &
+  // body.screen--lg &
 
-  body.screen--md &
+  // body.screen--md &
 
   body.screen--sm &
     height: 300px
@@ -748,10 +737,10 @@ onMounted(() => {
   height: 500px
   min-height: 500px
   width: 100%
-  body.screen--xl &
+  // body.screen--xl &
 
-  body.screen--lg &
-  body.screen--md &
+  // body.screen--lg &
+  // body.screen--md &
   body.screen--sm &
     height: 300px
     min-height: 300px
