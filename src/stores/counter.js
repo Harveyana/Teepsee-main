@@ -205,7 +205,7 @@ export const useCounterStore = defineStore('counter', {
       .then((response)=>{
         // this.router.push({ name: 'user', params: { username: 'eduardo' } })
         LocalStorage.set('username', response.user.displayName);
-        this.router.push('/account');
+        this.router.push('/categories/general');
         this.loadSignUpBtn = false;
         notifyUser(this.defaultPic, 'Welcome back')
 
@@ -246,7 +246,7 @@ export const useCounterStore = defineStore('counter', {
 
 
         }).then(() =>{
-          this.router.push('/account');
+          this.router.push('/categories/general');
           this.upDateProfilePrompt = true;
           this.loadSignUpBtn = false;
           LocalStorage.set('username', userCredential.user.displayName);
@@ -272,7 +272,7 @@ export const useCounterStore = defineStore('counter', {
       this.loadSignUpBtn = true;
       signInWithPopup(auth, provider)
        .then((userCredential) => {
-         this.router.push('/account');
+         this.router.push('/categories/general');
 
          this.notifyUser(userCredential.user.photoURL, `Welcome back ${userCredential.user.displayName}`)
          LocalStorage.set('username', userCredential.user.displayName);
