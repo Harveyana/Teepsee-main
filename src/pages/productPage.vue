@@ -13,21 +13,45 @@
         <!-- main image -->
         <q-card class="image-container row justify-center items-center" style="">
           <q-carousel
+            v-if="productDetails.images"
             animated
             v-model="slide"
-            arrows
             navigation
+            swipeable
+            autoplay="true"
             infinite
             class="image-carousel flex justify-center"
             style=""
           >
-            <q-carousel-slide
+            <!-- <q-carousel-slide
               v-for="(image, index) in productDetails.images"
               :key="index"
               :name="(index = +1)"
               class="product-image"
               :img-src="image"
               style="min-width: 200px"
+            /> -->
+
+            <q-carousel-slide
+              v-if="productDetails.images[0]"
+              :name="1"
+              class="product-image"
+              style="min-width: 200px"
+              :img-src="productDetails.images[0]"
+            />
+            <q-carousel-slide
+              v-if="productDetails.images[1]"
+              :name="2"
+              class="product-image"
+              style="min-width: 200px"
+              :img-src="productDetails.images[1]"
+            />
+            <q-carousel-slide
+              v-if="productDetails.images[2]"
+              :name="3"
+              class="product-image"
+              style="min-width: 200px"
+              :img-src="productDetails.images[2]"
             />
           </q-carousel>
         </q-card>
@@ -108,21 +132,45 @@
         style=""
       >
         <q-carousel
+          v-if="productDetails.images"
           animated
           v-model="slide"
-          arrows
           navigation
           infinite
+          swipeable
+          autoplay="true"
           class="image-carousel flex justify-center"
           style=""
         >
-          <q-carousel-slide
+          <!-- <q-carousel-slide
             v-for="(image, index) in productDetails.images"
             :key="index"
             :name="(index = +1)"
             class="product-image"
             :img-src="image"
             style="min-width: 200px"
+          /> -->
+
+          <q-carousel-slide
+            v-if="productDetails.images[0]"
+            :name="1"
+            class="product-image"
+            style="min-width: 200px"
+            :img-src="productDetails.images[0]"
+          />
+          <q-carousel-slide
+            v-if="productDetails.images[1]"
+            :name="2"
+            class="product-image"
+            style="min-width: 200px"
+            :img-src="productDetails.images[1]"
+          />
+          <q-carousel-slide
+            v-if="productDetails.images[2]"
+            :name="3"
+            class="product-image"
+            style="min-width: 200px"
+            :img-src="productDetails.images[2]"
           />
         </q-carousel>
         <q-inner-loading :showing="Store.ShowLoading">
