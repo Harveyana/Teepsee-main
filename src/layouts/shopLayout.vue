@@ -189,7 +189,7 @@
         <MainDrawer />
 
         <q-page-container>
-          <router-view />
+          <router-view :key="$route.fullPath" />
         </q-page-container>
 
         <!-- footer footer footer footer -->

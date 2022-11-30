@@ -36,21 +36,21 @@
               v-if="productDetails.images[0]"
               :name="1"
               class="product-image"
-              style="min-width: 200px"
+              style="min-width: 300px"
               :img-src="productDetails.images[0]"
             />
             <q-carousel-slide
               v-if="productDetails.images[1]"
               :name="2"
               class="product-image"
-              style="min-width: 200px"
+              style="min-width: 300px"
               :img-src="productDetails.images[1]"
             />
             <q-carousel-slide
               v-if="productDetails.images[2]"
               :name="3"
               class="product-image"
-              style="min-width: 200px"
+              style="min-width: 300px"
               :img-src="productDetails.images[2]"
             />
           </q-carousel>
@@ -155,21 +155,21 @@
             v-if="productDetails.images[0]"
             :name="1"
             class="product-image"
-            style="min-width: 200px"
+            style="min-width: 300px"
             :img-src="productDetails.images[0]"
           />
           <q-carousel-slide
             v-if="productDetails.images[1]"
             :name="2"
             class="product-image"
-            style="min-width: 200px"
+            style="min-width: 300px"
             :img-src="productDetails.images[1]"
           />
           <q-carousel-slide
             v-if="productDetails.images[2]"
             :name="3"
             class="product-image"
-            style="min-width: 200px"
+            style="min-width: 300px"
             :img-src="productDetails.images[2]"
           />
         </q-carousel>

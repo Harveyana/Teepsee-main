@@ -8,7 +8,7 @@
             class="search q-pl-xl"
             type="text"
             placeholder=" Products search"
-            @keydown="showsearch = true"
+            v-model="searchResults"
           />
         </div>
       </q-item>
@@ -65,7 +65,7 @@
           <!--  Product -->
           <!--  Product -->
           <AdminProduct
-            v-for="product in Store.products.value"
+            v-for="product in productList"
             :productName="product.name"
             :productImage="product.images[0]"
             :productPrice="product.price"
@@ -95,17 +95,46 @@
   </q-page>
 </template>
 
-<script setup>
+<script>
 import ProductUploader from "src/components/productUploader.vue";
 import { useCounterStore } from "stores/counter";
-import { onMounted } from "vue";
 import AdminProduct from "src/components/adminProduct.vue";
+import { ref, computed } from "vue";
 
-const Store = useCounterStore();
-
-onMounted(() => {
-  Store.Fetchproducts("general");
-});
+export default {
+  name: "adminProducts",
+  components: {
+    ProductUploader,
+    AdminProduct,
+  },
+  setup() {
+    const Store = useCounterStore();
+    const searchResults = ref("");
+    return {
+      Store,
+      searchResults,
+    };
+  },
+  computed: {
+    // a computed getter
+    productList: function () {
+      // `this` points to the component instance
+      // if (this.showSearch == true) {
+      //   return this.Store.products.value.filter((product) =>
+      //     product.name.toLowerCase().includes(this.searchResults.toLowerCase())
+      //   );
+      // }
+      if (this.Store.products.value) {
+        return this.Store.products.value.filter((product) => {
+          return product.name.toLowerCase().includes(this.searchResults.toLowerCase());
+        });
+      }
+    },
+  },
+  mounted() {
+    this.Store.Fetchproducts("general");
+  },
+};
 </script>
 <style scoped lang="sass">
 .search

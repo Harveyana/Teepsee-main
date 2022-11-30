@@ -86,7 +86,7 @@
       <AccountDrawer />
 
       <q-page-container>
-        <router-view />
+        <router-view :key="$route.fullPath" />
       </q-page-container>
       <q-dialog class="" v-model="Store.showReviewBox" persistent>
         <ReviewEntry />

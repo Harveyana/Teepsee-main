@@ -297,6 +297,7 @@ export const useCounterStore = defineStore('counter', {
           this.queryUser(user.uid);
 
           LocalStorage.set('isLoggedIn', true);
+          LocalStorage.set('userId', user.uid);
 
         }
       });
@@ -768,10 +769,10 @@ export const useCounterStore = defineStore('counter', {
     //   console.log('finally done');
     // },
     processPayment() {
-      if (this.isLoggedIn) {
+      if (this.userId) {
         const paystack = new PaystackPop();
 
-      paystack.newTransaction({
+         paystack.newTransaction({
 
         key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
         email: this.user.email,
@@ -787,9 +788,10 @@ export const useCounterStore = defineStore('counter', {
         this.notifyUser(this.user.profilePic, "Order Cancelled");
         LocalStorage.remove('singleItems');
 
-       }
-     });
-    }else{
+        }
+      });
+
+     }else{
       this.router.push('/login');
     }
 
