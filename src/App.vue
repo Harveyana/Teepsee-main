@@ -4,13 +4,13 @@
 
 <script setup>
 import { useCounterStore } from "stores/counter";
-import { onMounted } from "vue";
+// import { onMounted } from "vue";
 
 const Store = useCounterStore();
 
-onMounted(() => {
-  Store.handleAuthState();
-});
+// onMounted(() => {
+//   Store.handleAuthState();
+// });
 </script>
 <style>
 @font-face {

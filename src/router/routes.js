@@ -22,6 +22,13 @@ const routes = [
     ]
   },
   {
+    path: '/privacyPolicy',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/PrivacyPolicy.vue') }
+    ]
+  },
+  {
     path: '/account',
     component: () => import('layouts/AccountLayout.vue'),
     meta:{
@@ -116,5 +123,6 @@ const routes = [
     component: () => import('pages/ErrorNotFound.vue')
   }
 ]
+
 
 export default routes

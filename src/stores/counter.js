@@ -50,6 +50,7 @@ export const useCounterStore = defineStore('counter', {
     Showsetup: true,
     ShowLoading: false,
     products: ref([]),
+    chasers: ref([]),
     adminorders: ref([]),
     allUsers: ref([]),
     favourites: ref([]),
@@ -136,6 +137,7 @@ export const useCounterStore = defineStore('counter', {
       onSnapshot(userQuery, (querySnapshot)=>{
         querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots
+          LocalStorage.set('userDetails', doc.data());
           Object.assign(this.user, doc.data());
           // Object.assign(this.userId, doc.id);
           this.userId = doc.id;
@@ -145,18 +147,41 @@ export const useCounterStore = defineStore('counter', {
         });
 
       })
-      // getDocs(userQuery).then((querySnapshot)=>{
-      //   querySnapshot.forEach((doc) => {
-      //     // doc.data() is never undefined for query doc snapshots
-      //      console.log(doc.id, " => ", doc.data());
-      //     });
-      // })
 
-      // const querySnapshot = await getDocs(userQuery);
-      // querySnapshot.forEach((doc) => {
-      // // doc.data() is never undefined for query doc snapshots
-      //  console.log(doc.id, " => ", doc.data());
-      // });
+    },
+    handleAuthState() {
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // this.isLoggedIn = true;
+          this.queryUser(user.uid);
+
+          LocalStorage.set('isLoggedIn', true);
+          LocalStorage.set('userId', user.uid);
+
+        }
+      });
+    },
+    loginUser(payload) {
+      this.loadSignUpBtn = true;
+      signInWithEmailAndPassword(auth, payload.email, payload.password)
+      .then((response)=>{
+        LocalStorage.set('isLoggedIn', true);
+        // this.router.push({ name: 'user', params: { username: 'eduardo' } })
+        LocalStorage.set('username', response.user.displayName);
+        this.router.push('/categories/general');
+        this.loadSignUpBtn = false;
+        notifyUser(this.defaultPic, 'Welcome back')
+        this.handleAuthState()
+      })
+      .catch((err) => {
+        this.loadSignUpBtn = false;
+        Notify.create({
+          message: 'Connection Error',
+          icon: 'announcement',
+          color: 'secondary'
+        })
+      })
     },
     registerUser(payload) {
       this.loadSignUpBtn = true;
@@ -181,10 +206,11 @@ export const useCounterStore = defineStore('counter', {
             getUpdates: true
           }
         }).then(() =>{
-          this.router.push('/categories/general');
+          this.loginUser(payload)
+          // this.router.push('/categories/general');
           // this.upDateProfilePrompt = true;
           this.loadSignUpBtn = false;
-          this.notifyUser(this.defaultPic, 'Welcome to Teepsee');
+          // this.notifyUser(this.defaultPic, 'Welcome to Teepsee');
         })
 
 
@@ -199,26 +225,7 @@ export const useCounterStore = defineStore('counter', {
         })
       })
     },
-    loginUser(payload) {
-      this.loadSignUpBtn = true;
-      signInWithEmailAndPassword(auth, payload.email, payload.password)
-      .then((response)=>{
-        // this.router.push({ name: 'user', params: { username: 'eduardo' } })
-        LocalStorage.set('username', response.user.displayName);
-        this.router.push('/categories/general');
-        this.loadSignUpBtn = false;
-        notifyUser(this.defaultPic, 'Welcome back')
 
-      })
-      .catch((err) => {
-        this.loadSignUpBtn = false;
-        Notify.create({
-          message: 'Connection Error',
-          icon: 'announcement',
-          color: 'secondary'
-        })
-      })
-    },
     googleSigin() {
       let provider = new GoogleAuthProvider();
 
@@ -247,10 +254,11 @@ export const useCounterStore = defineStore('counter', {
 
         }).then(() =>{
           this.router.push('/categories/general');
-          this.upDateProfilePrompt = true;
+          this.handleAuthState();
+          // this.upDateProfilePrompt = true;
           this.loadSignUpBtn = false;
-          LocalStorage.set('username', userCredential.user.displayName);
-          this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`);
+          // LocalStorage.set('username', userCredential.user.displayName);
+          // this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`);
 
         })
 
@@ -272,10 +280,11 @@ export const useCounterStore = defineStore('counter', {
       this.loadSignUpBtn = true;
       signInWithPopup(auth, provider)
        .then((userCredential) => {
-         this.router.push('/categories/general');
+        this.router.push('/categories/general');
+         this.handleAuthState();
 
-         this.notifyUser(userCredential.user.photoURL, `Welcome back ${userCredential.user.displayName}`)
-         LocalStorage.set('username', userCredential.user.displayName);
+        //  this.notifyUser(userCredential.user.photoURL, `Welcome back ${userCredential.user.displayName}`)
+        //  LocalStorage.set('username', userCredential.user.displayName);
           this.loadSignUpBtn = false;
         }).catch((error) => {
           // Handle Errors here.
@@ -289,24 +298,13 @@ export const useCounterStore = defineStore('counter', {
 
        });
     },
-    handleAuthState() {
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // this.isLoggedIn = true;
-          this.queryUser(user.uid);
-
-          LocalStorage.set('isLoggedIn', true);
-          LocalStorage.set('userId', user.uid);
-
-        }
-      });
-    },
     logOut() {
       signOut(auth).then(() => {
         // Sign-out successful.
         LocalStorage.remove('isLoggedIn');
-        LocalStorage.remove('username');
+        LocalStorage.remove('userDetails');
+        LocalStorage.remove('userId');
         this.router.push('/login');
       }).catch((error) => {
         // An error happened.
@@ -335,6 +333,21 @@ export const useCounterStore = defineStore('counter', {
 
 
 
+    },
+    fetchChasers(){
+
+      const colRef = collection(db, "products");
+      const chaseRef = query(colRef, where("chaser", "==", true))
+
+      onSnapshot(chaseRef, (data) => {
+        let group = data.docs.map((item) => {
+          return item.data();
+        });
+        this.chasers.value = [...group];
+        // if (this.products.value.length > 0) {
+        //   this.ShowLoading = false;
+        // }
+      });
     },
     Fetchproducts (category) {
       this.ShowLoading = true;

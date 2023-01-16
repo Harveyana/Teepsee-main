@@ -2,7 +2,7 @@
   <q-card
     class="row product justify-between"
     style="width: 100%"
-    v-for="product in Store.products.value"
+    v-for="product in Store.chasers.value"
     :key="product.id"
   >
     <!-- Product image and name -->
@@ -131,7 +131,7 @@ const reduceQuantity = function (name, quantity) {
   // };
 };
 onMounted(() => {
-  Store.Fetchproducts("general");
+  Store.fetchChasers();
 });
 </script>
 <style scoped lang="sass">

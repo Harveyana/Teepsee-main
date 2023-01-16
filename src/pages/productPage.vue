@@ -196,7 +196,7 @@
             <q-card class="product-priceAndName column no-wrap" style="">
               <q-card class="NameAndprice">
                 <h2 class="product-name" style="">{{ productDetails.name }}</h2>
-                <h2 class="product-price" style="">₦{{ price }}</h2>
+                <h2 class="product-price" style="" v-if="productDetails.price">₦{{ price }}</h2>
               </q-card>
               <q-card class="counter row justify-center no-wrap" style="">
                 <h5 class="Quantity-Label" style="">Quantity</h5>

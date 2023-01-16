@@ -144,6 +144,16 @@
               class="checkoutBtn"
               label="Add to Chasers"
               style="background: #e6b41d; font-size: small"
+              @click="addToChasers(productId)"
+              v-if="!Chaser"
+            />
+            <q-btn
+              text-color="white"
+              class="checkoutBtn"
+              label="Remove from Chasers"
+              style="background: #e6b41d; font-size: small"
+              @click="removeFromChasers(productId)"
+              v-else
             />
           </q-card>
 
@@ -226,6 +236,7 @@ export default {
     productTag: String,
     productId: String,
     productImages: Array,
+    Chaser: Boolean,
   },
   data() {
     return {
@@ -267,6 +278,25 @@ export default {
     savefile(files) {
       this.images.unshift(files[0]);
     },
+    async addToChasers(id){
+      this.Store.ShowLoading = true;
+      const docToUpdate = doc(db, "products", id);
+      await updateDoc(docToUpdate, {
+          chaser: true
+        })
+      this.Store.notifyUser(this.Store.user.profilePic, "Product added to chasers");
+      this.Store.ShowLoading = false;
+    },
+
+    async removeFromChasers(id){
+      this.Store.ShowLoading = true;
+      const docToUpdate = doc(db, "products", id);
+      await updateDoc(docToUpdate, {
+          chaser: false
+        })
+      this.Store.notifyUser(this.Store.user.profilePic, "Product removed from chasers");
+      this.Store.ShowLoading = false;
+    },
 
     UpdateProduct(id) {
       this.$refs.qDateProxy.hide();
@@ -284,7 +314,7 @@ export default {
         });
       } else if (this.group == "price") {
         updateDoc(docToUpdate, {
-          price: value,
+          price: Number(value)
         }).then(() => {
           this.Store.ShowLoading = false;
           this.Store.notifyUser(this.Store.user.profilePic, "Product Updated");

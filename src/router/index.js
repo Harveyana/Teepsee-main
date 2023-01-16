@@ -31,32 +31,59 @@ export default route(function (/* { store, ssrContext } */) {
 
   })
 
-  Router.beforeEach((to,from, next) => {
-    to.matched.some( route =>{
-      const Store = useCounterStore();
-      const logged = LocalStorage.getItem('isLoggedIn')
-      const logAuth = LocalStorage.getItem('logger')
-      if(route.meta.requiresAuth && !logged){
-        // if(!Store.isLoggedIn ){
-          next({ path: '/login' })
-        // }
-      }
-      // if(route.meta.requiresAdmin && !logAuth){
+  Router.beforeEach((to, from) => {
+    // instead of having to check every route record with
+    // to.matched.some(record => record.meta.requiresAuth)
 
-      //     next({path: '/'})
+     const isLoggedIn = LocalStorage.getItem('isLoggedIn')
+     const user = JSON.parse(localStorage.getItem('UserDetails'))
+     if (to.meta.requiresAuth && !isLoggedIn) {
+       // this route requires auth, check if logged in
+       // if not, redirect to login page.
+       return {
+          path: '/login',
 
-      // }
+          // save the location we were at to come back later
+          query: { redirect: to.fullPath },
+       }
+     }
 
-      // if(route.meta.requiresUser){
-      //   if(!isUser()){
-      //     next({path: '/'})
-      //   }
-      // }
+     if (!to.meta.requiresAuth && isLoggedIn) {
+      return false
 
-    })
-    next()
+     }
 
-  })
+ })
+
+  // Router.beforeEach((to,from, next) => {
+  //   to.matched.some( route =>{
+  //     const Store = useCounterStore();
+  //     const logged = LocalStorage.getItem('isLoggedIn')
+  //     const logAuth = LocalStorage.getItem('logger')
+  //     if(route.meta.requiresAuth && !logged){
+  //       // if(!Store.isLoggedIn ){
+  //         next({ path: '/login' })
+  //       // }
+  //     }
+  //     // if(route.meta.requiresAdmin && !logAuth){
+
+  //     //     next({path: '/'})
+
+  //     // }
+
+  //     // if(route.meta.requiresUser){
+  //     //   if(!isUser()){
+  //     //     next({path: '/'})
+  //     //   }
+  //     // }
+
+  //   })
+  //   next()
+
+  // })
+
+
+
 
   // Router.beforeEach((to, from, next) => {
   //   if (route.meta.requiresAuth && !Store.isLoggedIn) next({ path: '/login' })

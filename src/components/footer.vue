@@ -24,8 +24,8 @@
               <q-item-section class="footer-head text-h6"> LEGAL </q-item-section>
             </q-item>
 
-            <q-item clickable>
-              <q-item-section class="footerlink"> Privacy policy </q-item-section>
+            <q-item clickable to="/privacypolicy">
+              <q-item-section class="footerlink" to="/privacypolicy"> Privacy policy </q-item-section>
             </q-item>
 
             <q-item clickable>

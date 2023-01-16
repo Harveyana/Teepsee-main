@@ -74,6 +74,7 @@
             :productBrand="product.brand"
             :productImages="product.images"
             :productId="product.id"
+            :Chaser="product.chaser"
             :key="product.id"
           >
           </AdminProduct>
