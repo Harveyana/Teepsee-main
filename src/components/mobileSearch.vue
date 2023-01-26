@@ -122,6 +122,7 @@ export default {
       searchResults,
     };
   },
+
   computed: {
     // a computed getter
     productList: function () {

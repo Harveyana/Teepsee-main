@@ -78,7 +78,7 @@
           clickable
           class="profile row no-wrap flex flex-center justify-between bg-transparent"
           style="width: 60%; cursor: pointer"
-          v-if="Store.isLoggedIn"
+          v-if="isLoggedIn"
         >
           <q-img
             to="/account"
@@ -99,16 +99,16 @@
                 font-size: 130%;
                 color: #e6b41d;
               "
-              v-if="Store.username !== null"
+              v-if="user.name"
             >
-              {{ Store.username }}
+              {{ user.name }}
             </div>
           </router-link>
         </q-card>
         <q-card
           class="AuthBtns row no-wrap bg-transparent"
           style="width: 100%; border-radius: 12px; background: transparent"
-          v-else="!Store.isLoggedIn"
+          v-else
         >
           <q-btn
             to="/login"
@@ -142,7 +142,7 @@
           class="bg-transparent navbar"
           to=""
           style="width: 30%"
-          v-if="Store.isLoggedIn"
+          v-if="isLoggedIn"
           ><q-btn
             color="white"
             flat
@@ -185,9 +185,11 @@
 
 <script>
 import { ref } from "vue";
+
 import footerVue from "src/components/footer.vue";
 import mainDrawerVue from "src/components/mainDrawer.vue";
 import MobileSearch from "src/components/mobileSearch.vue";
+import {LocalStorage} from 'quasar'
 import Search from "src/components/search.vue";
 import { useCounterStore } from "stores/counter";
 
@@ -229,6 +231,12 @@ export default {
           product.name.toLowerCase().includes(this.searchResults.toLowerCase())
         );
       }
+    },
+    user() {
+      return LocalStorage.getItem('userDetails')
+    },
+    isLoggedIn() {
+      return LocalStorage.getItem('isLoggedIn')
     },
   },
   mounted() {

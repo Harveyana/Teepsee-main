@@ -18,7 +18,7 @@
       <q-item class="self-center" style="margin-left: -13px; margin-top: 10%">
         <q-item-section avatar>
           <q-img
-            :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+            :src="user.profilePic ? user.profilePic : Store.defaultPic"
             spinner-color="white"
             class="avatar"
             style=""
@@ -28,7 +28,7 @@
         <q-item-section>
           <div class="userDetails self-end">
             <div class="text-h1 userName self-start" style="min-width: 250px">
-              {{ Store.user.name + " " + Store.user.lastName }}
+              {{ user.name + " " + user.lastName }}
             </div>
             <div class="text-h6 userRole self-start" style="color: #e6b41d">Teepseer</div>
           </div>
@@ -112,7 +112,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable v-if="!Store.isLoggedIn">
+      <q-item clickable v-if="!isLoggedIn">
         <q-item-section avatar>
           <q-btn
             text-color="white"
@@ -279,14 +279,31 @@
           </q-item-section>
         </q-item>
       </q-list>
+      <q-separator inset style="margin-top: 17px" />
+
+      <q-item
+        clickable
+        class="self-start"
+        style="margin-bottom: 8px"
+        @click="Store.logOut()"
+      >
+        <q-item-section avatar>
+          <q-icon name="img:/Logout.svg" style="margin-left: 16px" />
+        </q-item-section>
+        <q-space />
+        <q-item-section>
+          <div class="text-h6 acc-link">Logout</div>
+        </q-item-section>
+      </q-item>
     </q-list>
   </q-drawer>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import footerVue from "src/components/footer.vue";
 import { useCounterStore } from "stores/counter";
+import {LocalStorage} from 'quasar'
 
 const leftDrawerOpen = ref(false);
 const Store = useCounterStore();
@@ -295,6 +312,17 @@ const Store = useCounterStore();
 // function toggleLeftDrawer() {
 //   leftDrawerOpen.value = !leftDrawerOpen.value;
 // }
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
+
+const isLoggedIn = computed(() =>{
+
+return LocalStorage.getItem('isLoggedIn')
+
+})
 </script>
 
 <style scoped lang="sass">

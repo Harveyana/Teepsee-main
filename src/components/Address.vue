@@ -50,7 +50,8 @@
 
 <script setup>
 import { useCounterStore } from "stores/counter";
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
+import {LocalStorage} from 'quasar'
 const Store = useCounterStore();
 
 const address = reactive({
@@ -58,9 +59,21 @@ const address = reactive({
   landmark: "",
 });
 
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
+
+const isLoggedIn = computed(() =>{
+
+return LocalStorage.getItem('isLoggedIn')
+
+})
+
 const addAddress = () => {
   if (address.street.length === 0) {
-    Store.notifyUser(Store.user.profilePic, "Please Enter Address");
+    Store.notifyUser(user.profilePic, "Please Enter Address");
   } else {
     Store.updateAddress(address);
   }

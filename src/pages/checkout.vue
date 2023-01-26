@@ -37,13 +37,13 @@
             >
               <div class="text-h6" style="">Use Address on my Profile</div>
 
-              <q-card flat class="addresses" style="width: 90%">
+              <q-card flat class="addresses" style="width: 90%" v-for="address in user.addresses" :key="address.landmark">
                 <!-- Adresses -->
                 <!-- Adresses -->
                 <q-radio
                   v-model="Address"
-                  val="15, Abate way Victoria Island Lagos"
-                  label="15, Abate way Victoria Island Lagos"
+                  :val="address.street"
+                  :label="address.street"
                   :color="primary"
                   style="color: #444444; font-family: 'Manrope-semiBold'"
                 />
@@ -189,6 +189,7 @@
 // import PaystackPop from "@paystack/inline-js";
 
 import Chasers from "../components/Chasers.vue";
+import {LocalStorage} from 'quasar'
 import RecentlyViewed from "src/components/RecentlyViewed.vue";
 import { useCounterStore } from "stores/counter";
 // import { useRouter, useRoute } from "vue-router";
@@ -200,7 +201,7 @@ const cartProducts = ref([]);
 const discountCode = ref("");
 const hasCart = $q.localStorage.has("cartItems");
 const tab = ref("Personal Delivery");
-const Address = ref("15, Abate way Victoria Island Lagos");
+const Address = ref(null);
 const from = ref(null);
 const newAddress = reactive({
   name: Store.username,
@@ -294,6 +295,11 @@ const fetchValue = () => {
   }
 };
 
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
 // const cartValue = computed(() => {
 //   return fetchValue();
 // });

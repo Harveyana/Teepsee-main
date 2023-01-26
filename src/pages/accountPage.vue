@@ -26,7 +26,7 @@
                 /> -->
                 <q-img
                   class="avatar"
-                  :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+                  :src="user.profilePic ? user.profilePic : Store.defaultPic"
                   spinner-color="white"
                   style="width: 80%"
                 />
@@ -34,8 +34,8 @@
               <q-card style="width: 50%">
                 <div class="text-h3 userName self-start" style="">
                   {{
-                    Store.user.name
-                      ? Store.user.name + " " + Store.user.lastName
+                    user.name
+                      ? user.name + " " + user.lastName
                       : "Teepseer"
                   }}
                 </div>
@@ -199,13 +199,14 @@
 </template>
 
 <script setup>
+import {LocalStorage} from 'quasar'
 import orderHistoryVue from "src/components/orderHistory.vue";
 import profileVue from "src/components/profile.vue";
 import settingsVue from "src/components/settings.vue";
 import AddressVue from "src/components/Address.vue";
 import { useCounterStore } from "stores/counter";
 import Favourites1 from "../components/favourites.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 const Store = useCounterStore();
 
 const address = ref("");
@@ -217,6 +218,18 @@ const address = ref("");
 //     Store.namePrompt = true;
 //   }
 // });
+
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
+
+const isLoggedIn = computed(() =>{
+
+return LocalStorage.getItem('isLoggedIn')
+
+})
 </script>
 
 <style lang="sass">

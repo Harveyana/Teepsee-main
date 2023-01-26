@@ -19,8 +19,9 @@
       <q-card
         class="row Quantity flex flex-center"
         style="width: 15%; position: relative; right: 3%"
+
       >
-        <h4 class="Quantity NameClass" style="">
+        <h4 class="Quantity NameClass" style="" v-if="order.items">
           {{ parseInt(order.items.length) }}
         </h4>
       </q-card>

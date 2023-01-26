@@ -36,7 +36,7 @@ export default route(function (/* { store, ssrContext } */) {
     // to.matched.some(record => record.meta.requiresAuth)
 
      const isLoggedIn = LocalStorage.getItem('isLoggedIn')
-     const user = JSON.parse(localStorage.getItem('UserDetails'))
+    //  const {status} = LocalStorage.getItem('UserDetails')
      if (to.meta.requiresAuth && !isLoggedIn) {
        // this route requires auth, check if logged in
        // if not, redirect to login page.
@@ -48,10 +48,22 @@ export default route(function (/* { store, ssrContext } */) {
        }
      }
 
-     if (!to.meta.requiresAuth && isLoggedIn) {
-      return false
+     if (to.fullPath == '/login' && isLoggedIn) {
+
+      return {
+          path: '/categories/general'
+       }
 
      }
+
+
+    //  if (to.meta.requiresAdmin && !status === 'admin') {
+
+    //   return {
+    //       path: '/'
+    //    }
+
+    //  }
 
  })
 

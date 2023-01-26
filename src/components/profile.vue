@@ -18,7 +18,7 @@
             class="card2-Image"
           /> -->
           <q-img
-            :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+            :src="user.profilePic ? user.profilePic : Store.defaultPic"
             class="card2-Image"
           />
           <q-icon
@@ -68,7 +68,7 @@
                 v-model="data.name"
                 class="Firstname inputEdit"
                 type="text"
-                :placeholder="Store.user.name"
+                :placeholder="user.name"
               />
             </q-card>
 
@@ -87,7 +87,7 @@
                 v-model="data.lastName"
                 class="Lastname inputEdit"
                 type="text"
-                :placeholder="Store.user.lastName"
+                :placeholder="user.lastName"
               />
             </q-card>
           </q-card>
@@ -107,7 +107,7 @@
                 v-model="data.email"
                 class="Firstname inputEdit"
                 type="text"
-                :placeholder="Store.user.email"
+                :placeholder="user.email"
               />
             </div>
 
@@ -167,11 +167,12 @@
 </template>
 
 <script setup>
+import {LocalStorage} from 'quasar'
 import { useCounterStore } from "stores/counter";
 import { auth, db, Storage } from "src/boot/firebase";
 import { collection, addDoc, getDocs, doc, updateDoc } from "firebase/firestore";
 
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 const data = reactive({
   name: "",
   lastName: "",
@@ -195,6 +196,13 @@ const updateDetails = (payload, id) => {
     Store.updateData(payload, id);
   }
 };
+
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
+
 // const updateData = (Update) => {
 //   const docToUpdate = doc(db, "users", "");
 

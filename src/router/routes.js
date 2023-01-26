@@ -84,15 +84,15 @@ const routes = [
   {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
+    meta:{
+      requiresAdmin: true
+    },
     children: [
       { path: '/admin/products', component: () => import('pages/adminProducts.vue') },
       { path: '/admin/users', component: () => import('pages/users.vue') },
       { path: '/admin/coupons', component: () => import('pages/coupons.vue') },
       { path: '/admin/orders', component: () => import('pages/Orders.vue') },
-    ],
-    meta:{
-      requiresAdmin: true
-    }
+    ]
   },
   {
     path: '/signup',

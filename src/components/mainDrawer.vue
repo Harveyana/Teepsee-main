@@ -57,7 +57,7 @@
       </q-item>
       <!-- </a> -->
 
-      <q-item clickable class="self-start" style="margin-bottom: 8px">
+      <q-item clickable class="self-start" style="margin-bottom: 8px" to="/faqs">
         <q-item-section avatar>
           <q-icon name="img:/Heart.svg" style="margin-left: 16px" />
         </q-item-section>
@@ -74,11 +74,11 @@
         clickable
         class="profile row no-wrap self-center flex flex-center justify-around bg-transparent q-px-lg q-ml-md q-mt-lg"
         style="width: 90%; cursor: pointer"
-        v-if="Store.isLoggedIn"
+        v-if="isLoggedIn"
       >
         <q-img
           to="/account"
-          :src="Store.user.profilePic ? Store.user.profilePic : Store.defaultPic"
+          :src="user.profilePic ? user.profilePic : Store.defaultPic"
           spinner-color="white"
           class="profile-Image"
           style="width: 25%; border-radius: 50%; border: 1x solid"
@@ -96,11 +96,11 @@
               color: #e6b41d;
             "
           >
-            {{ Store.username }}
+            {{ user.name }}
           </div>
         </a>
       </q-card>
-      <q-item clickable v-else="!Store.isLoggedIn">
+      <q-item clickable v-else>
         <q-item-section avatar>
           <q-btn
             text-color="white"
@@ -291,14 +291,27 @@
           </q-item-section>
         </q-item>
       </q-list>
+      <q-separator inset style="margin-top: 17px" />
+
+      <q-item clickable class="self-start" style="margin-bottom: 8px" @click="Store.logOut()">
+        <q-item-section avatar>
+          <q-icon name="img:/logout.svg" style="margin-left: 16px" />
+        </q-item-section>
+        <q-space />
+        <q-item-section>
+          <div class="text-h6 acc-link">Logout</div>
+        </q-item-section>
+      </q-item>
+
     </q-list>
   </q-drawer>
 </template>
 
 <script setup>
+import {LocalStorage} from 'quasar'
 import { useCounterStore } from "stores/counter";
 import { useQuasar } from "quasar";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 const $q = useQuasar();
 const Store = useCounterStore();
 const cartQuantity = ref("");
@@ -310,6 +323,18 @@ const getcartQuantity = () => {
     cartQuantity.value = items.length;
   }
 };
+
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
+
+const isLoggedIn = computed(() =>{
+
+return LocalStorage.getItem('isLoggedIn')
+
+})
 
 onMounted(() => {
   getcartQuantity();

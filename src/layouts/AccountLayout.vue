@@ -98,7 +98,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import {LocalStorage} from 'quasar'
+import { ref, onMounted, computed } from "vue";
 import footerVue from "src/components/footer.vue";
 import AccountDrawer from "/src/components/accountDrawer.vue";
 import ReviewEntry from "/src/components/reviewEntry.vue";
@@ -121,6 +122,13 @@ const product = {
 // function toggleLeftDrawer() {
 //   leftDrawerOpen.value = !leftDrawerOpen.value;
 // }
+ const user = computed(() =>{
+
+  return LocalStorage.getItem('userDetails')
+
+})
+
+
 onMounted(() => {
   Store.getProductForReviews();
 });

@@ -12,7 +12,7 @@ import { createUserWithEmailAndPassword,
   signOut
  } from "firebase/auth"
  import { ref,  uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
- import { collection, query, arrayUnion, arrayRemove, onSnapshot, where, doc, addDoc, getDocs, updateDoc, deleteDoc, increment } from "firebase/firestore";
+ import { collection, query, arrayUnion, arrayRemove, onSnapshot, where, doc, addDoc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, increment } from "firebase/firestore";
 
 import { Notify, LocalStorage, } from 'quasar'
 import PaystackPop from '@paystack/inline-js';
@@ -132,21 +132,46 @@ export const useCounterStore = defineStore('counter', {
         LocalStorage.set("recentItems", recents);
       }
     },
-    queryUser(userId) {
-      const userQuery = query(collection(db, "users"), where("id", "==", userId));
-      onSnapshot(userQuery, (querySnapshot)=>{
-        querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
-          LocalStorage.set('userDetails', doc.data());
-          Object.assign(this.user, doc.data());
-          // Object.assign(this.userId, doc.id);
-          this.userId = doc.id;
-          // if (doc.data().status =='admin') {
-          //   LocalStorage.set('logger', false);
-          // }
-        });
+    async refreshUser(){
+      let user = LocalStorage.getItem('userDetails')
+      LocalStorage.remove('userDetails');
+      const docRef = doc(db, "users", user.id);
+      const docSnap = await getDoc(docRef);
+      LocalStorage.set('userDetails', docSnap.data());
+    },
+    async queryUser(userId) {
 
-      })
+      const docRef = doc(db, "users", userId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()){
+
+        LocalStorage.set('userDetails', docSnap.data());
+          LocalStorage.set('isLoggedIn', true);
+          LocalStorage.set('userId', userId);
+          Object.assign(this.user, docSnap.data());
+          // Object.assign(this.userId, doc.id);
+
+          if(this.router.options.history.state.back === '/cart'){
+            this.router.push('/cart')
+            this.loadSignUpBtn = false;
+            this.notifyUser(this.defaultPic, 'Welcome back')
+          }else{
+
+            this.router.push('/categories/general');
+            this.loadSignUpBtn = false;
+            this.notifyUser(this.defaultPic, 'Welcome back')
+          }
+
+          // console.log(this.router.options.history.state.back)
+
+
+      }else{
+        this.router.push('/signup');
+        this.loadSignUpBtn = false;
+      }
+
+
 
     },
     handleAuthState() {
@@ -155,10 +180,6 @@ export const useCounterStore = defineStore('counter', {
         if (user) {
           // this.isLoggedIn = true;
           this.queryUser(user.uid);
-
-          LocalStorage.set('isLoggedIn', true);
-          LocalStorage.set('userId', user.uid);
-
         }
       });
     },
@@ -169,9 +190,7 @@ export const useCounterStore = defineStore('counter', {
         LocalStorage.set('isLoggedIn', true);
         // this.router.push({ name: 'user', params: { username: 'eduardo' } })
         LocalStorage.set('username', response.user.displayName);
-        this.router.push('/categories/general');
-        this.loadSignUpBtn = false;
-        notifyUser(this.defaultPic, 'Welcome back')
+        // this.router.push('/categories/general');
         this.handleAuthState()
       })
       .catch((err) => {
@@ -186,16 +205,16 @@ export const useCounterStore = defineStore('counter', {
     registerUser(payload) {
       this.loadSignUpBtn = true;
       createUserWithEmailAndPassword(auth, payload.email, payload.password)
-      .then((userCredential)=>{
+      .then(async(userCredential)=>{
         // sendEmailVerification(auth.currentUser)
-        let colRef= collection(db, 'users',);
-        addDoc(colRef, {
+        await setDoc(doc(db, "users", userCredential.user.uid), {
           name: payload.name,
           lastName:'',
           id: userCredential.user.uid,
           email: userCredential.user.email,
           profilePic:'',
           phoneNumber:'',
+          status: 'user',
           cart:[],
           orderHistory:[],
           recentlyViewed:[],
@@ -205,13 +224,13 @@ export const useCounterStore = defineStore('counter', {
             getOrderDelivered: true,
             getUpdates: true
           }
-        }).then(() =>{
-          this.loginUser(payload)
+        });
+        this.loginUser(payload)
           // this.router.push('/categories/general');
           // this.upDateProfilePrompt = true;
-          this.loadSignUpBtn = false;
+        // this.loadSignUpBtn = false;
           // this.notifyUser(this.defaultPic, 'Welcome to Teepsee');
-        })
+
 
 
       })
@@ -231,28 +250,35 @@ export const useCounterStore = defineStore('counter', {
 
       this.loadSignUpBtn = true;
       signInWithPopup(auth, provider)
-       .then((userCredential) => {
+       .then(async(userCredential) => {
+          const docRef = doc(db, "users", userCredential.user.uid);
+          const docSnap = await getDoc(docRef);
 
-        let colRef= collection(db, 'users');
-        addDoc(colRef, {
-          name: userCredential.user.displayName,
-          lastName:'',
-          id: userCredential.user.uid,
-          email: userCredential.user.email,
-          profilePic: userCredential.user.photoURL,
-          phoneNumber:'',
-          cart:[],
-          orderHistory:[],
-          recentlyViewed:[],
-          addresses:[],
-          setup:{
-            getOrderConfirm: true,
-            getOrderDelivered: true,
-            getUpdates: true
-          }
+         if (docSnap.exists()){
 
+          this.router.push('/login');
 
-        }).then(() =>{
+        }else{
+
+          await setDoc(doc(db, "users", userCredential.user.uid), {
+            name: userCredential.user.displayName,
+            lastName:'',
+            id: userCredential.user.uid,
+            email: userCredential.user.email,
+            profilePic: userCredential.user.photoURL,
+            phoneNumber: userCredential.user.phoneNumber | null,
+            status: 'user',
+            cart:[],
+            orderHistory:[],
+            recentlyViewed:[],
+            addresses:[],
+            setup:{
+              getOrderConfirm: true,
+              getOrderDelivered: true,
+              getUpdates: true
+            }
+          });
+
           this.router.push('/categories/general');
           this.handleAuthState();
           // this.upDateProfilePrompt = true;
@@ -260,7 +286,11 @@ export const useCounterStore = defineStore('counter', {
           // LocalStorage.set('username', userCredential.user.displayName);
           // this.notifyUser(userCredential.user.photoURL, `Welcome to Teepsee ${userCredential.user.displayName}`);
 
-        })
+
+
+        }
+
+
 
 
         }).catch((error) => {
@@ -280,12 +310,11 @@ export const useCounterStore = defineStore('counter', {
       this.loadSignUpBtn = true;
       signInWithPopup(auth, provider)
        .then((userCredential) => {
-        this.router.push('/categories/general');
          this.handleAuthState();
 
         //  this.notifyUser(userCredential.user.photoURL, `Welcome back ${userCredential.user.displayName}`)
         //  LocalStorage.set('username', userCredential.user.displayName);
-          this.loadSignUpBtn = false;
+          // this.loadSignUpBtn = false;
         }).catch((error) => {
           // Handle Errors here.
           console.log(error);
@@ -558,14 +587,20 @@ export const useCounterStore = defineStore('counter', {
        this.notifyUser(this.user.profilePic, "Settings Updated");
       });
     },
+
+
     updateAddress(address) {
-      const docToUpdate = doc(db, "users", this.userId);
+      let user = LocalStorage.getItem('userDetails')
+
+      const docToUpdate = doc(db, "users", user.id);
       updateDoc(docToUpdate, {
         addresses: arrayUnion(address)
       }).then(()=>{
-        this.notifyUser(this.user.profilePic, " New Address Added");
+        this.notifyUser(user.profilePic, " New Address Added");
+        this.refreshUser();
       })
     },
+
     uploadProduct(payload) {
 
       if (payload) {
@@ -742,6 +777,7 @@ export const useCounterStore = defineStore('counter', {
 
     },
     async createOrder(id){
+      let user = LocalStorage.getItem('userDetails')
       const timeStamp = Date.now()
       const formattedString = date.formatDate(timeStamp, 'YYYY, MMM DD HH:mm A')
         await addDoc(collection(db, "orders"), {
@@ -750,7 +786,7 @@ export const useCounterStore = defineStore('counter', {
         items: LocalStorage.getItem("cartItems"),
         status: 'Pending',
         time: formattedString,
-        customer: this.checkout.name,
+        customer: this.user.email,
         address: this.checkout.address,
         landmark: this.checkout.landmark,
         phoneNumber: this.checkout.phoneNumber,
@@ -759,7 +795,7 @@ export const useCounterStore = defineStore('counter', {
       this.sendMail(id);
       LocalStorage.remove('cartItems');
       LocalStorage.remove('singleItems');
-      this.notifyUser(this.user.profilePic, "Order Successful");
+      this.notifyUser(user.profilePic, "Order Successful");
     },
     // async createOrder2(id){
     //   const timeStamp = Date.now()
@@ -782,13 +818,16 @@ export const useCounterStore = defineStore('counter', {
     //   console.log('finally done');
     // },
     processPayment() {
-      if (this.userId) {
+      let user = LocalStorage.getItem('userDetails')
+      let loggedIn = LocalStorage.getItem('isLoggedIn')
+
+      if (loggedIn) {
         const paystack = new PaystackPop();
 
          paystack.newTransaction({
 
-        key: 'pk_test_21a3b29fdc63fa8541342771a8bd098ab2c2c13a',
-        email: this.user.email,
+        key: 'pk_test_c20ec726668c0d52feabe4401e5016dc25fb6c70',
+        email: user.email,
         amount: this.toTalPayment * 100,
 
         onSuccess: (transaction) => {
@@ -798,7 +837,7 @@ export const useCounterStore = defineStore('counter', {
         },
         onCancel: () => {
         // user closed popup
-        this.notifyUser(this.user.profilePic, "Order Cancelled");
+        this.notifyUser(user.profilePic, "Order Cancelled");
         LocalStorage.remove('singleItems');
 
         }

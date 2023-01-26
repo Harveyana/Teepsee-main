@@ -74,9 +74,10 @@
 <script setup>
 import { db } from "src/boot/firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import {LocalStorage} from 'quasar'
 
 import { useCounterStore } from "stores/counter";
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed } from "vue";
 const Store = useCounterStore();
 const setup = reactive({
   getOrderConfirm: Store.user.setup.getOrderConfirm,
@@ -85,6 +86,13 @@ const setup = reactive({
 });
 
 // watch(notifyset, (newValue, oldValue) => {});
+
+const user = computed(() =>{
+
+return LocalStorage.getItem('userDetails')
+
+})
+
 
 watch(
   () => setup,
@@ -100,17 +108,17 @@ watch(
 
 const updateSetup = () => {
   const docToUpdate = doc(db, "users", "SR86nPnZB79JvsqkpHyo");
-  if (Store.user.getOrderConfirm === true) {
+  if (user.getOrderConfirm === true) {
     updateDoc(docToUpdate, {
       getOrderConfirm: false,
     }).then(() => {
-      Store.notifyUser(Store.user.profilePic, "Settings Updated");
+      Store.notifyUser(user.profilePic, "Settings Updated");
     });
   } else {
     updateDoc(docToUpdate, {
       getOrderConfirm: true,
     }).then(() => {
-      Store.notifyUser(Store.user.profilePic, "Settings Updated");
+      Store.notifyUser(user.profilePic, "Settings Updated");
     });
   }
 };
